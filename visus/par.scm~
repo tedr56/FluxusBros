@@ -1,0 +1,68 @@
+;(clear)
+;(define travels (make-hash))
+;(define-struct trip (start end speed time0))
+#(define
+    (travel
+        id
+        start
+        end
+        speed
+        time0
+    )
+            (let* ((dt (min (/ (- (time) (hash-ref! travels id time0)) speed) 1))
+                  (v
+                    (vadd
+                        start
+                        (vmul
+                            (vsub
+                                end
+                                start)
+                            dt
+                        )
+                    )
+                    )
+                    )
+;                (when (= dt 1)
+;                    (hash-set! travels id (time))
+;                )
+                v
+            )
+)
+
+(define t0-par (time))
+
+(define (par id cross)
+    (with-state
+        (let*
+            (
+                (speed (c "par-speed" id))
+                (ID (string-append (number->string id) "-" "par"))
+                (t (travel ID (vector 1 0 0) (vector 0 0 0) speed))
+                (t1 (travel (string-append ID "-2") (vector 0 0 0.5) (vector 0 0 0) (* speed 0.4)))
+                (t2 (travel (string-append ID "-3") (vector 1 1 1) (vector 3 3 3) speed))
+            )
+            (rotate (vector 90 0 0))
+            (scale (vector 5 1 5))
+            (scale 0.2)
+            (scale t2)
+            (colour (vadd t t1))
+            (opacity (vector-ref t 0))
+            (draw-cylinder)
+            (when (<= (vector-ref t 0) 0.1)
+                (rm-task (string->symbol ID))
+            )
+        )
+    )
+)
+
+;t0---------t0+speed
+;    Y
+;   t0+time
+;t0
+;dt
+
+;v= d/t
+;d=v/t
+        
+;v=dl/dt
+ 

@@ -1,0 +1,77 @@
+shuriken
+Bitstream
+scale-cube
+midi-ccn
+#(3 45)
+0
+-1
+0.11811023950576782
+0.0
+1
+1
+shuriken
+Bitstream
+increment-max
+midi-ccn
+#(3 43)
+0
+-1
+0.34645670652389526
+0.0
+1
+1
+shuriken
+Bitstream
+scale-cube-gh
+midi-ccn
+#(3 46)
+0
+-1
+0.15748031437397003
+0.0
+1
+1
+shuriken
+Bitstream
+rayon
+midi-ccn
+#(3 42)
+0
+-1
+0.4251968562602997
+0.0
+1
+1
+shuriken
+Bitstream
+size-cube
+midi-ccn
+#(3 44)
+0
+-1
+0.24409449100494385
+0.0
+1
+1
+shuriken
+Bitstream
+blur
+midi-ccn
+#(3 41)
+0
+-1
+1.0
+0.0
+1
+1
+shuriken
+Bitstream
+gain
+midi-ccn
+#(3 40)
+0
+-1
+0.34645670652389526
+0.4645669162273407
+1
+1

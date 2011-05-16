@@ -1,0 +1,320 @@
+equal_sym
+gain
+midi-ccn
+(vector 0 26)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+cam-x
+midi-ccn
+(vector 0 7)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+cam-y
+midi-ccn
+(vector 0 0)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+cam-z
+midi-ccn
+(vector 0 15)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-L-X-time
+midi-ccn
+(vector 0 4)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-L-Y-time
+midi-ccn
+(vector 0 3)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-L-Z-time
+midi-ccn
+(vector 0 12)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-L-X-coeff
+midi-ccn
+(vector 0 5)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-L-Y-coeff
+midi-ccn
+(vector 0 2)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-L-Z-coeff
+midi-ccn
+(vector 0 13)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+ortho-zoom
+midi-ccn
+(vector 0 7)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+blur
+midi-ccn
+(vector 0 24)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+clr-r
+midi-ccn
+(vector 0 28)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+clr-g
+midi-ccn
+(vector 0 29)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+clr-b
+midi-ccn
+(vector 0 30)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+line-width
+midi-ccn
+(vector 0 31)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+hint-wire
+midi-ccn
+(vector 2 81)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+hint-wire-strippled
+midi-ccn
+(vector 2 71)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+hint-solid
+midi-ccn
+(vector 2 61)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+trans-y-sin
+midi-ccn
+(vector 0 20)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+trans-y-sin-coeff
+midi-ccn
+(vector 0 21)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+trans-coeff
+midi-ccn
+(vector 0 27)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+scale-x
+midi-ccn
+(vector 0 27)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+scale-y-gh
+midi-ccn
+(vector 0 25)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+scale-z
+midi-ccn
+(vector 0 19)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+reset-camera
+midi-ccn
+(vector 2 43)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-G-X
+midi-ccn
+(vector 0 6)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-G-Y
+midi-ccn
+(vector 0 1)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-G-Z
+midi-ccn
+(vector 0 14)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-G-Z-time
+midi-ccn
+(vector 0 16)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-G-Y-time
+midi-ccn
+(vector 0 17)
+0
+-1
+0
+0.2
+0.3
+0.4
+equal_sym
+R-G-Z-time
+midi-ccn
+(vector 0 18)
+0
+-1
+0
+0.2
+0.3
+0.4

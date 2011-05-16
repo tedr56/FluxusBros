@@ -1,0 +1,110 @@
+dancing-cubes
+Korg
+speed
+midi-ccn
+#(1 24)
+0
+-1
+0.08661417663097382
+1
+1
+1
+dancing-cubes
+Korg
+45
+midi-ccn
+#(1 29)
+0
+-1
+0.6771653294563293
+1
+1
+1
+dancing-cubes
+Korg
+blur
+midi-ccn
+#(1 18)
+0
+-1
+0.0
+1
+1
+1
+dancing-cubes
+Korg
+rotation
+midi-ccn
+#(1 25)
+0
+-1
+0.09448818862438202
+1
+1
+1
+dancing-cubes
+Korg
+gain-a
+midi-ccn
+#(1 16)
+0
+-1
+0.6299212574958801
+1
+1
+1
+dancing-cubes
+Korg
+scale-gh
+midi-ccn
+#(1 28)
+0
+-1
+0.4251968562602997
+1
+1
+1
+dancing-cubes
+Korg
+scale-gh-z
+midi-ccn
+#(1 20)
+0
+-1
+0.18110236525535583
+1
+1
+1
+dancing-cubes
+Korg
+gain-b
+midi-ccn
+#(1 17)
+0
+-1
+1
+1
+1
+1
+dancing-cubes
+Korg
+opa-gh
+midi-ccn
+#(1 19)
+0
+-1
+0.03937007859349251
+1
+1
+1
+dancing-cubes
+Korg
+47
+midi-ccn
+#(1 31)
+0
+-1
+0.4173228442668915
+1
+1
+1

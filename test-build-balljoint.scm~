@@ -1,0 +1,35 @@
+(define (build)
+    (let
+        (
+            (a
+                (with-state
+                    (translate (vector -1 0 0))
+                    (build-cube)
+                )
+            )
+            (b
+                (with-state
+                    (translate (vector 1 0 0))
+                    (build-cube)
+                )
+            )
+        )
+        (active-box a)
+        (active-box b)
+
+(show "")
+        (build-balljoint a b (vector 0 0 0))
+(print-scene-graph)
+(show "")
+        (destroy a)
+        (destroy b)
+(print-scene-graph)
+    )
+)
+
+(clear)
+(collisions 1)
+(gravity (vector 0 -1 0))
+(ground-plane (vector 0 1 0) 0)
+
+(every-frame (build)) 

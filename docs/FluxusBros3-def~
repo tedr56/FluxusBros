@@ -1,0 +1,253 @@
+;############################################################################
+; TODOS
+;############################################################################
+;
+; disered mode pour controls - fonction lock pour retour sur focus
+; crossfader aleatoire pour visus multiples sur la meme note
+; fonction load crossfader pour changer les bank de notes-visu - sans lancer le visu - clavier midi
+; faire les players pour mixer a plusieurs
+; loader de fichiers trigger multiples pour config multiples
+; remplacer task-running pour export vers mac PA
+; fonction control-save (save par fichier visu)
+; crossfader video
+
+
+(rm-all-tasks)
+(clear)
+
+(current-directory "/home/ted/Fluxus/FluxusBros3")
+(define TRIGGER-SAVE-FILE       "Save-Trigger-File")
+(define CONTROL-SAVE-FILE       "Save-Control-File")
+
+(require "vjbros.scm")
+(require scheme/class)
+(require mzlib/string)
+(require scheme/bool)
+(require scheme/list)
+
+
+(define Crossfaders%
+    (class object%
+        (field
+            (Crossfader-List (make-hash))
+            (Current-Crossfader 1)
+            (wait-focus #f)
+        )
+        (define/public (Change-Crossfader n)
+        (define/public (add-crossfader n)
+        (define/public (del-crossfader (n Current-Crossfader))
+        (define/public (set-crossfader-side s (n Current-Crossfader))
+        (define/public (set-crossfader-visu v (n Current-Crossfader) (default-value -1))
+        (define/public (set-crossfader-visu-swap v (c Current-Crossfader) (default-value -1))
+        (define/public (set-wait-focus)
+        (define/public (get-current-crossfader)
+        (define/public (set-current-crossfader n)
+        (define/public (get-control n (c Current-Crossfader))
+        (define/public (set-visu-to-locked (c Current-Crossfader))
+        (define/public (set-visu-to-unlocked (c Current-Crossfader))
+        (define/public (set-visu-to-control (c Current-Crossfader))
+        (define/public (set-visu-to-default-value n (c Current-Crossfader))
+        (define/public (set-visu-default-value n (c Current-Crossfader))
+        (define/public (get-mode (c Current-Crossfader))
+	(define/public (save-controls (c Current-Crossfader))
+
+(define Crossfader%
+    (class object%
+        (init-field
+            num
+        )
+        (field
+            (side 0)
+            (pause #f)
+            (visu (new Visu% (id num)))
+        )
+        (define/public (set-side n)
+        (define/public (set-visu n)
+        (define/public (get-control n)
+        (define/public (get-id)
+        (define/public (set-visu-to-locked)
+        (define/public (set-visu-to-unlocked)
+        (define/public (set-visu-to-control)
+        (define/public (set-visu-to-default-value n)
+        (define/public (set-visu-default-value n)
+        (define/public (get-mode)
+	(define/public (save-controls)
+
+(define Visu%
+    (class object%
+        (init-field
+            id
+        )
+        (field
+            (file #f)
+            (destroy-function #f)
+            (controls (make-hash))
+            (desired-mode #f)
+        )
+        (define/public (set-visu n)
+        (define/public (set-visu-off)
+        (define/public (set-visu-on)
+        (define/public (get-file)
+        (define/public (get-id)
+        (define/public (add-control n o)
+        (define/public (get-control n)
+        (define/public (control-not-found n)
+        (define/public (load-control desired-mode (save-file CONTROL-SAVE-FILE))
+	(define/public (save-controls)
+        (define/public (set-visu-to-default-values n)
+        (define/public (set-visu-to-locked)
+        (define/public (set-visu-to-unlocked)
+        (define/public (set-visu-to-default-value d)
+        (define/public (set-visu-to-control)
+        (define/public (set-visu-default-value n)
+        (define/public (get-desired-mode)
+        (define/public (set-desired-mode n)
+
+(define Control%
+    (class object%
+        (field
+            (default-values (make-hash (list (cons 0 0.5) (cons 1 1) (cons 2 1) (cons 3 1) (cons 4 1))))
+            (mode -1)
+            (locked #f)
+            (lock-mode #f)
+        )
+        (define/public (get-value)
+        (define/public (get-default-value n)
+	(define/public (get-locked-value)
+        (define/public (get-mode)
+        (define/public (get-mode-value)
+        (define/public (unlocked?)
+        (define/pubment (set-mode n)
+        (define/public (set-mode-to-control)
+        (define/public (set-mode-to-locked)
+        (define/public (set-mode-to-unlocked)
+        (define/public (set-mode-to-default-value n)
+        (define/public (set-default-value-from-control n)
+        (define/public (set-default-value n v)
+        (define/public (set-locked-value)
+	(define/public (get-type)
+	(define/public (get-adress)
+
+(define Keyboard%
+    (class object%
+        (field
+            (key #f)
+        )
+        (define/public (set-key n)
+        (define/public (get-key)
+        (define/public (get-value)
+
+(define Keyboard-Special%
+    (class Keyboard%
+        (define/override (get-value)
+            (key-special-pressed key)
+        )
+
+(define Midi-CCN%
+    (class object%
+        (field
+            (channel 0)
+            (button 0)
+        )
+        (define/public (set-channel n)
+        (define/public (set-button n)
+        (define/public (get-value)
+        (define/public (get-channel)
+        (define/public (get-button)
+
+(define Midi-Note%
+    (class object%
+        (field
+            (channel 0)
+            (note 0)
+        )
+        (define/public (set-channel n)
+        (define/public (set-note n)
+        (define/public (get-channel)
+        (define/public (get-note)
+
+(define Control-Midi-CCN%
+    (class Control%
+        (field
+            (midi    (new Midi-CCN%))
+            (mapping 0)
+        )
+        (define/public (set-mapping n)
+        (define/public (set-channel-mapping n)
+        (define/override (get-value)
+        (define/public (get-mapping)
+        (define/public (set-control n)
+        (define/public (get-midi)
+        (define/override (get-type)
+        (define/override (get-adress)
+
+(define Triggers%
+    (class object%
+        (field
+            (trigger-list (make-hash))
+        )
+        (define/public (add-trigger n t)
+        (define/public (midi-note-read)
+        (define/public (test-triggers)
+        (define/public (load-triggers (file TRIGGER-SAVE-FILE))
+
+(define Trigger-Midi-Note%
+    (class Midi-Note%
+        (field
+            (function-on (void))
+            (function-off (void))
+            (triggered #f)
+            (option #f)
+            (value 0)
+        )
+        (define/public (set-control n)
+        (define/public (set-value n)
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-option n)
+        (define/public (trigg?)
+        (define/public (get-function-on)
+        (define/public (get-function-off)
+
+(define Trigger-Keyboard%
+    (class Keyboard%
+        (field
+            (function-on (void))
+            (function-off (void))
+            (triggered #f)
+            (on #f)
+            (option #f)
+            (value 0)
+        )
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-option n)
+        (define/public (set-control n)
+        (define/public (trigg?)
+
+(define Trigger-Keyboard-Special%
+    (class Keyboard-Special%
+        (field
+            (function-on (void))
+            (function-off (void))
+            (triggered #f)
+            (on #f)
+            (option #f)
+            (value 0)
+        )
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-option n)
+        (define/public (set-control n)
+        (define/public (trigg?)
+
+
+
+(define god (new Crossfaders%))
+(define Triggers-List (new Triggers%))
+(send Triggers-List load-triggers)
+(spawn-task (lambda () (send Triggers-List test-triggers)) 'Trigger-Detect)
+
+(define (c name id #:type (type 'linear) #:coeff (coefficient 1) #:toggle (toggle #f))
+    (* (send god get-control name id) coefficient)
+)

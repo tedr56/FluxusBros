@@ -1,0 +1,4 @@
+(send Triggers-List load-triggers "Config-Ted/Trigger-Korg")
+(send Triggers-List load-triggers "Config-Ted/Bank-Korg-Keyboard")
+(send Triggers-List load-triggers "Config-Ted/Bank-Korg-Pad-Note")
+(send Triggers-List load-triggers "Config-Ted/Bank-Korg-Pad-CCN")

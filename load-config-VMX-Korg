@@ -1,0 +1,2 @@
+(load "load-config-Korg")
+(load "load-config-VMX")

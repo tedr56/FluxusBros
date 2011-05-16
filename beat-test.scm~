@@ -1,0 +1,10 @@
+(require "beat-module.scm")
+
+(define (beat-test)
+    (when (beat-catch "1")
+        (show "**********************************")
+        (show (midi-position))
+    )
+)
+
+(every-frame (beat-test))

@@ -1,0 +1,60 @@
+tunnel-wall
+rotate-local
+midi-ccn
+(vector 1 24)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+rotate-global
+midi-ccn
+(vector 1 25)
+0
+4
+0.1
+0.2
+0.5
+0.8
+tunnel-wall
+gain-a
+midi-ccn
+(vector 1 30)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+gain-b
+midi-ccn
+(vector 1 31)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+max-size
+midi-ccn
+(vector 1 26)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+scale-gh-coeff
+midi-ccn
+(vector 1 27)
+0
+4
+0.2
+0.4
+0.6
+1.0

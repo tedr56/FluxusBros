@@ -1,0 +1,140 @@
+BANK-PAD-NOTE-1
+Korg
+note
+(vector 1 48)
+(send god set-crossfader-visu #:visu "mur" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-2
+Korg
+note
+(vector 1 49)
+(send god set-crossfader-visu #:visu "tennis" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-3
+Korg
+note
+(vector 1 50)
+(send god set-crossfader-visu #:visu "tunnel-wall" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-4
+Korg
+note
+(vector 1 51)
+(send god set-crossfader-visu #:visu "bully" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-5
+Korg
+note
+(vector 1 52)
+(send god set-crossfader-visu #:visu "spectre" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-6
+Korg
+note
+(vector 1 53)
+(send god set-crossfader-visu #:visu "vortex" #:player "Korg" #:auto #t)
+(void)
+#f
+BANK-PAD-NOTE-7
+Korg
+note
+(vector 1 54)
+(send god set-crossfader-visu #:visu "beat-sphere" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-8
+Korg
+note
+(vector 1 55)
+(send god set-crossfader-visu #:visu "space-bpm" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-9
+Korg
+note
+(vector 1 56)
+(send god set-crossfader-visu #:visu "mury" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-10
+Korg
+note
+(vector 1 57)
+(send god set-crossfader-visu #:visu "dancing-cubes" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-11
+Korg
+note
+(vector 1 58)
+(send god set-crossfader-visu #:visu "growing-cubes" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-12
+Korg
+note
+(vector 1 59)
+(send god set-crossfader-visu #:visu "wassup" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-13
+Korg
+note
+(vector 1 60)
+(send god set-crossfader-visu #:visu "circle" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-14
+Korg
+note
+(vector 1 61)
+(send god set-crossfader-visu #:visu "valley" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-14
+Korg
+note
+(vector 1 62)
+(send god set-crossfader-visu #:visu "foret" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-56
+Korg
+note
+(vector 1 63)
+(send god set-crossfader-visu #:visu "planets" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-17
+Korg
+midi-ccn
+(vector 1 32)
+(send god set-crossfader-visu #:visu "equal_simple" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-18
+Korg
+midi-ccn
+(vector 1 33)
+(send god set-crossfader-visu #:visu "equal_sym" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-19
+Korg
+midi-ccn
+(vector 1 34)
+(send god set-crossfader-visu #:visu "equal_grd" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-20
+Korg
+midi-ccn
+(vector 1 35)
+(send god set-crossfader-visu #:visu "equal_basse" #:player "Korg")
+(void)
+#f

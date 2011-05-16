@@ -1,0 +1,140 @@
+BANK-1-1-VMX
+VMX
+midi-ccn
+(vector 2 77)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 801 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 801 #:bank #t #:level 1)
+#f
+BANK-1-2-VMX
+VMX
+midi-ccn
+(vector 2 37)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 801 #:bank #t #:level 2)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 801 #:bank #t #:level 2)
+#f
+BANK-1-3-VMX
+VMX
+midi-ccn
+(vector 2 72)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 801 #:bank #t #:level 3)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 801 #:bank #t #:level 3)
+#f
+BANK-1-4-VMX
+VMX
+midi-ccn
+(vector 2 32)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 801 #:bank #t #:level 4)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 801 #:bank #t #:level 4)
+#f
+BANK-2-1-VMX
+VMX
+midi-ccn
+(vector 2 67)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 802 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 802 #:bank #t #:level 1)
+#f
+BANK-2-2-VMX
+VMX
+midi-ccn
+(vector 2 27)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 802 #:bank #t #:level 2)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 802 #:bank #t #:level 2)
+#f
+BANK-2-3-VMX
+VMX
+midi-ccn
+(vector 2 62)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 802 #:bank #t #:level 3)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 802 #:bank #t #:level 3)
+#f
+BANK-2-4-VMX
+VMX
+midi-ccn
+(vector 2 22)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 802 #:bank #t #:level 4)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 802 #:bank #t #:level 4)
+#f
+BANK-3-1-VMX
+VMX
+midi-ccn
+(vector 2 57)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 803 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 803 #:bank #t #:level 1)
+#f
+BANK-3-2-VMX
+VMX
+midi-ccn
+(vector 2 17)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 803 #:bank #t #:level 2)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 803 #:bank #t #:level 2)
+#f
+BANK-3-3-VMX
+VMX
+midi-ccn
+(vector 2 52)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 803 #:bank #t #:level 3)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 803 #:bank #t #:level 3)
+#f
+BANK-3-4-VMX
+VMX
+midi-ccn
+(vector 2 12)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 803 #:bank #t #:level 4)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 803 #:bank #t #:level 4)
+#f
+BANK-4-1-VMX
+VMX
+midi-ccn
+(vector 2 47)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 804 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 804 #:bank #t #:level 1)
+#f
+BANK-4-2-VMX
+VMX
+midi-ccn
+(vector 2 7)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 804 #:bank #t #:level 2)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 804 #:bank #t #:level 2)
+#f
+BANK-4-3-VMX
+VMX
+midi-ccn
+(vector 2 42)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 804 #:bank #t #:level 3)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 804 #:bank #t #:level 3)
+#f
+BANK-4-4-VMX
+VMX
+midi-ccn
+(vector 2 2)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 804 #:bank #t #:level 4)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 804 #:bank #t #:level 4)
+#f
+BANK-5-1-VMX
+VMX
+midi-ccn
+(vector 2 83)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 805 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 805 #:bank #t #:level 1)
+#f
+BANK-5-2-VMX
+VMX
+midi-ccn
+(vector 2 73)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 805 #:bank #t #:level 2)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 805 #:bank #t #:level 2)
+#f
+BANK-5-3-VMX
+VMX
+midi-ccn
+(vector 2 63)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 805 #:bank #t #:level 3)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 805 #:bank #t #:level 3)
+#f
+BANK-5-4-VMX
+VMX
+midi-ccn
+(vector 2 53)
+(send god set-crossfader-launch #:player "VMX" #:crossfader 805 #:bank #t #:level 4)
+(send god set-crossfader-stop #:player "VMX" #:crossfader 805 #:bank #t #:level 4)
+#f

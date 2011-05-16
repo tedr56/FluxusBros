@@ -1,0 +1,49 @@
+WAIT-FOCUS-KORG
+Korg
+midi-ccn
+(vector 1 40)
+(send god set-focus #:player "Korg")
+(void)
+#f
+WAIT-FOCUS-KORG-2
+Korg
+midi-ccn
+(vector 1 42)
+(send god set-focus #:player "Korg")
+(void)
+#f
+LOAD-TRIGGER-KB-KORG
+Korg
+kbs
+104
+(load "load-config")
+(void)
+#f
+SAVE-CONTROLS-KB-KORG
+Korg
+kbs
+105
+(send god save-controls-on-focus #:player "Korg")
+(void)
+#f
+GET-FOCUS-KORG-FROM-VMX
+Korg
+midi-ccn
+(vector 1 39)
+(send god set-focus-on-player #:player "Korg" #:player-target "VMX")
+(void)
+#f
+LOAD-TRIGGER-CC-KORG
+Korg
+note
+(vector 0 13)
+(load "load-config")
+(void)
+#f
+SAVE-CONTROLS-CC-KORG
+Korg
+note
+(vector 0 15)
+(send god save-controls-on-focus #:player "Korg")
+(void)
+#f

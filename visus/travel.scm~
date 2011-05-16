@@ -1,0 +1,72 @@
+(clear)
+(define travels (make-hash))
+(define-struct trip (start end speed time0))
+(define
+    (travel
+        id
+        start
+        end
+        speed
+        time0
+    )
+            (let* ((dt (min (/ (- (time) (hash-ref! travels id time0)) speed) 1))
+                  (v
+                    (vadd
+                        start
+                        (vmul
+                            (vsub
+                                end
+                                start)
+                            dt
+                        )
+                    )
+                    )
+                    )
+                (when (= dt 1)
+                    (hash-set! travels id (time))
+                )
+                v
+            )
+)
+
+(define t0 (time))
+
+(define (testy)
+    (with-state
+        (let ((t (travel "testy" (vector -5 0 0) (vector 5 0 0) (mn 0 40 10) t0)))
+;            (show t)
+            (translate t)
+            (rotate (travel "testy-r" (vector 0 0 0) (vector 0 0 -720) (mn 0 40 10) t0))
+            (colour (vector 0 1 0))
+            (draw-cube)
+        )
+    )
+)
+
+;(every-frame (testy))
+
+(define (par id cross)
+    (with-state
+        (let ((t (travel "par" (vector 0 0 0) (vector 1 0 0) 2 t0)))
+            (scale (vector 5 1 5))
+            (scale 0.2)
+            (colour t)
+            (draw-cylinder)
+        )
+    )
+)
+
+(every-frame (par 1 1))
+
+
+;t0---------t0+speed
+;    Y
+;   t0+time
+;t0
+;dt
+
+;v= d/t
+;d=v/t
+        
+;v=dl/dt
+ 

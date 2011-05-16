@@ -1,0 +1,66 @@
+tunnel-wall
+Bitstream
+max-size
+midi-ccn
+#(3 42)
+0
+-1
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Bitstream
+rotate-global
+midi-ccn
+#(3 41)
+0
+-1
+0.1
+0.2
+0.5
+0.8
+tunnel-wall
+Bitstream
+gain-b
+midi-ccn
+#(3 9)
+0
+-1
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Bitstream
+gain-a
+midi-ccn
+#(3 8)
+0
+-1
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Bitstream
+scale-gh-coeff
+midi-ccn
+#(3 47)
+0
+-1
+0.29921260476112366
+0.4
+0.6
+1.0
+tunnel-wall
+Bitstream
+rotate-local
+midi-ccn
+#(3 40)
+0
+-1
+0.29921260476112366
+0.4
+0.6
+1.0

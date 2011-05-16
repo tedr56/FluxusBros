@@ -1,0 +1,220 @@
+mur
+gain-a
+midi-ccn
+(vector 0 8)
+0
+-1
+0.2
+0.4
+0.6
+0.8
+mur
+blur
+midi-ccn
+(vector 0 10)
+0
+-1
+0
+0
+0.2
+0.3
+mur
+clr-coeff
+midi-ccn
+(vector 0 11)
+0
+-1
+0.1
+0.2
+0.5
+1
+mur
+scale-gh-y-incomplete-coeff
+midi-ccn
+(vector 0 47)
+0
+-1
+0
+0.2
+0.5
+0.8
+mur
+scale-x
+midi-ccn
+(vector 0 43)
+0
+-1
+0.1
+0.5
+0.8
+1
+mur
+scale-x-gh
+midi-ccn
+(vector 0 35)
+0
+-1
+0
+0.1
+0.2
+0.3
+mur
+scale-z
+midi-ccn
+(vector 0 44)
+0
+-1
+0.1
+0.5
+0.8
+1
+mur
+scale-z-gh
+midi-ccn
+(vector 0 36)
+0
+-1
+0
+0.1
+0.2
+0.3
+mur
+trans-x-gh
+midi-ccn
+(vector 0 41)
+0
+-1
+0
+0.1
+0.2
+0.3
+mur
+trans-x-gh-freq
+midi-ccn
+(vector 0 33)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+trans-y-gh
+midi-ccn
+(vector 0 46)
+0
+-1
+0
+0.1
+0.2
+0.3
+mur
+trans-y-gh-freq
+midi-ccn
+(vector 0 38)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+R-L-X
+midi-ccn
+(vector 0 42)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+R-L-Y
+midi-ccn
+(vector 0 40)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+R-L-Z
+midi-ccn
+(vector 0 45)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+blok-R-L-X
+midi-ccn
+(vector 0 18)
+0
+-1
+0
+0
+0
+1
+mur
+blok-R-L-Y
+midi-ccn
+(vector 0 32)
+0
+-1
+0
+0
+0
+1
+mur
+blok-R-L-Z
+midi-ccn
+(vector 0 21)
+0
+-1
+0
+0
+0
+1
+mur
+R-G-X
+midi-ccn
+(vector 0 34)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+R-G-Y
+midi-ccn
+(vector 0 37)
+0
+-1
+0
+0.33
+0.66
+1
+mur
+blok-R-G-X
+midi-ccn
+(vector 0 26)
+0
+-1
+0
+0
+0
+1
+mur
+blok-R-G-Y
+midi-ccn
+(vector 0 37)
+0
+-1
+0
+0
+0
+1
