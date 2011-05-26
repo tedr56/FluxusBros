@@ -161,7 +161,7 @@
         (blur (+ (c "blur" id) 0.01))
         (let
             (
-                (rayonG (c "rayon-G" id #:coeff 10))
+                (rayonG (c "rayon-G" id #:coeff 20))
                 (angleG (c "angle-G" id #:coeff pi))
                 (g (* (c "gain-a" id #:coeff 50) (c "gain-b" id)))
                 (taille (c "taille" id #:coeff 2))
