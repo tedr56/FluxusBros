@@ -1,141 +1,148 @@
-BANK-PAD-CC-1
+BANK-PAD-CC-1-1
 Korg
 midi-ccn
 (vector 1 48)
 (send god set-crossfader-launch #:visu "mur" #:player "Korg" #:crossfader 148 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 148 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-2
+BANK-PAD-CC-1-2
 Korg
 midi-ccn
 (vector 1 49)
 (send god set-crossfader-launch #:visu "tennis" #:player "Korg" #:crossfader 149 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 149 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-3
+BANK-PAD-CC-1-3
 Korg
 midi-ccn
 (vector 1 50)
 (send god set-crossfader-launch #:visu "tunnel-wall" #:player "Korg" #:crossfader 150 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 150 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-4
+BANK-PAD-CC-1-4
 Korg
 midi-ccn
 (vector 1 51)
 (send god set-crossfader-launch #:visu "bully" #:player "Korg" #:crossfader 151 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 151 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-5
+BANK-PAD-CC-1-5
 Korg
 midi-ccn
 (vector 1 52)
 (send god set-crossfader-launch #:visu "spectre" #:player "Korg" #:crossfader 152 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 152 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-6
+BANK-PAD-CC-1-6
 Korg
 midi-ccn
 (vector 1 53)
 (send god set-crossfader-launch #:visu "vortex" #:player "Korg" #:crossfader 153 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 153 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-7
+BANK-PAD-CC-1-7
 Korg
 midi-ccn
 (vector 1 54)
 (send god set-crossfader-launch #:visu "beat-sphere" #:player "Korg" #:crossfader 154 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 154 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-8
+BANK-PAD-CC-1-8
 Korg
 midi-ccn
 (vector 1 55)
 (send god set-crossfader-launch #:visu "space-bpm" #:player "Korg" #:crossfader 155 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 155 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-9
+BANK-PAD-CC-1-9
 Korg
 midi-ccn
 (vector 1 56)
 (send god set-crossfader-launch #:visu "shuriken" #:player "Korg" #:crossfader 156 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 156 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-10
+BANK-PAD-CC-1-10
 Korg
 midi-ccn
 (vector 1 57)
 (send god set-crossfader-launch #:visu "dancing-cubes" #:player "Korg" #:crossfader 157 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 157 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-11
+BANK-PAD-CC-1-11
 Korg
 midi-ccn
 (vector 1 58)
 (send god set-crossfader-launch #:visu "growing-cubes" #:player "Korg" #:crossfader 158 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 158 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-12
+BANK-PAD-CC-1-12
 Korg
 midi-ccn
 (vector 1 59)
 (send god set-crossfader-launch #:visu "wassup" #:player "Korg" #:crossfader 159 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 159 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-13
+BANK-PAD-CC-1-13
 Korg
 midi-ccn
 (vector 1 60)
 (send god set-crossfader-launch #:visu "circle" #:player "Korg" #:crossfader 160 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 160 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-14
+BANK-PAD-CC-1-14
 Korg
 midi-ccn
 (vector 1 61)
 (send god set-crossfader-launch #:visu "valley" #:player "Korg" #:crossfader 161 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 161 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-15
+BANK-PAD-CC-1-15
 Korg
 midi-ccn
 (vector 1 62)
 (send god set-crossfader-launch #:visu "foret" #:player "Korg" #:crossfader 162 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 162 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-16
+BANK-PAD-CC-1-16
 Korg
 midi-ccn
 (vector 1 63)
 (send god set-crossfader-launch #:visu "planets" #:player "Korg" #:crossfader 163 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 163 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-17
+BANK-PAD-CC-2-1
 Korg
 midi-ccn
 (vector 1 64)
 (send god set-crossfader-launch #:visu "equal_simple" #:player "Korg" #:crossfader 164 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 164 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-18
+BANK-PAD-CC-2-2
 Korg
 midi-ccn
 (vector 1 65)
 (send god set-crossfader-launch #:visu "equal_sym" #:player "Korg" #:crossfader 165 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 165 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-19
+BANK-PAD-CC-2-3
 Korg
 midi-ccn
 (vector 1 66)
 (send god set-crossfader-launch #:visu "equal_grd" #:player "Korg" #:crossfader 166 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 166 #:bank #t #:level 1)
 #f
-BANK-PAD-CC-20
+BANK-PAD-CC-2-4
 Korg
 midi-ccn
 (vector 1 67)
 (send god set-crossfader-launch #:visu "equal_basse" #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
+#f
+BANK-PAD-CC-2-5
+Korg
+midi-ccn
+(vector 1 68)
+(send god set-crossfader-launch #:visu "hyperbol" #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
 #f
 
