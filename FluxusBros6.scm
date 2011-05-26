@@ -1290,17 +1290,34 @@
                             (
 ;                                (get-control-actual (send C get-control))
                                 (get-control-actual (get-control Name))
+                                (get-default-value-lambda
+                                    (lambda (n)
+                                        (let
+                                            (
+                                                (value-default (visu-search-control #:player player Name n (send C get-control-default n #:player player) get-control-actual level-player))
+                                            )
+                                            (cond
+                                                ((number? value-default)
+                                                    (real->double-flonum value-default)
+                                                )
+                                                ((string? value-default)
+                                                    (real->double-flonum (string->number value-default))
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
                                 (default-value-1
-                                    (visu-search-control #:player player Name 1 (send C get-control-default 1 #:player player) get-control-actual level-player)
+                                    (get-default-value-lambda 1)
                                 )
                                 (default-value-2
-                                    (visu-search-control #:player player Name 2 (send C get-control-default 2 #:player player) get-control-actual level-player)
+                                    (get-default-value-lambda 1)
                                 )
                                 (default-value-3
-                                    (visu-search-control #:player player Name 3 (send C get-control-default 3 #:player player) get-control-actual level-player)
+                                    (get-default-value-lambda 1)
                                 )
                                 (default-value-4
-                                    (visu-search-control #:player player Name 4 (send C get-control-default 4 #:player player) get-control-actual level-player)
+                                    (get-default-value-lambda 1)
                                 )
                             )
                             (hash-set! controls-default-temp Name (list default-value-1 default-value-2 default-value-3 default-value-4))
