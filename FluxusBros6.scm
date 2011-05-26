@@ -1311,13 +1311,13 @@
                                     (get-default-value-lambda 1)
                                 )
                                 (default-value-2
-                                    (get-default-value-lambda 1)
+                                    (get-default-value-lambda 2)
                                 )
                                 (default-value-3
-                                    (get-default-value-lambda 1)
+                                    (get-default-value-lambda 3)
                                 )
                                 (default-value-4
-                                    (get-default-value-lambda 1)
+                                    (get-default-value-lambda 4)
                                 )
                             )
                             (hash-set! controls-default-temp Name (list default-value-1 default-value-2 default-value-3 default-value-4))
