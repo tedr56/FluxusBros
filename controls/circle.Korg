@@ -13,7 +13,7 @@ circle
 Korg
 Rx-2
 fake
-#(2 71)
+#(1 71)
 0
 -1
 0.26771652698516846
@@ -34,7 +34,7 @@ fake
 circle
 Korg
 coeff-color
-midi-ccn
+fake
 #(1 18)
 0
 -1
@@ -166,7 +166,7 @@ fake
 circle
 Korg
 coeff-color3
-midi-ccn
+fake
 #(1 21)
 0
 -1
@@ -210,7 +210,7 @@ fake
 circle
 Korg
 alpha
-midi-ccn
+fake
 #(1 27)
 0
 -1
@@ -221,7 +221,7 @@ midi-ccn
 circle
 Korg
 coeff-d-gh
-midi-ccn
+fake
 #(1 26)
 0
 -1
@@ -254,7 +254,7 @@ fake
 circle
 Korg
 scale-x
-midi-ccn
+fake
 #(1 24)
 0
 -1
@@ -298,7 +298,7 @@ fake
 circle
 Korg
 slave-speed
-midi-ccn
+fake
 #(1 31)
 0
 -1
@@ -353,7 +353,7 @@ fake
 circle
 Korg
 diametre
-midi-ccn
+fake
 #(1 25)
 0.2
 -1
@@ -386,7 +386,7 @@ fake
 circle
 Korg
 scale-y
-midi-ccn
+fake
 #(1 25)
 0
 -1
@@ -397,7 +397,7 @@ midi-ccn
 circle
 Korg
 ncube
-midi-ccn
+fake
 #(1 24)
 0
 -1
@@ -408,7 +408,7 @@ midi-ccn
 circle
 Korg
 scale-z
-midi-ccn
+fake
 #(1 26)
 0
 -1
@@ -431,7 +431,7 @@ circle
 Korg
 Rx-1
 fake
-#(2 81)
+#(1 81)
 0
 -1
 0.20472441613674164
@@ -496,7 +496,7 @@ fake
 circle
 Korg
 master-speed
-midi-ccn
+fake
 #(1 30)
 0
 -1
@@ -607,7 +607,7 @@ circle
 Korg
 prim-select
 fake
-#(2 43)
+#(1 43)
 0
 -1
 0.0
@@ -629,7 +629,7 @@ circle
 Korg
 Rz-1
 fake
-#(2 51)
+#(1 51)
 0
 -1
 0.834645688533783
@@ -694,7 +694,7 @@ fake
 circle
 Korg
 coeff-color2
-midi-ccn
+fake
 #(1 20)
 0
 -1
@@ -705,7 +705,7 @@ midi-ccn
 circle
 Korg
 blur
-midi-ccn
+fake
 #(1 17)
 0
 -1
@@ -738,7 +738,7 @@ fake
 circle
 Korg
 gain
-midi-ccn
+fake
 #(1 16)
 0
 -1
@@ -783,7 +783,7 @@ circle
 Korg
 Rz-2
 fake
-#(2 61)
+#(1 61)
 0
 -1
 0.3700787425041199
@@ -815,7 +815,7 @@ fake
 circle
 Korg
 coeff-color1
-midi-ccn
+fake
 #(1 19)
 0
 -1

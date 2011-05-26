@@ -2,7 +2,7 @@ planets
 Korg
 r-l-y-joystick
 fake
-#(3 6)
+#(1 6)
 0
 -1
 0.0
@@ -24,7 +24,7 @@ planets
 Korg
 r-x
 fake
-#(3 36)
+#(1 36)
 0
 -1
 0.4251968562602997
@@ -35,7 +35,7 @@ planets
 Korg
 coeff-color
 fake
-#(3 11)
+#(1 11)
 0
 -1
 0.30708661675453186
@@ -67,8 +67,8 @@ fake
 planets
 Korg
 gain-b
-fake
-#(3 9)
+ccn
+#(1 17)
 0
 -1
 0.17322835326194763
@@ -90,7 +90,7 @@ planets
 Korg
 r-e-y
 fake
-#(3 27)
+#(1 27)
 0
 -1
 0.34645670652389526
@@ -167,7 +167,7 @@ planets
 Korg
 diametre-centre
 fake
-#(3 31)
+#(1 31)
 0
 -1
 0.03937007859349251
@@ -188,8 +188,8 @@ fake
 planets
 Korg
 color-gain
-fake
-#(1 11)
+ccn
+#(1 19)
 0
 -1
 0.9370078444480896
@@ -199,8 +199,8 @@ fake
 planets
 Korg
 scale-x
-fake
-#(3 40)
+ccn
+#(1 24)
 0
 -1
 1.0
@@ -232,8 +232,8 @@ fake
 planets
 Korg
 nb-element-element
-fake
-#(3 46)
+ccn
+#(1 30)
 0
 -1
 0.16535432636737823
@@ -277,7 +277,7 @@ planets
 Korg
 opacity-c
 fake
-#(3 12)
+#(1 12)
 0
 -1
 0.23622047901153564
@@ -298,8 +298,8 @@ fake
 planets
 Korg
 r-e-time
-fake
-#(3 43)
+ccn
+#(1 27)
 0
 -1
 0.4173228442668915
@@ -309,8 +309,8 @@ fake
 planets
 Korg
 scale-y
-fake
-#(3 41)
+ccn
+#(1 25)
 0
 -1
 0.031496062874794006
@@ -331,8 +331,8 @@ midi-ccn
 planets
 Korg
 scale-z
-fake
-#(3 42)
+ccn
+#(1 26)
 0
 -1
 1.0
@@ -354,7 +354,7 @@ planets
 Korg
 r-e-z
 fake
-#(3 19)
+#(1 19)
 0
 -1
 0.4724409580230713
@@ -365,7 +365,7 @@ planets
 Korg
 r-l-x
 fake
-#(3 32)
+#(1 32)
 0
 -1
 0.0
@@ -387,7 +387,7 @@ planets
 Korg
 r-y
 fake
-#(3 28)
+#(1 28)
 0
 -1
 0.6456692814826965
@@ -475,7 +475,7 @@ planets
 Korg
 r-l-z-joystick
 fake
-#(3 7)
+#(1 7)
 0
 -1
 0.0
@@ -497,7 +497,7 @@ planets
 Korg
 r-l-kaos-x-freq
 fake
-#(3 16)
+#(1 16)
 0
 -1
 0.8
@@ -529,8 +529,8 @@ midi-ccn
 planets
 Korg
 blur
-fake
-#(3 10)
+ccn
+#(1 26)
 0
 -1
 0.3700787425041199
@@ -574,7 +574,7 @@ planets
 Korg
 gain-a
 fake
-#(3 8)
+#(1 8)
 0
 -1
 0.23622047901153564
@@ -596,7 +596,7 @@ planets
 Korg
 r-l-kaos-y-freq
 fake
-#(3 17)
+#(1 17)
 0
 -1
 0.8
@@ -607,7 +607,7 @@ planets
 Korg
 r-l-kaos-y-coeff
 fake
-#(3 25)
+#(1 25)
 0
 -1
 0.0
@@ -618,7 +618,7 @@ planets
 Korg
 r-l-kaos-z-freq
 fake
-#(3 18)
+#(1 18)
 0
 -1
 0.8
@@ -629,7 +629,7 @@ planets
 Korg
 color-coeff-sphere
 fake
-#(3 11)
+#(1 11)
 0
 -1
 0.30708661675453186
@@ -640,7 +640,7 @@ planets
 Korg
 r-e-x
 fake
-#(3 35)
+#(1 35)
 0
 -1
 0.4566929042339325
@@ -695,7 +695,7 @@ planets
 Korg
 r-z
 fake
-#(3 20)
+#(1 20)
 0
 -1
 0.6929134130477905
@@ -761,7 +761,7 @@ planets
 Korg
 scale-sphere-a
 fake
-#(3 38)
+#(1 38)
 0
 -1
 0.0
@@ -870,8 +870,8 @@ fake
 planets
 Korg
 nb-element
-fake
-#(3 39)
+ccn
+#(1 23)
 0
 -1
 0.3779527544975281
@@ -882,7 +882,7 @@ planets
 Korg
 scale-sphere-gh
 fake
-#(3 30)
+#(1 30)
 0
 -1
 0.0
@@ -948,7 +948,7 @@ planets
 Korg
 scale-z-gh
 fake
-#(3 23)
+#(1 22)
 0
 -1
 0.031496062874794006
@@ -959,7 +959,7 @@ planets
 Korg
 nb-cube
 fake
-#(3 47)
+#(1 31)
 0
 -1
 0.22834645211696625
@@ -1003,7 +1003,7 @@ planets
 Korg
 r-l-z
 fake
-#(3 34)
+#(1 34)
 0
 -1
 1.0
@@ -1047,7 +1047,7 @@ planets
 Korg
 r-l-kaos-x-coeff
 fake
-#(3 24)
+#(1 24)
 0
 -1
 0.023622047156095505
@@ -1090,8 +1090,8 @@ fake
 planets
 Korg
 r-speed
-fake
-#(3 44)
+ccn
+#(1 28)
 0
 -1
 0.0
@@ -1102,7 +1102,7 @@ planets
 Korg
 r-l-kaos-z-coeff
 fake
-#(3 26)
+#(1 26)
 0
 -1
 0.0
@@ -1135,7 +1135,7 @@ planets
 Korg
 r-l-y
 fake
-#(3 33)
+#(1 33)
 0
 -1
 0.0

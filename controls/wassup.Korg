@@ -1,7 +1,7 @@
 wassup
 Korg
 rayon-3
-midi-ccn
+fake
 #(1 39)
 0
 -1
@@ -12,8 +12,8 @@ midi-ccn
 wassup
 Korg
 Rx-2
-midi-ccn
-#(1 17)
+fake
+#(1 23)
 0
 -1
 1.0
@@ -23,7 +23,7 @@ midi-ccn
 wassup
 Korg
 coeff-gain-3
-midi-ccn
+fake
 #(1 37)
 0
 -1
@@ -34,8 +34,8 @@ midi-ccn
 wassup
 Korg
 angle-G
-midi-ccn
-#(1 43)
+ccn
+#(1 25)
 0
 -1
 1.0
@@ -45,7 +45,7 @@ midi-ccn
 wassup
 Korg
 color-1
-midi-ccn
+fake
 #(1 20)
 0
 -1
@@ -56,8 +56,8 @@ midi-ccn
 wassup
 Korg
 rayon-G
-midi-ccn
-#(1 47)
+ccn
+#(1 24)
 0
 -1
 0.34645670652389526
@@ -67,7 +67,7 @@ midi-ccn
 wassup
 Korg
 color-2
-midi-ccn
+fake
 #(1 28)
 0
 -1
@@ -78,7 +78,7 @@ midi-ccn
 wassup
 Korg
 rayon-2
-midi-ccn
+fake
 #(1 31)
 0
 -1
@@ -89,7 +89,7 @@ midi-ccn
 wassup
 Korg
 size-cube
-midi-ccn
+fake
 #(1 40)
 0
 -1
@@ -100,7 +100,7 @@ midi-ccn
 wassup
 Korg
 angle-1
-midi-ccn
+fake
 #(1 19)
 0
 -1
@@ -111,7 +111,7 @@ midi-ccn
 wassup
 Korg
 angle-2
-midi-ccn
+fake
 #(1 27)
 0
 -1
@@ -122,7 +122,7 @@ midi-ccn
 wassup
 Korg
 cube-size-y
-midi-ccn
+fake
 #(1 41)
 0
 -1
@@ -133,7 +133,7 @@ midi-ccn
 wassup
 Korg
 prim-select
-midi-ccn
+fake
 #(1 34)
 0
 -1
@@ -144,7 +144,7 @@ midi-ccn
 wassup
 Korg
 angle-3
-midi-ccn
+fake
 #(1 35)
 0
 -1
@@ -155,7 +155,7 @@ midi-ccn
 wassup
 Korg
 rayon-1
-midi-ccn
+fake
 #(1 23)
 0
 -1
@@ -166,7 +166,7 @@ midi-ccn
 wassup
 Korg
 Rz-2
-midi-ccn
+fake
 #(1 25)
 0
 -1
@@ -177,8 +177,8 @@ midi-ccn
 wassup
 Korg
 color-gain
-midi-ccn
-#(1 44)
+ccn
+#(1 26)
 0
 -1
 0.3937007784843445
@@ -188,7 +188,7 @@ midi-ccn
 wassup
 Korg
 color-3
-midi-ccn
+fake
 #(1 36)
 0
 -1
@@ -199,7 +199,7 @@ midi-ccn
 wassup
 Korg
 frequence-1
-midi-ccn
+fake
 #(1 22)
 0
 -1
@@ -210,8 +210,8 @@ midi-ccn
 wassup
 Korg
 blur
-midi-ccn
-#(1 10)
+ccn
+#(1 17)
 0
 -1
 1.0
@@ -221,8 +221,8 @@ midi-ccn
 wassup
 Korg
 smoothing-bias
-midi-ccn
-#(1 11)
+ccn
+#(1 18)
 0
 -1
 0.8
@@ -232,8 +232,8 @@ midi-ccn
 wassup
 Korg
 coeff-gain-1
-midi-ccn
-#(1 21)
+ccn
+#(1 16)
 0
 -1
 1.0
@@ -243,7 +243,7 @@ midi-ccn
 wassup
 Korg
 cube-size-z
-midi-ccn
+fake
 #(1 32)
 0
 -1
@@ -254,8 +254,8 @@ midi-ccn
 wassup
 Korg
 taille
-midi-ccn
-#(1 33)
+ccn
+#(1 31)
 0
 -1
 0.2
@@ -265,7 +265,7 @@ midi-ccn
 wassup
 Korg
 Rz-1
-midi-ccn
+fake
 #(1 24)
 0
 -1
@@ -276,7 +276,7 @@ midi-ccn
 wassup
 Korg
 frequence-2
-midi-ccn
+fake
 #(1 30)
 0
 -1
@@ -287,8 +287,8 @@ midi-ccn
 wassup
 Korg
 cube-size-x
-midi-ccn
-#(1 24)
+ccn
+#(1 30)
 0
 -1
 0.8267716765403748
@@ -298,7 +298,7 @@ midi-ccn
 wassup
 Korg
 frequence-3
-midi-ccn
+fake
 #(1 38)
 0
 -1
@@ -309,7 +309,7 @@ midi-ccn
 wassup
 Korg
 gain-a
-midi-ccn
+fake
 #(1 8)
 0
 -1
@@ -320,7 +320,7 @@ midi-ccn
 wassup
 Korg
 gain-b
-midi-ccn
+fake
 #(1 9)
 0
 -1
@@ -331,8 +331,8 @@ midi-ccn
 wassup
 Korg
 Rx-1
-midi-ccn
-#(1 16)
+fake
+#(1 22)
 0
 -1
 1.0
@@ -342,7 +342,7 @@ midi-ccn
 wassup
 Korg
 coeff-gain-2
-midi-ccn
+fake
 #(1 29)
 0
 -1
