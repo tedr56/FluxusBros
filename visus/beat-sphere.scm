@@ -93,7 +93,7 @@
                     (let
                         (
                             (first-swap
-                                (* (quotient (floor (* (flxrnd) (pdata-size))) 3) 3)
+                                (inexact->exact (* (quotient (floor (* (flxrnd) (pdata-size))) 3) 3))
                             )
                         )
                         (cond
@@ -157,5 +157,6 @@
                 "c"
             )
         )
+        (rotate (vmul (vector (* 1.2 (delta)) (* 1.05 (delta)) (* 0.985 (delta))) (c "speed" id #:coeff 50)))
     )
 )
