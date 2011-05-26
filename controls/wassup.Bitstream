@@ -1,7 +1,7 @@
 wassup
 Bitstream
 rayon-3
-midi-ccn
+ccn
 #(3 39)
 0
 -1
@@ -12,8 +12,8 @@ midi-ccn
 wassup
 Bitstream
 Rx-2
-midi-ccn
-#(2 17)
+ccn
+#(3 17)
 0
 -1
 1
@@ -23,7 +23,7 @@ midi-ccn
 wassup
 Bitstream
 coeff-gain-3
-midi-ccn
+ccn
 #(3 37)
 0
 -1
@@ -34,18 +34,18 @@ midi-ccn
 wassup
 Bitstream
 angle-G
-midi-ccn
+ccn
 #(3 43)
 0
 -1
-0.5
+1
 0.8
 1
 1
 wassup
 Bitstream
 color-1
-midi-ccn
+ccn
 #(3 20)
 0
 -1
@@ -56,18 +56,18 @@ midi-ccn
 wassup
 Bitstream
 rayon-G
-midi-ccn
+ccn
 #(3 47)
 0
 -1
-0.6220472455024719
+1
 1
 1
 1
 wassup
 Bitstream
 color-2
-midi-ccn
+ccn
 #(3 28)
 0
 -1
@@ -78,7 +78,7 @@ midi-ccn
 wassup
 Bitstream
 rayon-2
-midi-ccn
+ccn
 #(3 31)
 0
 -1
@@ -89,7 +89,7 @@ midi-ccn
 wassup
 Bitstream
 size-cube
-midi-ccn
+ccn
 #(3 40)
 0
 -1
@@ -100,7 +100,7 @@ midi-ccn
 wassup
 Bitstream
 angle-1
-midi-ccn
+ccn
 #(3 19)
 0
 -1
@@ -111,7 +111,7 @@ midi-ccn
 wassup
 Bitstream
 angle-2
-midi-ccn
+ccn
 #(3 27)
 0
 -1
@@ -122,7 +122,7 @@ midi-ccn
 wassup
 Bitstream
 cube-size-y
-midi-ccn
+ccn
 #(3 41)
 0
 -1
@@ -133,8 +133,8 @@ midi-ccn
 wassup
 Bitstream
 prim-select
-midi-ccn
-#(2 32)
+ccn
+#(3 34)
 0
 -1
 0.0
@@ -144,7 +144,7 @@ midi-ccn
 wassup
 Bitstream
 angle-3
-midi-ccn
+ccn
 #(3 35)
 0
 -1
@@ -155,7 +155,7 @@ midi-ccn
 wassup
 Bitstream
 rayon-1
-midi-ccn
+ccn
 #(3 23)
 0
 -1
@@ -166,8 +166,8 @@ midi-ccn
 wassup
 Bitstream
 Rz-2
-midi-ccn
-#(2 25)
+ccn
+#(3 25)
 0
 -1
 1
@@ -177,18 +177,18 @@ midi-ccn
 wassup
 Bitstream
 color-gain
-midi-ccn
+ccn
 #(3 44)
 0
 -1
-0.31496062874794006
+1
 1
 1
 1
 wassup
 Bitstream
 color-3
-midi-ccn
+ccn
 #(3 36)
 0
 -1
@@ -199,8 +199,8 @@ midi-ccn
 wassup
 Bitstream
 frequence-1
-midi-ccn
-#(3 19)
+ccn
+#(3 22)
 0
 -1
 2
@@ -210,7 +210,7 @@ midi-ccn
 wassup
 Bitstream
 blur
-midi-ccn
+ccn
 #(3 10)
 0
 -1
@@ -221,7 +221,7 @@ midi-ccn
 wassup
 Bitstream
 smoothing-bias
-midi-ccn
+ccn
 #(3 11)
 0
 -1
@@ -232,7 +232,7 @@ midi-ccn
 wassup
 Bitstream
 coeff-gain-1
-midi-ccn
+ccn
 #(3 21)
 0
 -1
@@ -243,7 +243,7 @@ midi-ccn
 wassup
 Bitstream
 cube-size-z
-midi-ccn
+ccn
 #(3 32)
 0
 -1
@@ -254,7 +254,7 @@ midi-ccn
 wassup
 Bitstream
 taille
-midi-ccn
+ccn
 #(3 33)
 0
 -1
@@ -265,8 +265,8 @@ midi-ccn
 wassup
 Bitstream
 Rz-1
-midi-ccn
-#(2 24)
+ccn
+#(3 24)
 0
 -1
 1
@@ -276,8 +276,8 @@ midi-ccn
 wassup
 Bitstream
 frequence-2
-midi-ccn
-#(3 27)
+ccn
+#(3 30)
 0
 -1
 8
@@ -287,7 +287,7 @@ midi-ccn
 wassup
 Bitstream
 cube-size-x
-midi-ccn
+ccn
 #(3 24)
 0
 -1
@@ -298,8 +298,8 @@ midi-ccn
 wassup
 Bitstream
 frequence-3
-midi-ccn
-#(3 7)
+ccn
+#(3 38)
 0
 -1
 10
@@ -309,18 +309,18 @@ midi-ccn
 wassup
 Bitstream
 gain-a
-midi-ccn
+ccn
 #(3 8)
 0
 -1
-0.05511811003088951
+1
 0.5
 1
 1
 wassup
 Bitstream
 gain-b
-midi-ccn
+ccn
 #(3 9)
 0
 -1
@@ -331,8 +331,8 @@ midi-ccn
 wassup
 Bitstream
 Rx-1
-midi-ccn
-#(2 16)
+ccn
+#(3 16)
 0
 -1
 1
@@ -342,7 +342,7 @@ midi-ccn
 wassup
 Bitstream
 coeff-gain-2
-midi-ccn
+ccn
 #(3 29)
 0
 -1
