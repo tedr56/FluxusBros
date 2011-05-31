@@ -14,7 +14,8 @@
 ; (ok)  implement : save-controls
 
 ;(current-directory "/Users/TchernoBob/Fluxus/FluxusBros6")
-(current-directory "/home/ted/Fluxus/FluxusBros6")
+;(current-directory "/home/ted/Fluxus/FluxusBros6")
+(current-directory "/home/ted/git/FluxusBros")
 
 (require "vjbros.scm")
 (require scheme/class)
