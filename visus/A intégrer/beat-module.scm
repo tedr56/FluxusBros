@@ -1,5 +1,5 @@
 (module beat-module racket
-    (require fluxus-017/fluxus-midi)
+    (require fluxus-018/fluxus-midi)
     (require "vjbros.scm")
     (provide
         beat-catch

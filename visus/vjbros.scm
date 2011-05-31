@@ -1,7 +1,7 @@
 (module vjbros racket
-    (require fluxus-017/fluxus-midi)
-    (require fluxus-017/fluxus)
-    (require fluxus-017/time)
+    (require fluxus-018/fluxus-midi)
+    (require fluxus-018/fluxus)
+    (require fluxus-018/time)
     (require scheme/math)
     (provide
         midi-connect
