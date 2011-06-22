@@ -1,2 +1,0 @@
-(show (ls-tasks))
-(rm-all-tasks)
