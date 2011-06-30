@@ -30,6 +30,13 @@
 (blur 0)
 (smoothing-bias 0.7)
 
+(define OSC-SOURCE "3333")
+(define osc-enable #t)
+
+(when osc-enable
+    (osc-source OSC-SOURCE)
+)
+
 (define normal-var #t)
 (define (show-n text . other)
 ;(show text)
@@ -1884,7 +1891,63 @@
     )
 )
 
+(define Control-OSC%
+    (class* Control% (Control-Interface)
+        (inherit-field
+            address
+        )
+        (field
+            (value 1)
+        )
+        (define/public (get-osc-value address (value #f))
+            (let
+                (
+                    (first-osc (osc 0))
+                )
+                (cond
+                    (first-osc
+                        (get-osc address first-osc)
+                    )
+                    (else
+                        value
+                    )
+                )
+            )
+        )
+        (define/override (get-control-mode)
+            (cond
+                ((osc-msg address)
+                    (let ((result (get-osc address)))
+                        (cond
+                            ((check-type result)
+                                (set! value (get-osc address))
+                            )
+                            (else
+                                value
+                            )
+                        )
+                    )
+                )
+                (else
+                    value
+                )
+            )
+        )
+        (define/public (check-type result)
+            #t
+        )
+        (super-new)
+    )
+)
 
+(define Control-OSC-String%
+    (class* Control-OSC% (Control-Interface)
+        (define/override (check-type result)
+            (string? result)
+        )
+        (super-new)
+    )
+)
 
 
 
