@@ -50,7 +50,7 @@ mapping-on-channel (experimental)
 and add the next triggers to the below.
 The different type of triggers are :
  midi note : note
- midi ccn : midi-ccn
+ midi ccn : midi-ccn or ccn
  keyboard normal keys : kb
  keyboard special keys : kbs
  osc : osc
