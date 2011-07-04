@@ -31,7 +31,7 @@
 (smoothing-bias 0.7)
 
 (define OSC-SOURCE "3333")
-(define osc-enable #t)
+(define osc-enable #f)
 
 (when osc-enable
     (osc-source OSC-SOURCE)
@@ -1455,7 +1455,10 @@
                     (new Control-Keyboard-Special%)
                 )
                 ((equal? control "osc")
-                    (new Control-Osc%)
+                    (new Control-OSC%)
+                )
+                ((equal? control "osc-s")
+                    (new Control-OSC-String%)
                 )
                 ((equal? control "fake")
                     (new Control-Fake%)
@@ -1915,12 +1918,14 @@
             )
         )
         (define/override (get-control-mode)
+            (show address)
+            (show (string? address))
             (cond
                 ((osc-msg address)
-                    (let ((result (get-osc address)))
+                    (let ((result (get-osc-value address)))
                         (cond
                             ((check-type result)
-                                (set! value (get-osc address))
+                                (set! value result)
                             )
                             (else
                                 value
@@ -2452,7 +2457,14 @@
             
 (define god (new Crossfaders%))
 (define (c name id #:type (type 'linear) #:coeff (coefficient 1) #:toggle (toggle #f))
-    (* (send god get-control name id) coefficient)
+    (cond
+        ((equal? type 'linear)
+            (* (send god get-control name id) coefficient)
+        )
+        ((equal? type 'string)
+            (send god get-control name id)
+        )
+    )
 )
 
 
