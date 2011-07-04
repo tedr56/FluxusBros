@@ -138,3 +138,18 @@ note
 (send god set-crossfader-visu #:visu "equal_basse" #:player "Korg")
 (void)
 #f
+BANK-PAD-NOTE-2-5
+Korg
+note
+(vector 1 36)
+(send god set-crossfader-visu #:visu "corner" #:player "Korg")
+(void)
+#f
+BANK-PAD-NOTE-2-6
+Korg
+note
+(vector 1 37)
+(send god set-crossfader-visu #:visu "mozaik" #:player "Korg")
+(void)
+#f
+
