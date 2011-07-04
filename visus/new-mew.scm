@@ -91,7 +91,6 @@
                                     )
                                 )
                                 (pdata-set "vel" n velocity)
-                                )
                             )
                             (ungrab)
                             (push)
