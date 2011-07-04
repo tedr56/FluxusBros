@@ -1,0 +1,7 @@
+VISU-LOGOS-OSC-S-TEST
+Test
+kbs
+1
+(send god set-crossfader-launch #:visu "logos" #:player "Test" #:crossfader 1 #:bank #t #:level 1 #:swap #t)
+(void)
+#f
