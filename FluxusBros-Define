@@ -1,0 +1,206 @@
+(require scheme/class)
+(define debug-var #f)
+(define (show-d text)
+(define Crossfaders-Interface
+    (interface ()
+;Crossfaders-public-interface
+;Crossfaders-private-interface
+(define Crossfaders%
+    (class* object% (Crossfaders-Interface)
+        (define/public (get-control name id)        ; recuperation de la valeur du control - appel get-control du crossfader
+        (define/private (get-crossfader-from-id id)     ; recuperation du crossfader correspondant a l'Id du visu
+        (define/public (set-focus #:player player #:crossfader (cross #f) #:bank (bank #f) #:level (level #f))     ; attribution du focus au crossfader/level
+        (define/private (set-crossfader-player #:player player #:crossfader cross #:level (level #f))        ; ajoute le player au crossfader
+        (define/private (unset-crossfader-player #:player player #:crossfader cross #:level (level #f))
+        (define/private (get-crossfader-from-player #:player player #:crossfader (cross #f))
+        (define/private (get-crossfader cross)
+        (define/private (crossfader-check #:crossfader crossfader #:player player #:bank (bank #f))
+        (define/private (set-crossfader-access #:crossfader cross #:player player)
+        (define/private (get-crossfader-access #:crossfader cross #:player player)
+        (define/public (set-crossfader-launch #:visu (visu (void)) #:crossfader (cross #f) #:player player #:mode (mode #f) #:velocity (velocity 1) #:level (level #f) #:bank (bank #f) #:auto (auto #f) #:swap (swap #f))
+        (define/public (set-crossfader-stop #:crossfader (cross #f) #:player player #:level (level #f) #:bank (bank #f) #:force (force #f))
+        (define/private (crossfader-create #:crossfader cross #:player player #:bank (bank #f))
+        (define/private (crossfader-remove #:crossfader cross #:player player #:bank (bank #f) #:level (level 1))
+        (define/private (set-crossfader-to-locked #:crossfader (cross #f) #:player player #:level (level #f))
+        (define/private (set-crossfader-to-unlocked #:crossfader (cross #f) #:player player #:level (level #f))
+        (define/public (set-crossfader-visu #:visu visu #:player player #:auto (auto #f) #:swap (swap #f))
+;Crossfader-public-interface
+;Crossfader-private-interface
+(define Crossfader-Interface
+    (interface ()
+(define Crossfader%
+    (class* object% (Crossfader-Interface)
+        (define/public (get-control name id)
+        (define/public (crossfader-set-player #:player player #:level (level #f))
+        (define/public (crossfader-unset-player #:player player)
+        (define/public (crossfader-visu-launch #:bank (bank #f) #:level (level 1) #:player player)
+        (define/public (crossfader-visu-stop #:player player #:bank (bank #f) #:level (level 1) #:force (force #f))
+        (define/public (crossfader-set-visu #:visu visual #:mode (mode #f) #:velocity (velocity 1) #:player player #:auto (auto #f) #:swap (swap #f))
+        (define/public (crossfader-set-visu-to-locked #:player player)
+        (define/public (crossfader-set-visu-to-unlocked #:player player)
+;Crossfader-Bank-public-interface
+;Crossfader-Bank-private-interface
+(define Crossfader-Bank%
+    (class* object% (Crossfader-Interface)
+        (define/private (get-visu level)
+        (define/private (get-level-from-id id)
+        (define/public (get-control name id)
+        (define/public (crossfader-set-player #:player player #:level (level #f))
+        (define/public (crossfader-unset-player #:player player)
+        (define/public (crossfader-set-visu-to-locked #:player player #:level (level #f))
+        (define/public (crossfader-set-visu-to-unlocked #:player player #:level (level #f))
+        (define/public (crossfader-set-visu #:visu visual #:mode (mode #f) #:velocity (velocity 1) #:player player #:auto (auto #f) #:swap (swap #f))
+        (define/public (add-visu #:level level #:player player)
+        (define/public (del-visu #:level level)
+        (define/public (crossfader-visu-launch #:bank (bank #t) #:level (level 1) #:velocity (velocity 1) #:player player)
+        (define/public (crossfader-visu-stop #:bank (bank #t) #:level (level #f) #:player player #:force (force #f))
+        (define/public (get-mode-auto)
+;visu-public-interface
+;visu-private-interface
+(define Visu-Interface
+    (interface ()
+(define (Control-Assign-Task Id Name File Players)
+(define Control-Type-Temp #f)
+(define Control-Address-Temp #f)
+(define Control-Assign-Temp 1)
+(define Control-Assign-Touch #f)
+(define Visu%
+    (class* object% (Visu-Interface)
+        (define/private (control-assign name)
+        (define/public (get-control name)
+        (define/private (get-control-object name)
+        (define/private (get-visu-task-name)
+        (define/public (set-visu-player #:player player)
+        (define/public (unset-visu-player #:player player)
+        (define/public (set-visu #:visu visu #:mode mode #:velocity velocity #:player player #:bank (bank #f) #:level (level 1))
+        (define/public (visu-launch)
+                (unless (defined? file)
+        (define/public (visu-stop #:bank (bank #f) #:level (level 1))
+        (define/public (set-visu-to-locked #:player player)
+        (define/public (set-visu-to-unlocked #:player player)
+        (define/public (set-visu-to-control #:player player)
+        (define/private (load-controls)
+        (define/public (save-controls #:player player)
+;Controls-public-interface
+;Controls-private-interface
+(define Controls-Interface
+    (interface ()
+(define Controls%
+    (class* object% (Controls-Interface)
+        (define/private (create-control control)
+        (define/private (check-player player)
+        (define/private (get-player (player hand))
+        (define/private (check-hand player)
+        (define/public (get-control)
+        (define/public (set-control-type control #:player player)
+        (define/public (set-control-address address #:player player)
+        (define/public (set-control-mapping mapping #:player player)
+        (define/public (set-control-actmode actmode #:player player)
+        (define/public (set-control-default default value #:player player)
+        (define/public (set-control-mode Mode #:player player)
+        (define/public (set-control-to-locked #:player player)
+        (define/public (set-control-to-unlocked #:player player)
+        (define/public (set-control-to-control #:player player)
+        (define/public (get-control-type #:player player)
+        (define/public (get-control-address #:player player)
+        (define/public (get-control-mapping #:player player)
+        (define/public (get-control-mode #:player player)
+        (define/public (get-control-default default #:player player)
+;Control-public-interface
+;Control-private-interface
+(define Control-Interface
+    (interface ()
+(define Control%
+    (class* object% (Control-Interface)
+        (define/public (set-address n_address)
+        (define/public (set-mapping n_mapping)
+        (define/public (set-actmode n_mode)
+        (define/public (set-default-value default value)
+        (define/public (set-mode n_mode)
+        (define/public (set-to-locked)
+        (define/public (set-to-unlocked)
+        (define/public (set-to-control)
+        (define/public (set-to-default n_mode)
+        (define/public (get-type)
+        (define/public (get-address)
+        (define/public (get-mapping)
+        (define/public (get-mode)
+        (define/public (get-default default)
+        (define/public (get-control)
+        (define/public (get-control-mode)
+        (define/private (get-control-locked-mode)
+        (define/private (get-locked-mode)
+(define Control-Midi-CCN%
+    (class* Control% (Control-Interface)
+        (define/override (get-control-mode)
+        (define/override (get-type)
+(define Control-Keyboard-Special%
+    (class* Control% (Control-Interface)
+        (define/override (get-control-mode)
+        (define/override (get-type)
+(define Triggers%
+    (class object%
+        (define/public (add-trigger n t)
+        (define/public (midi-note-read)
+        (define/public (test-triggers)
+        (define/public (load-triggers (file TRIGGER-SAVE-FILE))
+(define Keyboard%
+    (class object%
+        (define/public (set-key n)
+        (define/public (get-key)
+        (define/public (get-value)
+(define Keyboard-Special%
+    (class Keyboard%
+        (define/override (set-key n)
+        (define/override (get-value)
+(define Midi-CCN%
+    (class object%
+        (define/public (set-channel n)
+        (define/public (set-button n)
+        (define/public (get-value)
+        (define/public (get-channel)
+        (define/public (get-button)
+(define Midi-Note%
+    (class object%
+        (define/public (set-channel n)
+        (define/public (set-note n)
+        (define/public (get-channel)
+        (define/public (get-note)
+(define Trigger-Midi-Note%
+    (class Midi-Note%
+        (define/public (set-control n)
+        (define/public (set-value n)
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-player n)
+        (define/public (trigg?)
+        (define/public (get-function-on)
+        (define/public (get-function-off)
+(define Trigger-Midi-CCN%
+    (class Midi-CCN%
+        (define/public (set-control n)
+        (define/public (set-value n)
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-player n)
+        (define/public (trigg?)
+        (define/public (get-function-on)
+        (define/public (get-function-off)
+(define Trigger-Keyboard%
+    (class Keyboard%
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-option n)
+        (define/public (set-control n)
+        (define/public (trigg?)
+(define Trigger-Keyboard-Special%
+    (class Keyboard-Special%
+        (define/public (set-function-on n)
+        (define/public (set-function-off n)
+        (define/public (set-option n)
+        (define/public (set-control n)
+        (define/public (set-player player)
+        (define/public (trigg?)
+(define god (new Crossfaders%))
+(define (c name id #:type (type 'linear) #:coeff (coefficient 1) #:toggle (toggle #f))
+(define Triggers-List (new Triggers%))

@@ -3,5 +3,5 @@ echo "Starting JACK Audio Connection Kit..."
 qjackctl --preset=Alsa &
 sleep 4
 echo "Starting Fluxus..."
-fluxus FluxusBros6.scm
+fluxus FluxusBros.scm
 
