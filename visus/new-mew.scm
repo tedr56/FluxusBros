@@ -1,3 +1,4 @@
+(define number-points 100)
 (define (defil-z v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
     (cond
         ((>= (vector-ref v 2) v-max)
@@ -35,6 +36,7 @@
                             (p (build-cube))
                         )
                         (grab p)
+                            (hint-wire)
                             (identity)
                             (translate v)
                         (ungrab)
@@ -49,15 +51,16 @@
 )
 (define (new-mew-destroy id)
     (grab (hash-ref new-mew-prims id))
-    (pdata-map
+    (pdata-map!
         (lambda (p)
-            (destroy (vector-ref p 0))
+            (destroy (inexact->exact (vector-ref p 0)))
         )
         "prim"
     )
     (ungrab)
-    (destroy (hash-ref new-mew-prims id))
+    (destroy (inexact->exact (hash-ref new-mew-prims id)))
     (hash-remove! new-mew-prims id)
+    #t
 )
 (define (new-mew id cross)
     (letrec
@@ -65,8 +68,8 @@
             (g 1)
             (neighbor-avoidance 2.0)
             (home-attraction 2)
-            (speed 1)
-            (acceleration 1)
+            (speed 2)
+            (acceleration .51)
             (flock
                 (lambda (n p)
                     (unless (zero? n)
@@ -121,7 +124,8 @@
                             (translate p)
                             (opacity (* (gh2 i) .01))
                             (colour (hsv->rgb (vmul (vector (gh2 i g) (gh2 (* i 2) g) (gh2 (* i 4) g)) .02)))
-                            (scale (vmul (vector (gh2 i g) (gh2 (* i 2) g) (gh2 (* i 4) g)) .051))
+                            (wire-colour (hsv->rgb (vmul (vector (gh2 (* 2 i) g) (gh2 (* i 4) g) (gh2 (* i 2) g)) .02)))
+                            (scale (vmul (vector (gh2 i g) (gh2 i g) (gh2 i g)) .051))
                         (ungrab)
                         (defil-z p #:v-init 10 #:v-min -30)
                     )
