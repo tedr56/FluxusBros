@@ -1,2 +1,4 @@
 #ignore scheme cache files with the scm~ extension
 *.scm~
+#Eclipse project file
+.project
