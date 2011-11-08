@@ -1,0 +1,8 @@
+En cas de control non trouvé,
+donné le choix du type de control
+midi-ccn - midi-note - kb - kbs -osc -fake
+
+En cas de fake,
+Demandé un control temporaire
+midi-ccn - midi-note - kb - kbs -osc -fake
+et régler les 4 valeur par default

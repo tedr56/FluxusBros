@@ -1,0 +1,66 @@
+tunnel-wall
+Korg
+rotate-local
+ccn
+(vector 1 24)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Korg
+rotate-global
+ccn
+(vector 1 25)
+0
+4
+0.1
+0.2
+0.5
+0.8
+tunnel-wall
+Korg
+gain-a
+ccn
+(vector 1 30)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Korg
+gain-b
+ccn
+(vector 1 31)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Korg
+max-size
+ccn
+(vector 1 26)
+0
+4
+0.2
+0.4
+0.6
+1.0
+tunnel-wall
+Korg
+scale-gh-coeff
+ccn
+(vector 1 27)
+0
+4
+0.2
+0.4
+0.6
+1.0

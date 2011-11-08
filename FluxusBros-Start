@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "Starting JACK Audio Connection Kit..."
+qjackctl --preset=Alsa &
+sleep 4
+echo "Starting Fluxus..."
+fluxus FluxusBros.scm
+

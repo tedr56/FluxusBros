@@ -1,0 +1,102 @@
+FluxusBros6
+
+Fluxus Visuals Mixing Script
+
+*Scripts-Visuals----------------------------------------------------------------
+Rules too devellop new scripts inside
+
+All the visuals scripts must in /Visu folder.
+The script's file name must have the same name of the main function script.
+The main function script must have two parameters : id and crossfader
+The id parameter is a different string for each running script and compose of
+    3nb-3nb-name_of_script
+    like "901-001-valley"
+For example, this id is used in "c" function to find the appropriate control (see Controls section).
+
+A function can be created when a script is stop, for destroy build object or reinitialize variables.
+This function have to be named as "named_of_the_script-destroy"
+like valley-destroy.
+
+Taking in example, the "test" visual.
+The file have to be named "test.scm"
+and the main function of the visual script have to be defined like this :
+(define (test id cross)
+To destroy a (build-cube) used in the test visual, use the function
+(define (test-destroy id)
+and place a (destroy) function inside.
+
+
+*Triggers----------------------------------------------------------------
+The triggers are the midi, osc or keybooard event which can
+launch, kill, choose viuals and other few actions.
+It is the managing system of the visuals.
+The basic "Save-Trigger-File" can be use to place new triggers.
+To make your own and complexer config :
+ - create your folder
+ - replace the name of the folder in the "load-config" file by your folder.
+ - if you use multiple triggers file, make another load-config and load the different files.
+ - make your trigger file in your folder.
+
+To add a new trigger in the file, the syntax is like this :
+
+NAME_OF_THE_TRIGGER
+Hardware (a way to separate multiple players or multiple hardwares on a same session)
+type-of-control
+address-to-catch-the-control
+function-linked-to-the-trigger-when-activated
+function-linked-to-the-trigger-when-desactivated
+mapping-on-channel (experimental)
+
+and add the next triggers to the below.
+The different type of triggers are :
+ midi note : note
+ midi ccn : midi-ccn or ccn
+ keyboard normal keys : kb
+ keyboard special keys : kbs
+ osc : osc
+
+The address of controls are vectors.
+midi address : (vector midi-channel number-of-the-control)
+
+
+*Controls----------------------------------------------------------------
+The control part is to act on the inside of a visual.
+In the visual, the function to use is "c" like control.
+The basic way to use this is :
+(c "name-of-the-control-in-a-string" id)
+and the manager script will search in the config files to
+which midi,osc or keyboard control it is linked to.
+To configure these links, the files are in the "controls" folder.
+The basic Save-Control-File can be use to place your control config.
+To make complex config, the system use on config file for one visual with the same name.
+To use the multiple hardware separation system, you can specify the hardware at the end of the file name.
+For example, for the test.scm visual used with your FAVORITE-MIDI-CONTROLLER, create the file "test.FAVORITE-MIDI-CONTROLLER"
+in the "controls" folder.
+To add a new control in your file, here is the syntax :
+
+name-of-the-visual (even in a same named file)
+name-of-the-control (the name used in the visual script with the "c" function)
+Hardware
+type-of-control
+address-of-the-control
+mapping-on-channel (experimental, stay on 0)
+default-mode
+first-default-value
+second-default-value
+third-default-value
+fourth-default-value
+
+The different type of control are :
+ midi note : note
+ midi ccn : ccn
+ keyboard normal keys : kb
+ keyboard special keys : kbs
+ osc : osc
+ fake : a non controlable control which can handle default values
+
+The default-mode value act on the value to catch on the visual loading:
+ -1 : connect to the hardware control
+ 1  : use the first default value
+ 2  : use the second default value
+ 1  : use the third default value
+ 1  : use the fourth default value

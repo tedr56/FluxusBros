@@ -1,0 +1,33 @@
+;wasup
+(require scheme/math)
+(define (wasup)
+    (define (increment i o f r)
+        (for ((n (build-list (inexact->exact (floor i)) values)))
+            (with-state
+;                (colour (hsv->rgb (vector (/ (+ n 1) (+ i 1)) 1 (gh n))))
+;                (translate (vmul (vector (cos (atan (/ (* n o) r))) (sin (* n o)) 0) r))
+                (translate (vmul (vector (cos (/ (* n o 180) (* pi r))) (sin (/ (* n o 180) (* pi r))) 0) r))
+;                (rotate (vector 0 0 (* (/ 360 (* (asin 1) 4)) (* n o))))
+                (draw-cube)
+            )
+        )
+    )
+
+(gain (* 5 (mn 0 26)))
+(blur (+ (mn 0 24) 0.1))
+(let* ((rayon (mn 0 0 10))
+       (size-cube 1)
+       (nb-cube (/ (* 5 rayon pi) size-cube)))
+    (push)
+    (rotate (vector 180 0 -90))
+    (increment (max2 (* (gh 2) (mn 0 7)) nb-cube) size-cube 2 rayon)
+    (pop)
+;    (push)
+;    (rotate (vector 180 180 -90))
+;    (increment (max2 (* (gh 2) (mn 0 7)) nb-cube) size-cube 2 rayon)
+;    (pop)
+)
+
+)
+
+(every-frame (wasup))

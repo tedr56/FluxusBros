@@ -1,0 +1,132 @@
+valley
+Bitstream
+slave-speed
+midi-ccn
+#(3 46)
+0
+-1
+0.19685038924217224
+0
+0
+0
+valley
+Bitstream
+ncube
+midi-ccn
+#(3 40)
+0
+-1
+0.10236220806837082
+0.3
+0.4
+0.5
+valley
+Bitstream
+coeff-color1
+midi-ccn
+#(3 16)
+0
+-1
+0.16535432636737823
+1
+1
+1
+valley
+Bitstream
+coeff-color2
+midi-ccn
+#(3 17)
+0
+-1
+0.13385826349258423
+0.5
+0.5
+0.5
+valley
+Bitstream
+blur
+midi-ccn
+#(3 10)
+0
+-1
+0.0
+0
+0
+0
+valley
+Bitstream
+coeff-color3
+midi-ccn
+#(3 18)
+0
+-1
+0.10236220806837082
+1
+1
+1
+valley
+Bitstream
+coeff-color
+midi-ccn
+#(3 19)
+0
+-1
+0.4251968562602997
+1
+1
+1
+valley
+Bitstream
+diametre
+midi-ccn
+#(3 41)
+0.2
+-1
+0.32283464074134827
+0.4
+0.3
+0.2
+valley
+Bitstream
+gain
+midi-ccn
+#(3 8)
+0
+-1
+0.5275590419769287
+1
+1
+1
+valley
+Bitstream
+master-speed
+midi-ccn
+#(3 47)
+0
+-1
+0.22834645211696625
+0
+0
+0
+valley
+Bitstream
+coeff-d-gh
+midi-ccn
+#(3 42)
+0
+-1
+0.14173229038715363
+1
+1
+1
+valley
+Bitstream
+alpha
+midi-ccn
+#(3 43)
+0
+-1
+0.0
+0
+0
+0

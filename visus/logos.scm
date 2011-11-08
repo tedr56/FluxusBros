@@ -1,0 +1,27 @@
+(define logos-prims (make-hash))
+(define (logos-destroy id)
+    (destroy (hash-ref logos-prims id))
+    (hash-remove! logos-prims id)
+)
+
+(define (logos id cross)
+    (let*
+        (
+            (text (c "logo" id #:type 'string))
+            (font "Bitstream-Vera-Sans-Mono.ttf")
+            (logos-build
+                (lambda ()
+                    (hash-set! logos-prims id (build-type font text))
+                    (hash-set! logos-prims (string-append id "-text") text)
+                )
+            )
+        )
+        (unless (hash-has-key? logos-prims id)
+            (logos-build)
+        )
+        (unless (equal? (hash-ref logos-prims (string-append id "-text")) text)
+            (logos-destroy id)
+            (logos-build)
+        )
+    )
+)

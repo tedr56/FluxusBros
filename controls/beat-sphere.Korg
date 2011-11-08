@@ -1,0 +1,55 @@
+beat-sphere
+Korg
+Rouge
+ccn
+(vector 1 24)
+0
+4
+0.2
+0.2
+0.34645670652389526
+0.2
+beat-sphere
+Korg
+Vert
+ccn
+(vector 1 25)
+0
+4
+0.2
+0.2
+0.34645670652389526
+0.2
+beat-sphere
+Korg
+Bleu
+ccn
+(vector 1 26)
+0
+4
+0.2
+0.2
+0.34645670652389526
+0.2
+beat-sphere
+Korg
+speed
+ccn
+(vector 1 31)
+0
+4
+0.2
+0.2
+0.34645670652389526
+0.2
+beat-sphere
+Korg
+gain
+ccn
+(vector 1 27)
+0
+4
+0.2
+0.2
+0.34645670652389526
+0.2

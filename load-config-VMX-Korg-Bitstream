@@ -1,0 +1,3 @@
+(load "load-config-Korg")
+(load "load-config-VMX")
+(load "Config-Ted/load-config-Bitstream")

@@ -1,0 +1,8 @@
+bank load  - note to note - with/out dieses - auto name
+bank view  - view banks - auto name - agencement (scale on longest visu name - cursor
+bank note  - activ/deactiv visu (get-note) (dynamic controls) (player)
+pad bank   - set bank visu
+joy switch - set bank focus (and crossfader focus) on current bank note (get-note) on down
+joy switch + pad bank - set constant visu
+joy X      - change bank 1 visu
+joy Y      - change bank 2 visu
