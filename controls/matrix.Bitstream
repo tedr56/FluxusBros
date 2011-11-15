@@ -1,5 +1,5 @@
 matrix
-Korg
+Bitstream
 set-camera-transform-x
 fake
 (vector 1 7)
@@ -10,7 +10,7 @@ fake
 0.5
 0.5
 matrix
-Korg
+Bitstream
 set-camera-transform-y
 fake
 (vector 1 0)
@@ -21,7 +21,7 @@ fake
 0.5
 0.5
 matrix
-Korg
+Bitstream
 set-camera-transform-z
 fake
 (vector 1 15)
@@ -32,7 +32,7 @@ fake
 0.5
 0.5
 matrix
-Korg
+Bitstream
 rotate-x-time
 ccn
 (vector 1 29)
@@ -43,7 +43,7 @@ ccn
 0
 0.2
 matrix
-Korg
+Bitstream
 rotate-y-time
 ccn
 (vector 1 30)
@@ -54,7 +54,7 @@ ccn
 0.1
 0.2
 matrix
-Korg
+Bitstream
 rotate-z-time
 ccn
 (vector 1 31)
@@ -65,7 +65,7 @@ ccn
 0.1
 0.2
 matrix
-Korg
+Bitstream
 rotate-x
 ccn
 (vector 1 21)
@@ -76,7 +76,7 @@ ccn
 0
 0.1
 matrix
-Korg
+Bitstream
 rotate-y
 ccn
 (vector 1 22)
@@ -87,7 +87,7 @@ ccn
 0.1
 0.1
 matrix
-Korg
+Bitstream
 rotate-z
 ccn
 (vector 1 23)
@@ -98,18 +98,18 @@ ccn
 0.1
 0.2
 matrix
-Korg
+Bitstream
 set-ortho-zoom
 fake
 (vector 1 7)
 0
 1
-0
-0
-0
-0
+1
+1
+1
+1
 matrix
-Korg
+Bitstream
 blur
 ccn
 (vector 1 24)
@@ -120,7 +120,7 @@ ccn
 1
 1
 matrix
-Korg
+Bitstream
 colour-r
 ccn
 (vector 1 26)
@@ -131,7 +131,7 @@ ccn
 0.5
 0.5
 matrix
-Korg
+Bitstream
 colour-g
 ccn
 (vector 1 27)
@@ -142,7 +142,7 @@ ccn
 0.5
 0.5
 matrix
-Korg
+Bitstream
 colour-b
 ccn
 (vector 1 28)
@@ -153,7 +153,7 @@ ccn
 0.5
 0.5
 matrix
-Korg
+Bitstream
 wire-colour-r
 ccn
 (vector 1 26)
@@ -164,7 +164,7 @@ ccn
 0.5
 0.5
 matrix
-Korg
+Bitstream
 wire-colour-g
 ccn
 (vector 1 27)
@@ -175,7 +175,7 @@ ccn
 0.5
 0.5
 matrix
-Korg
+Bitstream
 wire-colour-b
 ccn
 (vector 1 28)
@@ -186,7 +186,7 @@ ccn
 0.5
 0.5
 matrix
-Korg
+Bitstream
 line-width
 ccn
 (vector 1 17)
@@ -197,10 +197,10 @@ ccn
 0.2
 0.3
 matrix
-Korg
+Bitstream
 wire
 ccn
-(vector 1 18)
+(vector 2 18)
 0
 1
 0
@@ -208,10 +208,10 @@ ccn
 1
 0
 matrix
-Korg
+Bitstream
 wire-stippled
 ccn
-(vector 1 19)
+(vector 2 19)
 0
 1
 0
@@ -219,10 +219,10 @@ ccn
 1
 0
 matrix
-Korg
+Bitstream
 solid
 ccn
-(vector 1 20)
+(vector 2 20)
 0
 1
 1

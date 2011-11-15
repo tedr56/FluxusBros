@@ -83,8 +83,8 @@
     )
 )
 
-(set-gain! 0.1)
-(smoothing-bias 0.4)
+;(set-gain! 0.1)
+;(smoothing-bias 0.4)
 ;(blur 0.3)
 
 (define master-time (time))

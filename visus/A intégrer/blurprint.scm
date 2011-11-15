@@ -1,0 +1,2 @@
+(require "beat-module.scm")
+

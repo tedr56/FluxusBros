@@ -22,6 +22,17 @@ fake
 1.0
 planets
 Korg
+rty
+fake
+#(1 2)
+0
+-1
+0.07086614519357681
+1.0
+1.0
+1.0
+planets
+Korg
 r-x
 fake
 #(1 36)
@@ -44,17 +55,6 @@ fake
 0.023622047156095505
 planets
 Korg
-color-1
-fake
-#(1 10)
-0
--1
-1.0
-0.12598425149917603
-0.0
-0.0
-planets
-Korg
 wire-color
 fake
 #(1 25)
@@ -66,14 +66,36 @@ fake
 1.0
 planets
 Korg
-gain-b
-ccn
-#(1 17)
+color-1
+fake
+#(1 10)
 0
 -1
-0.17322835326194763
 1.0
-0.19685038924217224
+0.12598425149917603
+0.0
+0.0
+planets
+Korg
+ty
+fake
+#(1 0)
+0
+-1
+0.4094488322734833
+1.0
+1.0
+1.0
+planets
+Korg
+r-l-z-joystick
+fake
+#(1 7)
+0
+-1
+0.0
+0.7
+0.3
 0.2
 planets
 Korg
@@ -99,6 +121,17 @@ fake
 0.34645670652389526
 planets
 Korg
+wire
+fake
+#(2 81)
+0
+-1
+1.0
+1.0
+1.0
+1.0
+planets
+Korg
 rot-x
 fake
 #(1 32)
@@ -110,15 +143,15 @@ fake
 0.0
 planets
 Korg
-rot-3-y
-fake
-#(1 22)
+r-e-time
+midi-ccn
+#(1 27)
 0
 -1
-0.4803149700164795
-0.4960629940032959
-0.4960629940032959
-0.4881889820098877
+1.0
+0.7
+0.3
+0.30708661675453186
 planets
 Korg
 size-cube
@@ -132,6 +165,17 @@ fake
 1.0
 planets
 Korg
+r-l-kaos-z-freq
+fake
+#(1 18)
+0
+-1
+0.8
+0.7
+0.0
+1.0
+planets
+Korg
 coeff-color3
 midi-ccn
 #(1 21)
@@ -141,17 +185,6 @@ midi-ccn
 0.8188976645469666
 0.10236220806837082
 1.0
-planets
-Korg
-rot-4-z
-fake
-#(1 15)
-0
--1
-0.4960629940032959
-0.4960629940032959
-0.4960629940032959
-0.4960629940032959
 planets
 Korg
 rot-3-x
@@ -176,6 +209,28 @@ fake
 0.023622047156095505
 planets
 Korg
+rot-360-y
+fake
+#(1 6)
+0
+-1
+0.0
+1.0
+1.0
+1.0
+planets
+Korg
+scale-z-gh
+fake
+#(1 22)
+0
+-1
+0.031496062874794006
+1.0
+1.0
+0.11023622006177902
+planets
+Korg
 Rz-2
 fake
 #(2 61)
@@ -188,7 +243,7 @@ fake
 planets
 Korg
 color-gain
-ccn
+midi-ccn
 #(1 19)
 0
 -1
@@ -199,7 +254,7 @@ ccn
 planets
 Korg
 scale-x
-ccn
+midi-ccn
 #(1 24)
 0
 -1
@@ -232,25 +287,25 @@ fake
 planets
 Korg
 nb-element-element
-ccn
+midi-ccn
 #(1 30)
 0
 -1
-0.16535432636737823
+0.6141732335090637
 0.07086614519357681
 0.14960630238056183
 0.14960630238056183
 planets
 Korg
-blok-rot-4
+scale-L-z
 fake
-#(1 12)
+#(1 42)
 0
 -1
-0.0
-0.0
-0.04724409431219101
-0.023622047156095505
+0.32283464074134827
+0.4881889820098877
+0.3385826647281647
+0.15748031437397003
 planets
 Korg
 rot-4-y
@@ -297,23 +352,23 @@ fake
 1.0
 planets
 Korg
-r-e-time
-ccn
-#(1 27)
+angle-1
+fake
+#(1 17)
 0
 -1
-0.4173228442668915
-0.7
-0.3
-0.30708661675453186
+1.0
+1.0
+1.0
+1.0
 planets
 Korg
 scale-y
-ccn
+midi-ccn
 #(1 25)
 0
 -1
-0.031496062874794006
+0.11023622006177902
 0.007874015718698502
 0.3
 0.031496062874794006
@@ -330,15 +385,26 @@ midi-ccn
 0.787401556968689
 planets
 Korg
-scale-z
-ccn
-#(1 26)
+gain-b
+midi-ccn
+#(1 17)
 0
 -1
+0.17322835326194763
 1.0
-0.22047244012355804
-0.3
+0.19685038924217224
 0.2
+planets
+Korg
+scale-coeff
+fake
+#(1 18)
+0
+-1
+0.03937007859349251
+0.03937007859349251
+0.0
+0.0
 planets
 Korg
 coeff-gain-2
@@ -352,17 +418,6 @@ fake
 1.0
 planets
 Korg
-r-e-z
-fake
-#(1 19)
-0
--1
-0.4724409580230713
-0.7
-0.8976377844810486
-0.29133859276771545
-planets
-Korg
 r-l-x
 fake
 #(1 32)
@@ -372,6 +427,17 @@ fake
 1.0
 0.0
 0.0
+planets
+Korg
+cube-size-x
+fake
+#(1 29)
+0
+-1
+0.834645688533783
+1.0
+1.0
+1.0
 planets
 Korg
 master-speed
@@ -418,26 +484,26 @@ fake
 1.0
 planets
 Korg
-trans
+sens-z-1
 fake
-#(1 5)
+#(2 23)
 0
 -1
-0.0
-0.0
-0.0
-0.0
+1.0
+1.0
+1.0
+1.0
 planets
 Korg
-scale-L-z
+sens-y-1
 fake
-#(1 42)
+#(2 33)
 0
 -1
-0.32283464074134827
-0.4881889820098877
-0.3385826647281647
-0.15748031437397003
+0.0
+1.0
+1.0
+1.0
 planets
 Korg
 color-2
@@ -462,26 +528,26 @@ fake
 1.0
 planets
 Korg
-prim-select
+rtz-blok
 fake
-#(2 43)
+#(2 63)
 0
 -1
 0.0
-0.0
-0.0
+1.0
+1.0
 1.0
 planets
 Korg
-r-l-z-joystick
+tz
 fake
-#(1 7)
+#(1 15)
 0
 -1
-0.0
-0.7
-0.3
-0.2
+1.0
+1.0
+1.0
+1.0
 planets
 Korg
 Rz-1
@@ -495,15 +561,26 @@ fake
 1.0
 planets
 Korg
-r-l-kaos-x-freq
+color-g
 fake
-#(1 16)
+#(1 29)
 0
 -1
-0.8
-0.20472441613674164
-0.3
-0.2
+0.07086614519357681
+1.0
+1.0
+1.0
+planets
+Korg
+sens-x-1
+fake
+#(2 41)
+0
+-1
+0.0
+1.0
+1.0
+1.0
 planets
 Korg
 frequence-1
@@ -515,6 +592,17 @@ fake
 2.0
 2.0
 2.0
+planets
+Korg
+ry
+fake
+#(1 1)
+0
+-1
+1.0
+1.0
+1.0
+1.0
 planets
 Korg
 coeff-color2
@@ -529,7 +617,7 @@ midi-ccn
 planets
 Korg
 blur
-ccn
+midi-ccn
 #(1 26)
 0
 -1
@@ -550,9 +638,42 @@ fake
 0.8
 planets
 Korg
-angle-3
+diametre
+midi-ccn
+#(1 25)
+0.2
+-1
+0.5039370059967041
+0.23622047901153564
+0.23622047901153564
+1.0
+planets
+Korg
+rot-1-y
 fake
-#(1 19)
+#(1 38)
+0
+-1
+0.4566929042339325
+0.4566929042339325
+0.5669291615486145
+0.4566929042339325
+planets
+Korg
+rtx-blok
+fake
+#(2 83)
+0
+-1
+0.0
+1.0
+1.0
+1.0
+planets
+Korg
+rz
+fake
+#(1 14)
 0
 -1
 1.0
@@ -561,15 +682,15 @@ fake
 1.0
 planets
 Korg
-scale-coeff
+rot-4-z
 fake
-#(1 18)
+#(1 15)
 0
 -1
-0.03937007859349251
-0.03937007859349251
-0.0
-0.0
+0.4960629940032959
+0.4960629940032959
+0.4960629940032959
+0.4960629940032959
 planets
 Korg
 gain-a
@@ -583,14 +704,14 @@ fake
 0.7559055089950562
 planets
 Korg
-coeff-color1
-midi-ccn
-#(1 19)
+trans
+fake
+#(1 5)
 0
 -1
-0.16535432636737823
-0.4173228442668915
-1.0
+0.0
+0.0
+0.0
 0.0
 planets
 Korg
@@ -616,14 +737,25 @@ fake
 0.0
 planets
 Korg
-r-l-kaos-z-freq
+rayon-3
 fake
-#(1 18)
+#(1 15)
 0
 -1
-0.8
-0.7
-0.0
+1.0
+0.36220473051071167
+1.0
+1.0
+planets
+Korg
+rayon-2
+fake
+#(1 14)
+0
+-1
+0.6692913174629211
+0.22047244012355804
+1.0
 1.0
 planets
 Korg
@@ -638,35 +770,46 @@ fake
 0.023622047156095505
 planets
 Korg
-r-e-x
-fake
-#(1 35)
+scale-z
+midi-ccn
+#(1 26)
 0
 -1
-0.4566929042339325
-0.7
-0.7322834730148315
-0.31496062874794006
-planets
-Korg
-param-c
-fake
-#(1 44)
-0
--1
-0.5748031735420227
-0.5511810779571533
-0.5669291615486145
-0.5748031735420227
-planets
-Korg
-rayon-2
-fake
-#(1 14)
-0
--1
-0.6692913174629211
+1.0
 0.22047244012355804
+0.3
+0.2
+planets
+Korg
+prim-select
+fake
+#(2 43)
+0
+-1
+0.0
+0.0
+0.0
+1.0
+planets
+Korg
+rtz
+fake
+#(1 13)
+0
+-1
+0.0
+1.0
+1.0
+1.0
+planets
+Korg
+sens-z-2
+fake
+#(2 43)
+0
+-1
+1.0
+1.0
 1.0
 1.0
 planets
@@ -682,15 +825,15 @@ fake
 1.0
 planets
 Korg
-angle-1
+r-e-z
 fake
-#(1 17)
+#(1 19)
 0
 -1
-1.0
-1.0
-1.0
-1.0
+0.4724409580230713
+0.7
+0.8976377844810486
+0.29133859276771545
 planets
 Korg
 r-z
@@ -711,6 +854,17 @@ fake
 -1
 0.07874015718698502
 0.22834645211696625
+1.0
+1.0
+planets
+Korg
+rx
+fake
+#(1 6)
+0
+-1
+1.0
+1.0
 1.0
 1.0
 planets
@@ -737,6 +891,28 @@ midi-ccn
 0.0
 planets
 Korg
+blok-rot-4
+fake
+#(1 12)
+0
+-1
+0.0
+0.0
+0.04724409431219101
+0.023622047156095505
+planets
+Korg
+rty-blok
+fake
+#(2 73)
+0
+-1
+0.0
+1.0
+1.0
+1.0
+planets
+Korg
 rot-3-z
 fake
 #(1 23)
@@ -748,15 +924,15 @@ fake
 0.5196850299835205
 planets
 Korg
-cube-size-x
+color-3
 fake
-#(1 29)
+#(1 8)
 0
 -1
-0.834645688533783
-1.0
-1.0
-1.0
+0.0
+0.0
+0.8
+0.8
 planets
 Korg
 scale-sphere-a
@@ -770,15 +946,26 @@ fake
 0.0
 planets
 Korg
-color-3
+rot-360-z
 fake
-#(1 8)
+#(1 7)
 0
 -1
 0.0
-0.0
-0.8
-0.8
+1.0
+1.0
+1.0
+planets
+Korg
+wire-color-r
+fake
+#(1 28)
+0
+-1
+0.12598425149917603
+1.0
+1.0
+1.0
 planets
 Korg
 scale-L-y
@@ -847,14 +1034,14 @@ fake
 8.0
 planets
 Korg
-diametre
-midi-ccn
-#(1 25)
-0.2
+solid
+fake
+#(2 61)
+0
 -1
-0.5039370059967041
-0.23622047901153564
-0.23622047901153564
+1.0
+1.0
+1.0
 1.0
 planets
 Korg
@@ -870,7 +1057,7 @@ fake
 planets
 Korg
 nb-element
-ccn
+midi-ccn
 #(1 23)
 0
 -1
@@ -878,6 +1065,39 @@ ccn
 0.7
 0.4724409580230713
 1.0
+planets
+Korg
+sens-y-2
+fake
+#(2 3)
+0
+-1
+1.0
+1.0
+1.0
+1.0
+planets
+Korg
+color-r
+fake
+#(1 28)
+0
+-1
+0.07874015718698502
+1.0
+1.0
+1.0
+planets
+Korg
+rot-3-y
+fake
+#(1 22)
+0
+-1
+0.4803149700164795
+0.4960629940032959
+0.4960629940032959
+0.4881889820098877
 planets
 Korg
 scale-sphere-gh
@@ -924,15 +1144,15 @@ fake
 1.0
 planets
 Korg
-rot-1-y
+r-l-kaos-x-freq
 fake
-#(1 38)
+#(1 16)
 0
 -1
-0.4566929042339325
-0.4566929042339325
-0.5669291615486145
-0.4566929042339325
+0.8
+0.20472441613674164
+0.3
+0.2
 planets
 Korg
 blok-rot-3
@@ -946,15 +1166,26 @@ fake
 0.0
 planets
 Korg
-scale-z-gh
+sens-x-2
 fake
-#(1 22)
+#(2 13)
 0
 -1
-0.031496062874794006
 1.0
 1.0
-0.11023622006177902
+1.0
+1.0
+planets
+Korg
+tx
+fake
+#(1 7)
+0
+-1
+0.3858267664909363
+1.0
+1.0
+1.0
 planets
 Korg
 nb-cube
@@ -979,6 +1210,28 @@ fake
 0.0
 planets
 Korg
+wire-color-b
+fake
+#(1 30)
+0
+-1
+0.05511811003088951
+1.0
+1.0
+1.0
+planets
+Korg
+wire-stippled
+fake
+#(2 71)
+0
+-1
+1.0
+1.0
+1.0
+1.0
+planets
+Korg
 rot-y
 fake
 #(1 33)
@@ -990,9 +1243,9 @@ fake
 0.0
 planets
 Korg
-opacity
+angle-3
 fake
-#(1 17)
+#(1 19)
 0
 -1
 1.0
@@ -1012,15 +1265,15 @@ fake
 0.2
 planets
 Korg
-rot-360-y
+r-e-x
 fake
-#(1 6)
+#(1 35)
 0
 -1
-0.0
-1.0
-1.0
-1.0
+0.4566929042339325
+0.7
+0.7322834730148315
+0.31496062874794006
 planets
 Korg
 blok-rot-1
@@ -1056,12 +1309,34 @@ fake
 0.023622047156095505
 planets
 Korg
+opacity
+fake
+#(1 17)
+0
+-1
+1.0
+1.0
+1.0
+1.0
+planets
+Korg
 coeff-gain-1
 fake
 #(1 2)
 0
 -1
 1.0
+1.0
+1.0
+1.0
+planets
+Korg
+wire-color-g
+fake
+#(1 29)
+0
+-1
+0.21259842813014984
 1.0
 1.0
 1.0
@@ -1078,9 +1353,42 @@ midi-ccn
 1.0
 planets
 Korg
-rot-360-z
+rtx
 fake
-#(1 7)
+#(1 5)
+0
+-1
+0.0
+1.0
+1.0
+1.0
+planets
+Korg
+color-b
+fake
+#(1 30)
+0
+-1
+0.14173229038715363
+1.0
+1.0
+1.0
+planets
+Korg
+param-c
+fake
+#(1 44)
+0
+-1
+0.5748031735420227
+0.5511810779571533
+0.5669291615486145
+0.5748031735420227
+planets
+Korg
+line-width
+fake
+#(1 31)
 0
 -1
 0.0
@@ -1090,11 +1398,11 @@ fake
 planets
 Korg
 r-speed
-ccn
+midi-ccn
 #(1 28)
 0
 -1
-0.0
+0.3779527544975281
 0.30708661675453186
 0.3
 0.0
@@ -1122,15 +1430,15 @@ fake
 10.0
 planets
 Korg
-rayon-3
-fake
-#(1 15)
+coeff-color1
+midi-ccn
+#(1 19)
 0
 -1
+0.16535432636737823
+0.4173228442668915
 1.0
-0.36220473051071167
-1.0
-1.0
+0.0
 planets
 Korg
 r-l-y

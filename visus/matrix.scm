@@ -35,7 +35,7 @@
                                             (* (+ (* (c "rotate-y-time" id) (time2))(c "rotate-y" id)) 360)  
                                             (* (+ (* (c "rotate-z-time" id) (time2))(c "rotate-z" id)) 360)))
 
-                                    (set-ortho-zoom (* (c "set-ortho-zoom" id) -50))
+                                    ;(set-ortho-zoom (* (c "set-ortho-zoom" id) -50))
 
                                     (blur (+ (c "blur" id) 0.01))
 

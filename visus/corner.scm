@@ -7,7 +7,7 @@
                         (- (* 360 input) 180)
                     )
                 )
-                (g (c "gain" id #:coeff 2))
+                (g (c "gain" id #:coeff 4))
                 (blur-c (c "blur" id))
                 (cs (c "cs" id #:coeff 127))
                 (-cs (* -1 cs))

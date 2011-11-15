@@ -2,3 +2,5 @@
 *.scm~
 #Eclipse project file
 .project
+#opened files
+*~
