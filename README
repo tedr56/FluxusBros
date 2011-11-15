@@ -1,4 +1,4 @@
-FluxusBros6
+FluxusBros
 
 Fluxus Visuals Mixing Script
 
@@ -55,9 +55,10 @@ The different type of triggers are :
  keyboard special keys : kbs
  osc : osc
 
-The address of controls are vectors.
+The address of controls:
 midi address : (vector midi-channel number-of-the-control)
-
+keyboard normal keys : character of the key
+keyboard special keys : special number of the key (cf (help keys-special-down) or (help keys-special-pressed) in Fluxus)
 
 *Controls----------------------------------------------------------------
 The control part is to act on the inside of a visual.
@@ -92,7 +93,7 @@ The different type of control are :
  keyboard normal keys : kb
  keyboard special keys : kbs
  osc : osc
- fake : a non controlable control which can handle default values
+ fake : a non controlable control which just can handle default values
 
 The default-mode value act on the value to catch on the visual loading:
  -1 : connect to the hardware control
