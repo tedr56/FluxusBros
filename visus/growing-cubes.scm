@@ -1,5 +1,3 @@
-(require "beat-module.scm")
-
 (define (growing-cubes-destroy id)
     (when (hash-has-key? growing-cubes-prims id)
     (for-each
@@ -210,7 +208,7 @@
             (hash-set! growing-cubes-prims id '())
         )
         (flxseed (+ (inexact->exact (floor (* 1000 (flxrnd) (time))))))
-        (when (beat-catch id)
+        (when (beat-catch id "addcube")
             (add-cube)
             (move-cube)
         )

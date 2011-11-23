@@ -17,6 +17,7 @@
 (current-directory "/home/ted/Sources/git/FluxusBros")
 
 (require "vjbros.scm")
+(require "beat-module.scm")
 (require scheme/class)
 (require mzlib/string)
 (require scheme/bool)

@@ -28,7 +28,7 @@
     (define (beat-add beat1 beat2)  ; #(bar beat tick)
         (let*
             (
-                (tick (+ (vector-ref beat1 2) (vector-ref beat2 2)))
+                (tick (inexact->exact (floor (+ (vector-ref beat1 2) (vector-ref beat2 2)))))
                 (tick-n (remainder tick (midi-clocks-per-beat)))
                 (beat (+ (vector-ref beat1 1) (vector-ref beat2 1) (quotient tick (midi-clocks-per-beat))))
                 (beat-n (remainder beat (midi-beats-per-bar)))

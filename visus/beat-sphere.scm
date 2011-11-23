@@ -1,5 +1,3 @@
-(require "beat-module.scm")
-
 (define beat-sphere-prims (make-hash))
 (define (beat-sphere-build id)
     (cond
@@ -144,7 +142,7 @@
     )
 ;        (rotate (vmul (vector (* (time) 1.987) (* (time) 1.0789) (* (time) 0.51245)) 0.05))
     (with-primitive (hash-ref beat-sphere-prims id)
-        (when (beat-catch id)
+        (when (beat-catch id "swap")
             (beat-sphere-launcher-swap id)
             (beat-sphere-launcher-swap id)
             (beat-sphere-launcher-swap id)

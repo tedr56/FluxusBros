@@ -1,4 +1,3 @@
-(require "beat-module.scm")
 (define (space-bpm-destroy id)
     (hash-for-each
         (hash-ref space-bpm-prims id)
@@ -99,7 +98,7 @@
     (unless (hash-has-key? space-bpm-prims id)
         (hash-set! space-bpm-prims id (make-hash))
     )
-    (when (beat-catch id)
+    (when (beat-catch id "space")
         (cond
             ((hash-ref space-bpm-mode id)
                 (space-bpm-add id)
