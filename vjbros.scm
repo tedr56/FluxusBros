@@ -25,6 +25,11 @@
         cylindric->cartesien
         cartesien->cylindric
         find
+    	vector-non-empty?
+	    defil-x
+        defil-y
+        defil-z
+        modulo-d
     )
     (define (midi-connect)
         (letrec
@@ -88,7 +93,7 @@
         )
     )
     (define m midi-cc)
-    (define (mn channel input (coeff 1))
+    (define (mn channel input (coeff 1) #:name (name 0))
         (* (midi-ccn channel input) coeff))
 
     (define (show input . other)
@@ -250,6 +255,44 @@
                 (equal? arg v)
             )
             listing
+        )
+    )
+    (define (vector-non-empty? v)
+        (for/first ((i (vector->list v)) #:when (positive? i))
+            #t
+        )
+    )
+    (define (defil axis v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
+        (cond
+            ((>= (vector-ref v axis) v-max)
+;                (vector (vector-ref v 0) (vector-ref v 1) v-init)
+                (vector-set! v axis v-init)
+;                (vector-set! v axis (+ (modulo (vector-ref v axis) (- v-max v-min)) v-init))
+            )
+            ((<= (vector-ref v axis) v-min)
+;                (vector (vector-ref v 0) (vector-ref v 1) v-init)
+                (vector-set! v axis v-init)
+;                (vector-set! v axis (+ (modulo (vector-ref v axis) (- v-max v-min)) v-init))
+            )
+        )
+        v
+    )
+    (define (defil-x v #:v-init (v-init 0) #:v-max (v-max 20) #:v-min (v-min -20))
+        (defil 0 v #:v-init v-init #:v-max v-max #:v-min v-min)
+    )
+    (define (defil-y v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
+        (defil 1 v #:v-init v-init #:v-max v-max #:v-min v-min)
+    )
+    (define (defil-z v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -10))
+        (defil 2 v #:v-init v-init #:v-max v-max #:v-min v-min)
+    )
+    (define (modulo-d v d)
+        (let*
+            (
+                (v-p (* (expt 10 13) v))
+                (d-p (* (expt 10 13) d))
+            )        
+            (* (expt 10 -13) (modulo v-p d-p))
         )
     )
 )
