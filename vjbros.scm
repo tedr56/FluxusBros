@@ -93,7 +93,7 @@
         )
     )
     (define m midi-cc)
-    (define (mn channel input (coeff 1) #:name (name 0))
+    (define (mn channel input (coeff 1) (name 0))
         (* (midi-ccn channel input) coeff))
 
     (define (show input . other)
@@ -287,12 +287,15 @@
         (defil 2 v #:v-init v-init #:v-max v-max #:v-min v-min)
     )
     (define (modulo-d v d)
-        (let*
-            (
-                (v-p (* (expt 10 13) v))
-                (d-p (* (expt 10 13) d))
-            )        
-            (* (expt 10 -13) (modulo v-p d-p))
+        (if (zero? d)
+            0
+            (let*
+                (
+                    (v-p (* (expt 10 20) v))
+                    (d-p (* (expt 10 20) d))
+                )        
+                (* (expt 10 -20) (modulo v-p d-p))
+            )
         )
     )
 )
