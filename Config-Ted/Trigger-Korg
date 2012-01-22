@@ -12,6 +12,13 @@ midi-ccn
 (send god set-focus #:player "Korg")
 (void)
 #f
+WAIT-FOCUS-KORG-KEYBOARD
+Korg
+note
+(vector 0 11)
+(send god set-focus #:player "Korg")
+(void)
+#f
 LOAD-TRIGGER-KB-KORG
 Korg
 kbs

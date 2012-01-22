@@ -152,4 +152,10 @@ note
 (send god set-crossfader-visu #:visu "mozaik" #:player "Korg")
 (void)
 #f
-
+BANK-PAD-NOTE-2-7
+Korg
+note
+(vector 1 38)
+(send god set-crossfader-visu #:visu "neontron" #:player "Korg")
+(void)
+#f
