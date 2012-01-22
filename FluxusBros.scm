@@ -14,7 +14,7 @@
 
 ;(current-directory "/Users/TchernoBob/Fluxus/FluxusBros6")
 ;(current-directory "/home/ted/Fluxus/FluxusBros6")
-;(current-directory "/home/ted/Sources/git/FluxusBros")
+(current-directory "/home/ted/Sources/git/FluxusBros")
 
 (require "vjbros.scm")
 (require "beat-module.scm")
@@ -197,10 +197,11 @@
         (define/public (set-crossfader-launch #:visu (visu (void)) #:crossfader (cross #f) #:player player #:mode (mode #f) #:velocity (velocity 1) #:level (level #f) #:bank (bank #f) #:auto (auto #f) #:swap (swap #f))
 ;(show-d "debug set-crossfader-launch entry")
             (let ((crossfader (get-crossfader-from-player #:crossfader cross #:player player)))
-                (unless (crossfader-check #:crossfader crossfader #:player player #:bank bank)
+                (crossfader-check #:crossfader crossfader #:player player #:bank bank)
+;                (unless (crossfader-check #:crossfader crossfader #:player player #:bank bank)
 ;(show-d "debug crossfader-visu-launch crossfader-create")
-                    (crossfader-create #:crossfader crossfader #:player player #:bank bank)
-                )
+;                (crossfader-create #:crossfader crossfader #:player player #:bank bank)
+;                )
                 (cond
                     ((get-crossfader-access #:crossfader crossfader #:player player)
 ;(show-d "debug crossfader-visu-launch crossfader-access")
@@ -247,7 +248,7 @@
             )
             cross
         )
-        (define/public (set-crossfader-visu #:visu visu #:crossfader (crossfader #f) #:player player #:mode (mode 1) #:velocity (velocity 1) #:auto (auto #f) #:swap (swap #f))
+        (define/public (set-crossfader-visu #:visu visu #:crossfader (crossfader #f) #:player player #:mode (mode 1) #:velocity (velocity 1) #:auto (auto #f) #:swap (swap #f) #:bank (bank #t) #:level (level 1))
 ;(show-d "debug set-crossfader-visu entry")
             (let
                 (
@@ -262,8 +263,10 @@
                         )
                     )
                 )
+                (crossfader-check #:crossfader cross #:player player #:bank bank)
 ;(show-d "debug set-crossfader-visu cross")
 ;(show-d cross)
+;(show-d (get-crossfader cross))
                 (when cross
 ;(show-d "debug set-crossfader-visu cross found")
                     (send (get-crossfader cross) crossfader-set-visu #:player player #:visu visu #:mode mode #:auto auto #:swap swap)
