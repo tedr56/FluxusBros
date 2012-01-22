@@ -1,0 +1,5 @@
+(send god set-crossfader-visu #:visu "tennis" #:player "Korg" #:crossfader 901)
+(send god set-crossfader-visu #:visu "neontron" #:player "Korg" #:crossfader 902)
+(send god set-crossfader-visu #:visu "tunnel-wall" #:player "Korg" #:crossfader 903)
+(send god set-crossfader-visu #:visu "planets" #:player "Korg" #:crossfader 904)
+(send god set-crossfader-visu #:visu "valley" #:player "Korg" #:crossfader 905)
