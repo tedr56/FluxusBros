@@ -1,0 +1,154 @@
+neontron
+Korg
+size-row
+midi-ccn
+#(1 29)
+0
+-1
+0.25196850299835205
+0.05511811003088951
+0.03937007859349251
+0.05511811003088951
+neontron
+Korg
+rotate-global-plane-ctrl
+midi-ccn
+#(1 22)
+0
+-1
+0.0
+1.0
+0.3
+0.9291338324546814
+neontron
+Korg
+blur
+midi-ccn
+#(1 31)
+0
+-1
+1.0
+0.874015748500824
+0.6220472455024719
+0.11023622006177902
+neontron
+Korg
+random-sens-sens-ctrl
+midi-ccn
+#(1 18)
+0
+-1
+0.8
+0.0
+0.3
+0.2
+neontron
+Korg
+rotate-global-ctrl
+midi-ccn
+#(1 23)
+0
+-1
+0.0
+1.0
+0.3
+1.0
+neontron
+Korg
+random-sens-ctrl
+midi-ccn
+#(1 26)
+0
+-1
+0.18110236525535583
+0.0
+0.3
+0.2
+neontron
+Korg
+rotate-local-ctrl
+midi-ccn
+#(1 17)
+0
+-1
+0.8
+0.28346458077430725
+0.28346458077430725
+0.0
+neontron
+Korg
+gain-neon
+midi-ccn
+#(1 16)
+0
+-1
+0.15748031437397003
+0.20472441613674164
+0.20472441613674164
+0.20472441613674164
+neontron
+Korg
+size-ctrl
+midi-ccn
+#(1 28)
+0
+-1
+0.33070865273475647
+0.5039370059967041
+0.3779527544975281
+0.9370078444480896
+neontron
+Korg
+random-speed-ctrl
+midi-ccn
+#(1 25)
+0
+-1
+1.0
+0.06299212574958801
+0.3
+0.2
+neontron
+Korg
+rotate-global-speed
+midi-ccn
+#(1 21)
+0
+-1
+0.0
+0.0
+0.3
+0.25196850299835205
+neontron
+Korg
+row-sens-ctrl
+midi-ccn
+#(1 27)
+0
+-1
+0.6377952694892883
+0.6377952694892883
+0.3
+0.2
+neontron
+Korg
+global-speed-ctrl
+midi-ccn
+#(1 24)
+0
+-1
+0.22047244012355804
+0.18897637724876404
+0.3
+0.22047244012355804
+neontron
+Korg
+size-plane-ctrl
+midi-ccn
+#(1 30)
+0
+-1
+0.0
+0.34645670652389526
+0.0
+0.7165354490280151
