@@ -22,6 +22,7 @@
 (require mzlib/string)
 (require scheme/bool)
 (require scheme/list)
+(require scheme/vector)
 
 (rm-all-tasks)
 (reset-camera)
@@ -31,7 +32,7 @@
 (smoothing-bias 0.7)
 
 (define OSC-SOURCE "3333")
-(define osc-enable #f)
+(define osc-enable #t)
 
 (when osc-enable
     (osc-source OSC-SOURCE)
@@ -1958,143 +1959,6 @@
 )
 
 
-
-
-
-
-
-(define Triggers%
-    (class object%
-        (field
-            (trigger-list (make-hash))
-        )
-        (define/public (add-trigger n t)
-            (hash-set! trigger-list n t)
-        )
-        (define/public (midi-note-read)
-            (let
-                (
-                    (midi-note-buffer (midi-note))
-                )
-                (when midi-note-buffer
-                    (let
-                        (
-                            (trigger-name (string-append "note" "-" (substring (number->string (+ 100 (vector-ref midi-note-buffer 1))) 1) "-" (substring (number->string (+ 1000 (vector-ref midi-note-buffer 2))) 1)))
-                        )
-                        (when (hash-has-key? trigger-list trigger-name)
-                            (if (eq? (vector-ref midi-note-buffer 0) 'note-off)
-                                (send (hash-ref trigger-list trigger-name) set-value 0)
-                                (send (hash-ref trigger-list trigger-name) set-value (vector-ref midi-note-buffer 3))
-                            )
-                        )
-                    )
-                )
-            )
-        )
-        (define/public (test-triggers)
-;;(show-d "test-triggers")
-            (midi-note-read)
-;;(show-d "note parsed")
-            (hash-for-each
-                trigger-list
-                (lambda (n t)
-;;(show-d n)
-                    (let
-                        (
-                            (trigg-activ? (send t trigg?))
-                        )
-;;(show-d "trigg-activ?")
-;;(show-d trigg-activ?)
-;;(show-d (string? trigg-activ?))
-;;(show-d "")
-                        (when trigg-activ?
-                            (unless (equal? trigg-activ? "(void)")
-                                (show-n (string-append "Launch " trigg-activ?))
-                            )
-                            (eval-string trigg-activ?)
-                        )
-                    )
-                )
-            )
-        )
-        (define/public (load-triggers (file TRIGGER-SAVE-FILE))
-            (let ((in (open-input-file file #:mode 'text)))
-                (letrec
-                    (
-                        (Trigger-File-Parse
-                            (lambda ()
-                                (let
-                                    (
-                                        (s (read-line in))  ;Nom
-                                        (p (read-line in))  ;Player
-                                        (t (read-line in))  ;Type
-                                        (u (read-line in))  ;Adress
-                                        (v (read-line in))  ;Fonction On
-                                        (v2 (read-line in)) ;Fonction Off
-                                        (w (read-line in))  ;Mapping?
-                                    )
-                                    (when (not (or (eof-object? s) (eof-object? p) (eof-object? t) (eof-object? u) (eof-object? v) (eof-object? v2) (eof-object? w)))
-                                        (let
-                                            (
-                                                (new-trigger
-                                                    (cond
-                                                        ((equal? t "note")
-                                                            (new Trigger-Midi-Note%))
-                                                        ((equal? t "kb")
-                                                            (new Trigger-Keyboard%))
-                                                        ((equal? t "kbs")
-                                                            (new Trigger-Keyboard-Special%))
-                                                        ((equal? t "midi-ccn")
-                                                            (new Trigger-Midi-CCN%))
-                                                        ((equal? t "ctrl")
-                                                            (new Trigger-Ctrl%))
-                                                    )
-                                                )
-                                            )
-                                            (send new-trigger set-control u)
-                                            (send new-trigger set-function-on v)
-                                            (send new-trigger set-function-off v2)
-                                            (send new-trigger set-player p)
-                                            (let
-                                                (
-                                                    (new-trigger-name
-                                                        (cond
-                                                            ((equal? t "note")
-                                                                (string-append "note" "-" (substring (number->string (+ 100 (send new-trigger get-channel))) 1) "-" (substring (number->string (+ 1000 (send new-trigger get-note))) 1))
-                                                            )
-                                                            ((equal? t "kb")
-                                                                (string-append "kb" "-" (send new-trigger get-key))
-                                                            )
-                                                            ((equal? t "kbs")
-                                                                (string-append "kbs" "-" (number->string (send new-trigger get-key))
-                                                                )
-                                                            )
-                                                            ((equal? t "midi-ccn")
-                                                                (string-append "midi-ccn" "-" (substring (number->string (+ 100 (send new-trigger get-channel))) 1) "-" (substring (number->string (+ 1000 (send new-trigger get-button))) 1))
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            (add-trigger new-trigger-name new-trigger)
-;(show-n (string-append s " loaded with name " new-trigger-name))
-                                            )
-                                        )
-                                        (Trigger-File-Parse)
-                                    )
-                                )
-                            )
-                        )
-                    )
-                (file-position in 0)
-                (Trigger-File-Parse)
-                (close-input-port in)
-                )
-            )
-        )
-        (super-new)
-    )
-)
-
 (define Keyboard%
     (class object%
         (field
@@ -2185,279 +2049,367 @@
     )
 )
 
-
-(define Trigger-Midi-Note%
-    (class Midi-Note%
-        (field
-            (function-on (void))
-            (function-off (void))
-            (triggered #f)
-            (player #f)
-            (value 0)
+(define Trigger%
+    (class object%
+        (init-field
+            Name
+            Trigger-On
+            Trigger-Off
+            (Trigger-On-Level 1)
+            (Trigger-Off-Level 0)
         )
-        (define/public (set-control n)
-            (let
+        (field
+            (Trigger-Level #f)
+        )
+        (define/public (update Value)
+            (when (number? Value)
+                (cond
+                    ((>= Value Trigger-On-Level)
+                        (eval-string Trigger-On)
+                    )
+                    ((= Value Trigger-Off-Level)
+                        (eval-string Trigger-Off)
+                    )
+                )
+            )
+        )
+        (define/private (Check-Number value)
+            (cond
+                ((= value Trigger-On-Level)
+                    (eval-string Trigger-On)
+                )
+                ((= value Trigger-Off-Level)
+                    (eval-string Trigger-Off)
+                )
+            )
+        )
+        (define/private (Check-String value)
+            (cond
+                ((equal? value Trigger-On-Level)
+                    (eval-string Trigger-On)
+                )
+                ((equal? value Trigger-Off-Level)
+                    (eval-string Trigger-Off)
+                )
+            )
+        )   
+        (super-new)
+    )
+)
+
+
+(define Triggers%
+    (class object%
+        (init-field
+            (Trigger-List (make-hash))
+        )
+        (field
+            (osc-event-list '())
+        )
+        (define/private (Trigger-Event-Detect type-detect type-address-detect) ;Abstracted function to check type trigger event
+            (letrec
                 (
-                    (v
-                        (cond
-                            ((vector? n)
-                                n
+                    (trigg-event type-detect)
+                    (event-trigg
+                        (lambda (event)
+                            (when event
+                                (type-address-detect type event)
+                                (let ((new-event type-detect))
+                                    (when new-event
+                                        (event-trigg new-event)
+                                    )
+                                )
                             )
-                            ((string? n)
-                                (eval-string n)
-                            )
                         )
                     )
                 )
-                (when (vector? v)
-                    (when (= (vector-length v) 2)
-                        (send this set-channel (vector-ref v 0))
-                        (send this set-note (vector-ref v 1))
-;;(show-n "note set control debug")
-;;(show-n (send this get-channel))
-;;(show-n (send this get-note))
-                    )
+                (when trigg-event
+                    (event-trigg trigg-event)
                 )
             )
         )
-        (define/public (set-value n)
-            (unless (= n value)
-                (set! triggered #t)
-                (set! value n)
-            )
+        (define/public (Trigger-Detect) ;Main loop for trigger event
+            (Trigger-CC-Event-Detect)
+            (Trigger-Note-Event-Detect)
+            (Trigger-Osc-Event-Detect)
         )
-        (define/public (set-function-on n)
-            (when (string? n)
-                (set! function-on n)
-            )
-        )
-        (define/public (set-function-off n)
-            (when (string? n)
-                (set! function-off n)
-            )
-        )
-        (define/public (set-player n)
-            (set! player n)
-        )
-        (define/public (trigg?)
-            (cond
-                (triggered
-                    (cond
-                        ((zero? value)
-                            (set! triggered #f)
-                            function-off
-                        )
-                        (else
-;                            ;(show-n (string-append "Launch " function-on))
-                            (set! triggered #f)
-                            function-on
-                        )
-                    )
-                )
-                (else
-                    #f
-                )
-            )
-        )
-        (define/public (get-function-on)
-            function-on
-        )
-        (define/public (get-function-off)
-            function-off
-        )
-        (super-new)
-    )
-)
-
-(define Trigger-Midi-CCN%
-    (class Midi-CCN%
-        (field
-            (function-on (void))
-            (function-off (void))
-            (triggered #f)
-            (player #f)
-            (value 0)
-        )
-        (define/public (set-control n)
-            (let
+        (define/private (Trigger-CC-Event-Detect) ;Abstracted function to check type trigger event
+            (letrec
                 (
-                    (v
-                        (cond
-                            ((vector? n)
-                                n
-                            )
-                            ((string? n)
-                                (eval-string n)
+                    (trigg-event (midi-cc-event))
+                    (event-trigg
+                        (lambda (event)
+                            (when event
+                                (Trigger-CC-Search event)
+                                (let ((new-event (midi-cc-event)))
+                                    (when new-event
+                                        (event-trigg new-event)
+                                    )
+                                )
                             )
                         )
                     )
                 )
-                (when (vector? v)
-                    (when (= (vector-length v) 2)
-                        (send this set-channel (vector-ref v 0))
-                        (send this set-button (vector-ref v 1))
+                (when trigg-event
+                    (event-trigg trigg-event)
+                )
+            )
+        )
+        (define/private (Trigger-Note-Event-Detect) ;Abstracted function to check type trigger event
+            (letrec
+                (
+                    (trigg-event (midi-note))
+                    (event-trigg
+                        (lambda (event)
+                            (when event
+                                (Trigger-Note-Search event)
+                                (let ((new-event (midi-note)))
+                                    (when new-event
+                                        (event-trigg new-event)
+                                    )
+                                )
+                            )
+                        )
                     )
                 )
-            )
-        )
-        (define/public (set-value n)
-            (unless (= n value)
-                (set! triggered #t)
-                (set! value n)
-            )
-        )
-        (define/public (set-function-on n)
-            (when (string? n)
-                (set! function-on n)
-            )
-        )
-        (define/public (set-function-off n)
-            (when (string? n)
-                (set! function-off n)
-            )
-        )
-        (define/public (set-player n)
-            (set! player n)
-        )
-        (define/public (trigg?)
-            (cond
-                ((and (= 1 (send this get-value)) (not triggered))
-                    (set! triggered #t)
-                    function-on
+                (when trigg-event
+                    (event-trigg trigg-event)
                 )
-                ((and (= (send this get-value) 0) triggered)
-                    (set! triggered #f)
-                    function-off
+            )
+        )
+        (define/private (Trigger-Osc-Event-Detect) ;Abstracted function to check type trigger event
+            (letrec
+                (
+                    (trigg-event (osc-trigger-event))
+                    (event-trigg
+                        (lambda (event)
+                            (when event
+                                (Trigger-Osc-Search event)
+                                (let ((new-event (osc-trigger-event)))
+                                    (when new-event
+                                        (event-trigg new-event)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                (when trigg-event
+                    (event-trigg trigg-event)
+                )
+            )
+        )
+        (define/public (add-osc-event event)
+            (set! osc-event-list (append osc-event-list (list event)))
+        )
+        (define/private (osc-trigger-event)
+            (cond
+                ((not (zero? (length osc-event-list)))
+                    (let ((event (list-ref osc-event-list 0)))
+                        (set! osc-event-list (list-tail osc-event-list 1))
+                        event
+                    )
                 )
                 (else
                     #f
                 )
             )
         )
-        (define/public (get-function-on)
-            function-on
+        (define/public (Trigger-Address-Search type address) ;Search and return the hash index of the coresponding trigger object path
+            (letrec
+                (
+                    (Iter-Address
+                        (lambda (Address Path)
+                            (cond
+                                ((= (vector-length Address) 1)
+                                    (let ((Obj (hash-ref Path (vector-ref Address 0) #f)))
+                                        (cond
+                                            ((is-a? Obj Trigger%)
+                                                Obj
+                                            )
+                                            (else
+                                                #f
+                                            )
+                                        )
+                                    )
+                                    
+                                )
+                                (else
+                                    (cond
+                                        ((hash-has-key? Path (vector-ref Address 0))
+                                            (Iter-Address (vector-drop Address 1) (hash-ref Path (vector-ref Address 0)))
+                                        )
+                                        (else
+                                            #f
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                (Iter-Address address (hash-ref! Trigger-List type (make-hash)))
+            )
         )
-        (define/public (get-function-off)
-            function-off
+        (define/private (Trigger-Note-Search event) ;Format the Note check event for path search then launch the update
+            (let*
+                (
+                    (address (vector (vector-ref event 1) (vector-ref event 2)))
+                    (value 
+                        (cond
+                            ((equal? 'note-off (vector-ref event 0))
+                                0
+                            )
+                            (else
+                                (vector-ref event 3)
+                            )
+                        )
+                    )
+                    (Trigger-Obj (Trigger-Address-Search "note" address))
+                )
+                (Trigger-Set Trigger-Obj value)
+            )
+        )
+        (define/private (Trigger-CC-Search event) ;Format the CC check event for path search then launch the update
+            (let*
+                (
+                    (address (vector (vector-ref event 0) (vector-ref event 1)))
+                    (value (vector-ref event 2))
+                    (Trigger-Obj (Trigger-Address-Search "cc" address))
+                )
+                (Trigger-Set Trigger-Obj value)
+            )
+        )
+        (define/private (Trigger-Osc-Search event) ;Format the Osc check event for path search then launch the update
+            (let*
+                (
+                    (address (vector (vector-ref event 0)))
+                    (value (vector-ref event 1))
+                    (Trigger-Obj (Trigger-Address-Search "osc" address))
+                )
+                (Trigger-Set Trigger-Obj value)
+            )
+        )
+        (define/public (Trigger-Set obj value) ;Update Trigger value - The Trigger will de/activate by itself
+            (when obj
+                (send obj update value)
+            )
+        )
+        (define/private (Trigger-Create-Path path value)  ;Create necessary hash table for the Trigger path using a vector
+            (letrec
+                (
+                    (Create-Path
+                        (lambda (Path Follow Value)
+                            (cond
+                                ((= (vector-length Follow) 1)
+                                    (hash-set! Path (vector-ref Follow 0) Value)
+                                    Path
+                                )
+                                (else
+                                    (when (not (hash-has-key? Path (vector-ref Follow 0)))
+                                        (hash-set! Path (vector-ref Follow 0) (make-hash))
+                                    )
+                                    (Create-Path (hash-ref Path (vector-ref Follow 0)) (vector-drop Follow 1) Value)
+                                )
+                            )
+                        )
+                    )
+                )
+                (Create-Path Trigger-List path value)
+            )
+        )
+        (define/public (load-triggers (file TRIGGER-SAVE-FILE)) ;Compatibility with old Trigger system method
+            (show "load-triggers")
+            (Trigger-Load file)
+        )
+        (define/public (Trigger-Load (file TRIGGER-SAVE-FILE))
+            (letrec
+                (
+                    (in (open-input-file file #:mode 'text))
+                    (Trigger-File-Parse
+                        (lambda ()
+                            (let
+                                (
+                                    (L-Name         (read-line in))  ;Nom
+                                    (L-Player       (read-line in))  ;Player
+                                    (L-Type         (read-line in))  ;Type
+                                    (L-Address      (read-line in))  ;Adress
+                                    (L-Function-On  (read-line in))  ;Fonction On
+                                    (L-Function-Off (read-line in))  ;Fonction Off
+                                    (L-Trigg-Limit  (read-line in))  ;Mapping?
+                                )
+                                (when
+                                    (not
+                                        (or
+                                            (eof-object? L-Name)
+                                            (eof-object? L-Player)
+                                            (eof-object? L-Type)
+                                            (eof-object? L-Address)
+                                            (eof-object? L-Function-On)
+                                            (eof-object? L-Function-Off)
+                                            (eof-object? L-Trigg-Limit)))
+                                    (let
+                                        (
+                                            (new-trigger
+                                                (new Trigger%
+                                                    (Name L-Name)
+                                                    (Trigger-On  L-Function-On)
+                                                    (Trigger-Off L-Function-Off)
+                                                )
+                                            )
+                                        )
+                                        (cond
+                                            ((or (equal? L-Type "osc") (equal? L-Type "Osc") (equal? L-Type "OSC"))
+                                                (let*
+                                                    (
+                                                        (Address-Full (list->vector (filter (lambda (x) (not (equal? x ""))) (regexp-split #rx"/" L-Address))))
+                                                        (Address
+                                                            (if (equal? (vector-ref Address-Full 0) "Trigger")
+                                                                (vector-drop Address-Full 1)
+                                                                Address-Full
+                                                            )
+                                                        )
+                                                    )
+                                                    (Trigger-Create-Path (vector-append (vector "osc") Address) new-trigger)
+                                                )
+                                            )
+                                            ((or (equal? L-Type "note") (equal? L-Type "Note"))
+                                                (let ((Address (eval-string L-Address)))
+                                                    (Trigger-Create-Path (vector-append (vector "note") Address) new-trigger)
+                                                )
+                                            )
+                                            ((or (equal? L-Type "midi-ccn") (equal? L-Type "CC"))
+                                                (let ((Address (eval-string L-Address)))
+                                                    (Trigger-Create-Path (vector-append (vector "cc") Address) new-trigger)
+                                                )
+                                            )
+                                            ((or (equal? L-Type "kb") (equal? L-Type "KB"))
+                                                (let ((Address (vector L-Address)))
+                                                    (Trigger-Create-Path (vector-append (vector "kb") Address) new-trigger)
+                                                )
+                                            )
+                                            ((or (equal? L-Type "kbs") (equal? L-Type "KBS"))
+                                                (let ((Address (vector (string->number L-Address))))
+                                                    (Trigger-Create-Path (vector-append (vector "kbs") Address) new-trigger)
+                                                )
+                                            )
+                                        )
+                                    )
+                                    (Trigger-File-Parse)
+                                )
+                            )
+                        )
+                    )
+                )
+                (file-position in 0)
+                (Trigger-File-Parse)
+                (close-input-port in)
+            )
         )
         (super-new)
     )
 )
 
-
-(define Trigger-Keyboard%
-    (class Keyboard%
-        (inherit-field
-            key
-        )
-        (field
-            (function-on (void))
-            (function-off (void))
-            (triggered #f)
-            (on #f)
-            (option #f)
-            (value 0)
-            (Player #f)
-        )
-        (define/public (set-function-on n)
-            (when (string? n)
-                (set! function-on n)
-            )
-        )
-        (define/public (set-function-off n)
-            (when (string? n)
-                (set! function-off n)
-            )
-        )
-        (define/public (set-player player)
-            (set! Player player)
-        )
-        (define/public (set-option n)
-            (set! option n)
-        )
-        (define/public (set-control n)
-            (cond
-                ((string? n)
-                    (send this set-key n)
-                )
-                ((number? n)
-                    (send this set-key (number->string n))
-                )
-            )
-        )
-        (define/public (trigg?)
-            (cond
-                ((and (send this get-value) (not triggered))
-                    (set! triggered #t)
-                    function-on
-                )
-                ((and (not (send this get-value)) triggered)
-                    (set! triggered #f)
-                    function-off
-                )
-                (else
-                    #f
-                )
-            )
-        )
-        (super-new)
-    )
-)
-
-(define Trigger-Keyboard-Special%
-    (class Keyboard-Special%
-        (inherit-field
-            key
-        )
-        (field
-            (function-on (void))
-            (function-off (void))
-            (triggered #f)
-            (on #f)
-            (option #f)
-            (value 0)
-            (Player #f)
-        )
-        (define/public (set-function-on n)
-            (when (string? n)
-                (set! function-on n)
-            )
-        )
-        (define/public (set-function-off n)
-            (when (string? n)
-                (set! function-off n)
-            )
-        )
-        (define/public (set-option n)
-            (set! option n)
-        )
-        (define/public (set-control n)
-            (send this set-key n)
-        )
-        (define/public (set-player player)
-            (set! Player player)
-        )
-        (define/public (trigg?)
-;;(show-d "debug trigger-key-special")
-;;(show-d (send this get-value))
-            (cond
-                ((and (send this get-value) (not triggered))
-                    (set! triggered #t)
-                    function-on
-                )
-                ((and (not (send this get-value)) triggered)
-                    (set! triggered #f)
-                    function-off
-                )
-                (else
-                    #f
-                )
-            )
-        )
-        (super-new)
-    )
-)
-            
 (define god (new Crossfaders%))
 (define (c name id #:type (type 'linear) #:coeff (coefficient 1) #:toggle (toggle #f))
     (cond
@@ -2470,11 +2422,93 @@
     )
 )
 
-
 (define Triggers-List (new Triggers%))
-;(send Triggers-List load-triggers)
 (load "load-config")
-(spawn-task (lambda () (send Triggers-List test-triggers)) 'Trigger-Detect)
+(spawn-task (lambda () (send Triggers-List Trigger-Detect)) 'Trigger-Detect)
+
+(define last-osc-peek-event "no message yet...")
+(define (osc-event Triggers)
+    (let ((peek (osc-peek)))
+        (unless (equal? last-osc-peek-event peek)
+            (set! last-osc-peek-event peek)
+            (let*
+                (
+                    (peek-split (regexp-split #rx" " peek))
+                    (path (list-ref peek-split 0))
+                    (parameters (filter (lambda (x) (not (equal? x ""))) (list-tail peek-split 1)))
+                    (parameters-type-check
+                        (map
+                            (lambda (t v)
+                                (cond
+                                    ((equal? t #\s)
+                                        v
+                                    )
+                                    ((equal? t #\i)
+                                        (string->number v)
+                                    )
+                                    ((equal? t #\f)
+                                        (string->number v)
+                                    )
+                                    (else
+                                        v
+                                    )
+                                )
+                            )
+                            (string->list (list-ref parameters 0))
+                            (drop parameters 1)
+                        )
+                    )
+                    (params
+                        (cond
+                            ((= 1 (length parameters-type-check))
+                                (list-ref parameters-type-check 0)
+                            )
+                            (else
+                                parameters-type-check
+                            )
+                        )
+                    )
+                    (params-v (list->vector parameters-type-check))
+                    (path-split (list->vector (filter (lambda (x) (not (equal? x ""))) (regexp-split #rx"/" (list-ref peek-split 0)))))
+                    (path-type (vector-ref path-split 0))
+                    (path-trigger (vector-drop path-split 1))
+                    (path-event (vector-append path-trigger params-v))
+                )
+                ;(show "osc-event-detect")
+                ;(show parameters)
+                ;(show parameters-type-check)
+                ;(show params)
+                (cond
+                    ((equal? path-type "Trigger")
+                        (send Triggers add-osc-event path-event)
+                    )
+                    ((equal? path-type "Control")
+                        #t
+                        ;todo : Send osc controls to Crossfaders (god)
+                        ;(send god Control-Set Control-Object params))
+                    )
+                    (else
+                        (let* ((Trigger-Object (send Triggers-List Trigger-Address-Search "osc" path-split)))
+                            (cond (Trigger-Object
+                                (send Triggers-List Trigger-Set Trigger-Object params))
+                                (else
+                                    (let ((Control-Object #f))
+                                        (cond (Control-Object
+                                            #t)
+                                            ;(send god Control-Set Control-Object params))
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+    #t
+)
+(spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
 
 (define (gain-task)
     (let ((var-mouse-wheel (mouse-wheel)))
