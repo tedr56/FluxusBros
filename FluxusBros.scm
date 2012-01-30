@@ -1142,7 +1142,16 @@
                                                                 (hash-set! controls NAME (new Controls%))
                                                             )
                                                                 (send (get-control-object NAME) set-control-type CONTROL #:player PLAYER)
-                                                                (send (get-control-object NAME) set-control-address (eval-string ADDRESS) #:player PLAYER)
+                                                                (cond
+                                                                    ((equal? CONTROL "osc")
+                                                                        (show "Control-File-Parse osc?!")
+                                                                        (send (get-control-object NAME) set-control-address ADDRESS #:player PLAYER)
+                                                                        (osc-control-add ADDRESS (send (get-control-object NAME) get-control))
+                                                                    )
+                                                                    (else
+                                                                        (send (get-control-object NAME) set-control-address (eval-string ADDRESS) #:player PLAYER)
+                                                                    )
+                                                                )
                                                                 (send (get-control-object NAME) set-control-mapping (eval-string MAPPING) #:player PLAYER)
                                                                 (send (get-control-object NAME) set-control-default 1 (eval-string DEFAULT1) #:player PLAYER)
                                                                 (send (get-control-object NAME) set-control-default 2 (eval-string DEFAULT2) #:player PLAYER)
@@ -1904,148 +1913,87 @@
             address
         )
         (field
+            (address-v #f)
             (value 1)
         )
-        (define/public (get-osc-value address (value #f))
-            (let
-                (
-                    (first-osc (osc 0))
-                )
-                (cond
-                    (first-osc
-                        (get-osc address first-osc)
-                    )
-                    (else
-                        value
+        (define/override (get-control-mode)
+            (osc-control address-v value)
+        )
+        (define/override (set-address n-address)
+            (set! address n-address)
+            (set! address-v (list->vector (filter (lambda (x) (not (equal? x ""))) (regexp-split #rx"/" n-address))))
+        )
+        (super-new)
+    )
+)
+
+
+(define osc-control-list (make-hash))
+(define (osc-control-add address value)
+    (letrec
+        (
+            (add-control
+                (lambda (Address Path Value)
+                    (cond
+                        ((= (vector-length Address) 1)
+                            (hash-set! Path (vector-ref Address 0) Value)
+                        )
+                        (else
+                            (add-control (vector-drop Address 1) (hash-ref! Path (vector-ref Address 0) (make-hash)) Value)
+                        )
                     )
                 )
             )
         )
-        (define/override (get-control-mode)
-            (show address)
-            (show (string? address))
-            (cond
-                ((osc-msg address)
-                    (let ((result (get-osc-value address)))
-                        (cond
-                            ((check-type result)
-                                (set! value result)
+        (add-control (list->vector (filter (lambda (x) (not (equal? x ""))) (regexp-split #rx"/" address))) osc-control-list value)
+    )
+)
+(define (osc-control-address-search address)
+    (letrec
+        (
+            (control-check
+                (lambda (Address Path)
+                    (cond
+                        ((= (vector-length Address) 1)
+                            ;(hash-ref Path (vector-ref Address 0))
+                            (if (hash-has-key? Path (vector-ref Address 0))
+                                Path
+                                #f
                             )
-                            (else
-                                value
+                        )
+                        (else
+                            (if (hash-has-key? Path (vector-ref Address 0))
+                                (control-check (vector-drop Address 1) (hash-ref Path (vector-ref Address 0)))
+                                #f
                             )
                         )
                     )
                 )
-                (else
-                    value
+            )
+        )
+        (control-check address osc-control-list)
+    )
+)
+(define (osc-control-update path address value)
+    (hash-set! path address value)
+)
+(define (osc-control address (value 1))
+    (letrec
+        (
+            (search-control
+                (lambda (Address Path Value)
+                    (cond
+                        ((= (vector-length Address) 1)
+                            (hash-ref Path (vector-ref Address 0) Value)
+                        )
+                        (else
+                            (search-control (vector-drop Address 1) (hash-ref! Path (vector-ref Address 0) (make-hash)) Value)
+                        )
+                    )
                 )
             )
         )
-        (define/public (check-type result)
-            #t
-        )
-        (super-new)
-    )
-)
-
-(define Control-OSC-String%
-    (class* Control-OSC% (Control-Interface)
-        (define/override (check-type result)
-            (string? result)
-        )
-        (super-new)
-    )
-)
-
-
-(define Keyboard%
-    (class object%
-        (field
-            (key #f)
-        )
-        (define/public (set-key n)
-            (if (string? n)
-                (set! key n)
-                (set! key (number->string n))
-            )
-        )
-        (define/public (get-key)
-            key
-        )
-        (define/public (get-value)
-            (key-pressed key)
-        )
-        (super-new)
-    )
-)
-
-(define Keyboard-Special%
-    (class Keyboard%
-        (inherit-field
-            key
-        )
-        (define/override (set-key n)
-            (cond
-                ((string? n)
-                    (set! key (string->number n))
-                )
-                (else
-                    (set! key n)
-                )
-            )
-        )
-        (define/override (get-value)
-            (key-special-pressed key)
-        )
-        (super-new)
-    )
-)
-
-(define Midi-CCN%
-    (class object%
-        (field
-            (channel 0)
-            (button 0)
-        )
-        (define/public (set-channel n)
-            (set! channel n)
-        )
-        (define/public (set-button n)
-            (set! button n)
-        )
-        (define/public (get-value)
-            (mn channel button)
-        )
-        (define/public (get-channel)
-            channel
-        )
-        (define/public (get-button)
-            button
-        )
-        (super-new)
-    )
-)
-
-(define Midi-Note%
-    (class object%
-        (field
-            (channel 0)
-            (note 0)
-        )
-        (define/public (set-channel n)
-            (set! channel n)
-        )
-        (define/public (set-note n)
-            (set! note n)
-        )
-        (define/public (get-channel)
-            channel
-        )
-        (define/public (get-note)
-            note
-        )
-        (super-new)
+        (search-control address osc-control-list value)
     )
 )
 
@@ -2065,9 +2013,11 @@
             (when (number? Value)
                 (cond
                     ((>= Value Trigger-On-Level)
+                        (show Trigger-On)
                         (eval-string Trigger-On)
                     )
                     ((= Value Trigger-Off-Level)
+                        (show Trigger-Off)
                         (eval-string Trigger-Off)
                     )
                 )
@@ -2319,7 +2269,6 @@
             )
         )
         (define/public (load-triggers (file TRIGGER-SAVE-FILE)) ;Compatibility with old Trigger system method
-            (show "load-triggers")
             (Trigger-Load file)
         )
         (define/public (Trigger-Load (file TRIGGER-SAVE-FILE))
@@ -2444,7 +2393,7 @@
                                         v
                                     )
                                     ((equal? t #\i)
-                                        (string->number v)
+                                        (inexact->exact (string->number v))
                                     )
                                     ((equal? t #\f)
                                         (string->number v)
@@ -2459,14 +2408,7 @@
                         )
                     )
                     (params
-                        (cond
-                            ((= 1 (length parameters-type-check))
-                                (list-ref parameters-type-check 0)
-                            )
-                            (else
-                                parameters-type-check
-                            )
-                        )
+                        (list-ref parameters-type-check 0)
                     )
                     (params-v (list->vector parameters-type-check))
                     (path-split (list->vector (filter (lambda (x) (not (equal? x ""))) (regexp-split #rx"/" (list-ref peek-split 0)))))
@@ -2474,28 +2416,29 @@
                     (path-trigger (vector-drop path-split 1))
                     (path-event (vector-append path-trigger params-v))
                 )
-                ;(show "osc-event-detect")
-                ;(show parameters)
-                ;(show parameters-type-check)
-                ;(show params)
                 (cond
                     ((equal? path-type "Trigger")
                         (send Triggers add-osc-event path-event)
                     )
                     ((equal? path-type "Control")
-                        #t
-                        ;todo : Send osc controls to Crossfaders (god)
-                        ;(send god Control-Set Control-Object params))
+                        (let ((osc-control-address (osc-control-address-search path-trigger)))
+                            (when osc-control-address
+                                (osc-control-update osc-control-address (vector-ref path-trigger (- (length path-trigger) 1))  params)
+                            )
+                        )
                     )
                     (else
                         (let* ((Trigger-Object (send Triggers-List Trigger-Address-Search "osc" path-split)))
-                            (cond (Trigger-Object
-                                (send Triggers-List Trigger-Set Trigger-Object params))
+                            (cond
+                                (Trigger-Object
+                                    (send Triggers-List Trigger-Set Trigger-Object params)
+                                )
                                 (else
-                                    (let ((Control-Object #f))
-                                        (cond (Control-Object
-                                            #t)
-                                            ;(send god Control-Set Control-Object params))
+                                    (let ((osc-control-address (osc-control-address-search path-split)))
+                                        (cond
+                                            (osc-control-address
+                                                (osc-control-update osc-control-address (vector-ref path-split (- (vector-length path-split) 1)) params)
+                                            )
                                         )
                                     )
                                 )
