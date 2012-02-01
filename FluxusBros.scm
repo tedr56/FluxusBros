@@ -912,7 +912,7 @@
                     1
                 )
                 (else
-                    (spawn-task (lambda () (Control-Assign-Task id name file players)) 'Control-Assign)
+                    (spawn-task (lambda () (Control-Assign-Task this name file players)) 'Control-Assign)
                     (cond
                         (Control-Assign-Temp
                             Control-Assign-Temp
@@ -1007,7 +1007,7 @@
                     ;(show-n "Load file" file)
                     (load (string-append "visus/" file ".scm"))
                 )
-                (spawn-task (lambda () ((eval-string file) id 1)) (get-visu-task-name))
+                (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
 ;(show-d "debug visu-launch spawn-task")
 ;;(show-d (ls-tasks))
             )
@@ -1033,7 +1033,7 @@
                                 (eval-string "void")
                             )
                         )
-                        id
+                        this
                     )
 ;(show-d "debug visu-stop destroy")
                 )
@@ -1997,6 +1997,28 @@
     )
 )
 
+(define Kb-list (make-hash))
+(define (Kb-Add key)
+    (hash-set! Kb-list key 1)
+)
+(define (Kb-Remove key)
+    (hash-remove! Kb-list key)
+)
+(define (Kb-Get-On)
+    (hash-keys Kb-list)
+)
+
+(define Kbs-list (make-hash))
+(define (Kbs-Add key)
+    (hash-set! Kbs-list key 1)
+)
+(define (Kbs-Remove key)
+    (hash-remove! Kbs-list key)
+)
+(define (Kbs-Get-On)
+    (hash-keys Kbs-list)
+)
+
 (define Trigger%
     (class object%
         (init-field
@@ -2079,9 +2101,11 @@
             )
         )
         (define/public (Trigger-Detect) ;Main loop for trigger event
-            (Trigger-CC-Event-Detect)
             (Trigger-Note-Event-Detect)
             (Trigger-Osc-Event-Detect)
+            (Trigger-CC-Event-Detect)
+            (Trigger-Kb-Event-Detect)
+            (Trigger-Kbs-Event-Detect)
         )
         (define/private (Trigger-CC-Event-Detect) ;Abstracted function to check type trigger event
             (letrec
@@ -2146,6 +2170,64 @@
                 )
                 (when trigg-event
                     (event-trigg trigg-event)
+                )
+            )
+        )
+        (define/private (Trigger-Kb-Event-Detect)
+            (let
+                (
+                    (k-down (keys-down))
+                )
+                ;Test released keys with Kb-list memory
+                (map
+                    (lambda (key-on)
+                        (unless (member key-on k-down)
+                            (Kb-Remove key-on)
+                            (Trigger-Kb-Search (vector (string key-on) 0))
+                        )
+                    )
+                    (Kb-Get-On)
+                )
+                ;Test pushed keys with Kb-list memory
+                (let ((keys-downed (Kb-Get-On)))
+                    (map
+                        (lambda (k)
+                            (unless (member k keys-downed)
+                                (Kb-Add k)
+                                (Trigger-Kb-Search (vector (string k) 1))
+                            )
+                        )
+                        k-down
+                    )
+                )
+            )
+        )
+        (define/private (Trigger-Kbs-Event-Detect)
+            (let*
+                (
+                    (k-down (keys-special-down))
+                )
+                ;Test released special keys with Kbs-list memory
+                (map
+                    (lambda (key-on)
+                        (unless (member key-on k-down)
+                            (Kbs-Remove key-on)
+                            (Trigger-Kbs-Search (vector key-on 0))
+                        )
+                    )
+                    (Kbs-Get-On)
+                )
+                ;Test pushed keys with Kbs-list memory
+                (let ((keys-downed (Kbs-Get-On)))
+                    (map
+                        (lambda (k)
+                            (unless (member k keys-downed)
+                                (Kbs-Add k)
+                                (Trigger-Kbs-Search (vector k 1))
+                            )
+                        )
+                        k-down
+                    )
                 )
             )
         )
@@ -2236,6 +2318,26 @@
                     (address (vector (vector-ref event 0)))
                     (value (vector-ref event 1))
                     (Trigger-Obj (Trigger-Address-Search "osc" address))
+                )
+                (Trigger-Set Trigger-Obj value)
+            )
+        )
+        (define/private (Trigger-Kb-Search event)
+            (let*
+                (
+                    (address (vector (vector-ref event 0)))
+                    (value (vector-ref event 1))
+                    (Trigger-Obj (Trigger-Address-Search "kb" address))
+                )
+                (Trigger-Set Trigger-Obj value)
+            )
+        )
+        (define/private (Trigger-Kbs-Search event)
+            (let*
+                (
+                    (address (vector (vector-ref event 0)))
+                    (value (vector-ref event 1))
+                    (Trigger-Obj (Trigger-Address-Search "kbs" address))
                 )
                 (Trigger-Set Trigger-Obj value)
             )
@@ -2363,10 +2465,10 @@
 (define (c name id #:type (type 'linear) #:coeff (coefficient 1) #:toggle (toggle #f))
     (cond
         ((equal? type 'linear)
-            (* (send god get-control name id) coefficient)
+            (* (send id get-control name) coefficient)
         )
         ((equal? type 'string)
-            (send god get-control name id)
+            (send id get-control name)
         )
     )
 )
