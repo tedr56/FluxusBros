@@ -32,10 +32,11 @@
 (smoothing-bias 0.7)
 
 (define OSC-SOURCE "3333")
-(define osc-enable #t)
-
-(when osc-enable
+(define (osc-launch)
     (osc-source OSC-SOURCE)
+)
+(when osc-enable
+    (osc-launch)
 )
 
 (define normal-var #t)
@@ -1144,7 +1145,7 @@
                                                                 (send (get-control-object NAME) set-control-type CONTROL #:player PLAYER)
                                                                 (cond
                                                                     ((equal? CONTROL "osc")
-                                                                        (show "Control-File-Parse osc?!")
+                                                                        (osc-launch)
                                                                         (send (get-control-object NAME) set-control-address ADDRESS #:player PLAYER)
                                                                         (osc-control-add ADDRESS (send (get-control-object NAME) get-control))
                                                                     )
@@ -2421,6 +2422,7 @@
                                                             )
                                                         )
                                                     )
+                                                    (osc-launch)
                                                     (Trigger-Create-Path (vector-append (vector "osc") Address) new-trigger)
                                                 )
                                             )
