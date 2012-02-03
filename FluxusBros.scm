@@ -59,6 +59,73 @@
     )
 )
 
+(define Mapping-Surface%
+    (class object%
+        (init-field
+            (mesh build-plane)
+            (surface-resolution (vector 500 500))
+        )
+        (field
+            (mask
+                (with-state
+                    (scale 0)
+                    (build-pixels (vector-ref surface-resolution 0) (vector-ref surface-resolution 1) #t)
+                )
+            )
+            (renderer
+                (with-state
+                    (scale 0)
+                    (build-pixels (vector-ref surface-resolution 0) (vector-ref surface-resolution 1) #t)
+                )
+            )
+            (surface (Init-Surface))
+        )
+        (define/private (Init-Surface)
+            (with-primitive mask
+                (pixels-clear (vector 1 0 0))
+                (pixels-upload)
+            )
+            (with-state
+                (scale 5)
+                (multitexture 0 (pixels->texture renderer))
+                (texture-params 0
+                    (list
+                        'min 'nearest
+                        'mag 'nearest
+                        'wrap-t 'clamp
+                        'wrap-s 'clamp
+                        'tex-env 'replace
+                    )
+                )
+                (multitexture 1 (pixels->texture mask))
+                (texture-params 1
+                    (list
+                        'min 'nearest
+                        'mag 'nearest
+                        'wrap-s 'clamp
+                        'wrap-t 'clamp
+                        'tex-env 'blend
+                    )
+                )
+                (mesh)
+            )
+        )
+        (define/public (Get-Renderer)
+            (show "")
+            (show "Renderer: ")
+            (show renderer)
+            (show "Mask:")
+            (show mask)
+            (show "Surface :")
+            (show surface)
+            renderer
+        )
+        (super-new)
+    )
+)
+
+(define Mapping (new Mapping-Surface%))
+
 (define Crossfaders-Interface
     (interface ()
         set-focus
@@ -1008,7 +1075,9 @@
                     ;(show-n "Load file" file)
                     (load (string-append "visus/" file ".scm"))
                 )
-                (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
+                (with-pixels-renderer (send Mapping Get-Renderer)
+                    (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
+                )
 ;(show-d "debug visu-launch spawn-task")
 ;;(show-d (ls-tasks))
             )
