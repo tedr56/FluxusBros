@@ -119,7 +119,7 @@
                     (second-swap (inexact->exact (beat-sphere-find-swap id)))
                     (first-parm (vector (pdata-ref "p" first-swap) (pdata-ref "p" (+ first-swap 1)) (pdata-ref "p" (+ first-swap 2))))
                     (second-parm (vector (pdata-ref "p" second-swap) (pdata-ref "p" (+ second-swap 1)) (pdata-ref "p" (+ second-swap 2))))
-                    (function-name (string->symbol (string-append id "-" "swap" "-" (number->string (inexact->exact first-swap)))))
+                    (function-name (string->symbol (string-append (send id get-name) "-" "swap" "-" (number->string (inexact->exact first-swap)))))
                 )
                 (spawn-task
                     (lambda ()
@@ -142,7 +142,7 @@
     )
 ;        (rotate (vmul (vector (* (time) 1.987) (* (time) 1.0789) (* (time) 0.51245)) 0.05))
     (with-primitive (hash-ref beat-sphere-prims id)
-        (when (beat-catch id "swap")
+        (when (beat-catch (send id get-name) "swap")
             (beat-sphere-launcher-swap id)
             (beat-sphere-launcher-swap id)
             (beat-sphere-launcher-swap id)

@@ -4,11 +4,12 @@
         (lambda (l)
             (let*
                 (
+                    (Name (send id get-name))
                     (prim (car l))
-                    (travel-function (string->symbol (string-append "growing-cubes" "-" id "-" (number->string prim))))
+                    (travel-function (string->symbol (string-append "growing-cubes" "-" Name "-" (number->string prim))))
                 )
                 (when (task-running? travel-function)
-                    (travel-end (string-append "growing-cubes" "-" id "-" (number->string prim)))
+                    (travel-end (string-append "growing-cubes" "-" Name "-" (number->string prim)))
                     (rm-task travel-function)
                 )
                 (destroy prim)
@@ -24,6 +25,7 @@
 (define (growing-cubes id cross)
     (letrec
         (
+            (Name (send id get-name))
             (add-cube
                 (lambda ()
                     (let
@@ -123,7 +125,7 @@
                                 (
                                     (voyage
                                         (travel
-                                            (string-append "growing-cubes" "-" id "-" (number->string prim))
+                                            (string-append "growing-cubes" "-" Name "-" (number->string prim))
 ;                                            origine
 ;                                            destination
                                             (vector 0 0 0)
@@ -134,7 +136,7 @@
                                 )
                                 (cond
                                     ((equal? voyage destination)
-                                        (travel-end (string-append "growing-cubes" "-" id "-" (number->string prim)))
+                                        (travel-end (string-append "growing-cubes" "-" Name "-" (number->string prim)))
                                         #f
                                     )
                                     (else
@@ -151,7 +153,7 @@
                                 )
                             )
                         )
-                        (string->symbol (string-append "growing-cubes" "-" id "-" (number->string prim)))
+                        (string->symbol (string-append "growing-cubes" "-" Name "-" (number->string prim)))
                     )
                 )
             )
@@ -171,7 +173,7 @@
 
 ;                                        ((= (car l) (car (list-ref (hash-ref growing-cubes-prims id) (- (length (hash-ref growing-cubes-prims id)) 2))))
 ;)
-                                            (travel-end (string-append "growing-cubes" "-" id "-" (number->string (car l))))
+                                            (travel-end (string-append "growing-cubes" "-" Name "-" (number->string (car l))))
                                             (travel-cube (car l) (cdr l) (vadd dir (cdr l)) dir)
                                             (cons (car l) (vadd dir (cdr l)))
                                         )
@@ -192,10 +194,10 @@
                         (
                             (list-prims (hash-ref growing-cubes-prims id))
                             (prim (car (list-ref list-prims 0)))
-                            (travel-function (string->symbol (string-append "growing-cubes" "-" id "-" (number->string prim))))
+                            (travel-function (string->symbol (string-append "growing-cubes" "-" Name "-" (number->string prim))))
                         )
                         (when (task-running? travel-function)
-                            (travel-end (string-append "growing-cubes" "-" id "-" (number->string prim)))
+                            (travel-end (string-append "growing-cubes" "-" Name "-" (number->string prim)))
                             (rm-task travel-function)
                         )
                         (destroy prim)
@@ -208,7 +210,7 @@
             (hash-set! growing-cubes-prims id '())
         )
         (flxseed (+ (inexact->exact (floor (* 1000 (flxrnd) (time))))))
-        (when (beat-catch id "addcube")
+        (when (beat-catch (send id get-name) "addcube")
             (add-cube)
             (move-cube)
         )

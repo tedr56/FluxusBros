@@ -7,7 +7,8 @@
 
 (define (circle id cross)
     (let
-        (	
+        (
+            (Name (send id get-name))
 		    (g (c "gain" id))
             (param-n (+ 1 (round (c "param-n" id #:coeff 127))))
             (param-c (c "param-c" id #:coeff 8))
@@ -16,7 +17,7 @@
             (
                 (rot-mid
                     (lambda (name (reset null))
-                        (tempo (string-append id "-" name) (* (- (c name id) 0.5) 1270) reset)
+                        (tempo (string-append Name "-" name) (* (- (c name id) 0.5) 1270) reset)
                     )
                  )
                  

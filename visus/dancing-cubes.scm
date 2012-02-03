@@ -1,4 +1,4 @@
-(require mzlib/string)
+;(require mzlib/string)
 ;(clear)
 ;(video-clear-cache)
 
@@ -10,42 +10,40 @@
 ;(define (dancing-cubes chann cross)
 (define (dancing-cubes id cross)
     (define (get-sens i size sizep cpt)
-        (let ((rndX (* (+ (vector-ref (dcub-pos (list-ref (dcubs-dcubes dc) i)) 0)
-                          (* 0.5 (vector-ref size 0))
-                          (* 0.5 (vector-ref sizep 0)))
-                       (* 2 (- (round (flxrnd)) 1))))
-              (rndY (* (+ (vector-ref (dcub-pos (list-ref (dcubs-dcubes dc) i)) 1)
-                          (* 0.5 (vector-ref size 1))
-                          (* 0.5 (vector-ref sizep 0)))
-                       (* 2 (- (round (flxrnd)) 1)))))
-;    (show rndX)
-;    (show rndY)
-
-        (if (> (vmag
-                    (vadd
-                        (dcub-pos (list-ref (dcubs-dcubes dc) i))
-                        (vector rndX rndY 0)
+        (let
+            (
+                (rndX (*    (+ (vector-ref (dcub-pos (list-ref (dcubs-dcubes dc) i)) 0)
+                                (* 0.5 (vector-ref size 0))
+                                (* 0.5 (vector-ref sizep 0)))
+                            (* 2 (- (round (flxrnd)) 1))))
+                (rndY (*    (+ (vector-ref (dcub-pos (list-ref (dcubs-dcubes dc) i)) 1)
+                                (* 0.5 (vector-ref size 1))
+                                (* 0.5 (vector-ref sizep 0)))
+                            (* 2 (- (round (flxrnd)) 1))))
+            )
+            (if (> (vmag
+                        (vadd
+                            (dcub-pos (list-ref (dcubs-dcubes dc) i))
+                            (vector rndX rndY 0)
+                        )
+                    )
+                    (+ (* (c "45" id) 30) 1))
+                (cond
+                    ((< cpt 20)
+                        (get-sens i size sizep (add1 cpt)))
+                    (else
+                        (get-sens i (vmul size -1) (vmul sizep -1) (add1 cpt))
                     )
                 )
-                (+ (* (c "45" id) 30) 1))
-            (cond
-                ((< cpt 20)
-                    (get-sens i size sizep (add1 cpt)))
-                (else
-                    (get-sens i (vmul size -1) (vmul sizep -1) (add1 cpt))
-                )
+                (vector rndX rndY 0)
             )
-            (vector rndX rndY 0)
-        )
         )
     )
 
     (let ((g (* (c "gain-a" id) (* (c "gain-b" id) 10))))
 (push)
     (blur (c "blur" id))
-;    (blur (+ 0.1 (- 1 (* 0.0001 (gh2 2)))))
     (flxseed (inexact->exact (floor (gl 1 g))))
-;    (hint-ignore-depth)
     (hint-depth-sort)
     (blend-mode 'src-alpha 'one-minus-src-alpha)
     (translate (vector 0 0 -20))
@@ -57,8 +55,6 @@
               (cube0 (list-ref (dcubs-dcubes dc) 0)))
             (push)
                 (translate (vadd (dcub-pos cube) (vector 0 0 (* -0.1 (vector-ref (dcub-size cube) 0)))))
-;                (colour (vector 1 0.5 0.3))
-;                (opacity (max2 (dcub-opa cube) (opa-cross cross)))
                 (opacity (dcub-opa cube))
                 (colour(hsv->rgb  (dcub-color cube)))
                 (scale (dcub-size cube))
@@ -68,7 +64,6 @@
     )
 
     (let ((max-cubes (+ (inexact->exact (floor (* (c "speed" id) 400))) 1)))
-;(show (length (dcubs-dcubes dc)))
         (when (> (length (dcubs-dcubes dc)) max-cubes)
             #(for ((i (build-list (- (length (dcubs-dcubes dc)) max-cubes) values)))
                 (destroy (dcub-prim (list-ref (dcubs-dcubes dc) i)))
@@ -82,9 +77,7 @@
         (let*
             (
                 (cubep (sub1 (length (dcubs-dcubes dc))))
-;                (color (vector (- (/ i 20) 0.1) (* 1 (gl i g)) (* 1 (gl i g))))
-;(color (vector (/ i (get-num-frequency-bins)) 1 (gl i g)))3
-               (color (vector (- (/ i 20) 0.1) (* 1 (gl i g)) (* 1 (gl i g))))
+                (color (vector (- (/ i 20) 0.1) (* 1 (gl i g)) (* 1 (gl i g))))
                 (opa (+ 0.2 (* (gl i g) (* (c "opa-gh" id) 1))))
                 (size (vmul (vector (gl i g) (gl (+ 0 i) g) (* (gl (+ 5 i) g) (+ 1 (* (c "scale-gh-z" id) 5)))) (* (c "scale-gh" id) 1)))
                 (sizep (dcub-size (list-ref (dcubs-dcubes dc) (sub1 (length (dcubs-dcubes dc))))))
@@ -108,24 +101,3 @@
 )
 
 ;(every-frame (dancing-cubes))
-
-
-;(define dancing-cubes-state 0)
-;(define dancing-cubes-stop 0)
-
-#(define (dancing-cubes-control chann cross in)
-    (when (not (zero? (pipe-content-length in)))
-        (let ((data (read in)))
-            (if (equal? "1" data)
-                (set! dancing-cubes-stop 1)
-                (set! dancing-cubes-stop 0)
-            )
-        )
-    )
-    (cond ((and (= dancing-cubes-state 0) (> (m 0 cross) 0) (zero? dancing-cubes-stop))
-        (set! dancing-cubes-state 1)
-        (spawn-task (lambda () (dancing-cubes chann cross)) 'dancing-cubes)))
-    (cond ((or (and (= dancing-cubes-state 1) (= (m 0 cross) 0)) (not (zero? dancing-cubes-stop)))
-        (set! dancing-cubes-state 0)
-        (rm-task 'dancing-cubes)))
-)

@@ -13,6 +13,7 @@
     )
     (let
         (
+            (name (send id get-name))
             (b (c "blur" id))
             (g (c "gain" id))
         )
@@ -21,8 +22,8 @@
                 (num-id
                     (lambda ()
                         (+
-                            (string->number (substring id 0 3))
-                            (string->number (substring id 4))
+                            (string->number (substring name 0 3))
+                            (string->number (substring name 4))
                         )
                     )
                 )
@@ -60,7 +61,7 @@
                             (hint-ignore-depth)
                             (line-width 20)
                             (scale (vector 1 1 1))
-                            (when (beat-catch id "posrnd" #:beat (list (c "tempo" id)))
+                            (when (beat-catch name "posrnd" #:beat (list (c "tempo" id)))
                                 (hash-set! bully-seed id (+ (num-id) (inexact->exact (floor (* 1000 (gh (* 16 (flxrnd)))))) 1))
                             )
                             (flxseed (hash-ref bully-seed id))

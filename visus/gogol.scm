@@ -76,10 +76,8 @@
 
 (define (gogol-add-prim id name value)
     (unless (hash-has-key? gogol-prims id)
-(show "debug gogol-add-prim add id")
         (hash-set! gogol-prims id (make-hash))
     )
-(show (string-append "debug gogol-add-prim add id : " name))
     (hash-set!
         (hash-ref
             gogol-prims

@@ -1,13 +1,14 @@
 (define (spectre id cross)
-    (let
+    (let*
         (
 ;            (long (vector-length (ga)))
+            (Name (send id get-name))
             (long 128)
             (move-gain 4)
             (num-id
                 (+
-                    (string->number (substring id 0 3))
-                    (string->number (substring id 4))
+                    (string->number (substring Name 0 3))
+                    (string->number (substring Name 4))
                 )
             )
         )

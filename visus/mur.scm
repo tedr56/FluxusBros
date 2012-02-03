@@ -3,6 +3,7 @@
     (translate (vector 0 0 -30))
     (let
         (
+            (Name (send id get-name))
             (g (c "gain-a" id #:coeff 10))
             (blur-control (c "blur" id))
             (clr-coeff (c "clr-coeff" id #:coeff 0.1))
@@ -59,13 +60,13 @@
                 )
                 (draw-line
                     (lambda (count-line count-row)
-                        (rotate (vector (tempo (string-append id "-" "mur-L-X") L-X) (tempo (string-append id "-" "mur-L-Y") L-Y) (tempo (string-append id "-" "mur-L-Z") L-Z)))
+                        (rotate (vector (tempo (string-append Name "-" "mur-L-X") L-X) (tempo (string-append Name "-" "mur-L-Y") L-Y) (tempo (string-append Name "-" "mur-L-Z") L-Z)))
                         (when (positive? Block-L-X)
-                            (tempo (string-append id "-" "mur-L-X") null 0))
+                            (tempo (string-append Name "-" "mur-L-X") null 0))
                         (when (positive? Block-L-Y)
-                            (tempo (string-append id "-" "mur-L-Y") null 0))
+                            (tempo (string-append Name "-" "mur-L-Y") null 0))
                         (when (positive? Block-L-Z)
-                            (tempo (string-append id "-" "mur-L-Z") null 0))
+                            (tempo (string-append Name "-" "mur-L-Z") null 0))
     
                         (cond
                             ((<= count-line 0)
@@ -89,11 +90,11 @@
             (blur blur-control)
 ;            (opacity  cross)
 
-            (rotate (vector (tempo (string-append id "-" "mur-G-X") G-X) (* (tempo (string-append id "-" "mur-G-X") G-X) 0.98751) (tempo (string-append id "-" "mur-G-Y") G-Y)))
+            (rotate (vector (tempo (string-append Name "-" "mur-G-X") G-X) (* (tempo (string-append Name "-" "mur-G-X") G-X) 0.98751) (tempo (string-append Name "-" "mur-G-Y") G-Y)))
             (when (positive? Block-G-X)
-                (tempo (string-append id "-" "mur-G-X") null 0))
+                (tempo (string-append Name "-" "mur-G-X") null 0))
             (when (positive? Block-G-Y)
-                (tempo (string-append id "-" "mur-G-Y") null 0))
+                (tempo (string-append Name "-" "mur-G-Y") null 0))
             (draw-line i i)
         )
     )

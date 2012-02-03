@@ -5,7 +5,8 @@
     (with-state
         (let
             (
-               (g (c "gain" id #:coeff 0.5))
+                (Name (send id get-name))
+                (g (c "gain" id #:coeff 0.5))
             )
             (letrec
                 (
@@ -110,16 +111,16 @@
                     )
 
 
-                    (tempo (string-append "rtx" id) (* sensx (c "rtx" id #:coeff 100)))
-                    (tempo (string-append "rty" id) (* sensy (c "rty" id #:coeff 100)))
-                    (tempo (string-append "rtz" id) (* sensz (c "rtz" id #:coeff 100)))
+                    (tempo (string-append "rtx" Name) (* sensx (c "rtx" id #:coeff 100)))
+                    (tempo (string-append "rty" Name) (* sensy (c "rty" id #:coeff 100)))
+                    (tempo (string-append "rtz" Name) (* sensz (c "rtz" id #:coeff 100)))
                 )
                 (unless (zero? (c "rtx-blok" id))
-                            (tempo (string-append "rtx" id) 0 0))
+                            (tempo (string-append "rtx" Name) 0 0))
                 (unless (zero? (c "rty-blok" id))
-                            (tempo (string-append "rty" id) 0 0))
+                            (tempo (string-append "rty" Name) 0 0))
                 (unless (zero? (c "rtz-blok" id))
-                            (tempo (string-append "rtz" id) 0 0))
+                            (tempo (string-append "rtz" Name) 0 0))
                 (let*
                     (
                         (sensx (- (* 2 (c "sens-x-2" id)) 1))
@@ -131,9 +132,9 @@
                         (rx (c "rx" id #:coeff coeffrx))
                         (ry (c "ry" id #:coeff coeffry))
                         (rz (c "rz" id #:coeff coeffrz))
-                        (rtx (* sensx (tempo (string-append "rtx" id))))
-                        (rty (* sensy (tempo (string-append "rty" id))))
-                        (rtz (* sensz (tempo (string-append "rtz" id))))
+                        (rtx (* sensx (tempo (string-append "rtx" Name))))
+                        (rty (* sensy (tempo (string-append "rty" Name))))
+                        (rtz (* sensz (tempo (string-append "rtz" Name))))
                         (Rx (+ rtx rx))
                         (Ry (+ rty ry))
                         (Rz (+ rtz rz))

@@ -60,7 +60,7 @@
                             (hint-ignore-depth)
                             (line-width 20)
                             (scale (vector 1 1 1))
-                            (when (beat-catch id "posrnd" #:beat (list (c "tempo" id)))
+                            (when (beat-catch (send id get-name) "posrnd" #:beat (list (c "tempo" id)))
                                 (hash-set! transform-cube-seed id (+ (num-id) (inexact->exact (floor (* 1000 (gh (* 16 (flxrnd)))))) 1))
                             )
                             (flxseed (hash-ref transform-cube-seed id))

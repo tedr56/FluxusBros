@@ -35,7 +35,7 @@
                         (
                             (origine (hash-ref (hash-ref space-bpm-prims id) prim))
                             (destination (vadd origine (vector 0 0 z)))
-                            (tour-operator  (string-append "space-bpm" "-" id "-" (number->string prim)))
+                            (tour-operator  (string-append "space-bpm" "-" (send id get-name) "-" (number->string prim)))
                             (voyage (travel tour-operator origine destination 0.5))
                         )
                         (cond
@@ -95,21 +95,22 @@
     (unless (hash-has-key? space-bpm-mode id)
         (hash-set! space-bpm-mode id #t)
     )
-    (unless (hash-has-key? space-bpm-prims id)
-        (hash-set! space-bpm-prims id (make-hash))
-    )
-    (when (beat-catch id "space")
-        (cond
-            ((hash-ref space-bpm-mode id)
-                (space-bpm-add id)
-                (space-bpm-add id)
-                (space-bpm-walk id)
-                (hash-set! space-bpm-mode id #f)
-            )
-            (else
-                (hash-set! space-bpm-mode id #t)
+    (let ((Name (send id get-name)))
+        (unless (hash-has-key? space-bpm-prims id)
+            (hash-set! space-bpm-prims id (make-hash))
+        )
+        (when (beat-catch Name "space")
+            (cond
+                ((hash-ref space-bpm-mode id)
+                    (space-bpm-add id)
+                    (space-bpm-add id)
+                    (space-bpm-walk id)
+                    (hash-set! space-bpm-mode id #f)
+                )
+                (else
+                    (hash-set! space-bpm-mode id #t)
+                )
             )
         )
     )
 )
-            
