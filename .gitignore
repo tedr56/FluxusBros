@@ -8,3 +8,5 @@
 FluxusBrosLauncher.scm
 #Devellopement visuals
 visus/Experimental
+#Tests files
+Tests/
