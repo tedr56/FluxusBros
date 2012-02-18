@@ -13,8 +13,8 @@ The id parameter is a different string for each running script and compose of
     like "901-001-valley"
 For example, this id is used in "c" function to find the appropriate control (see Controls section).
 
-A function can be created when a script is stop, for destroy build object or reinitialize variables.
-This function have to be named as "named_of_the_script-destroy"
+A function can be created when a script is stopped, to destroy build object or reinitialize variables.
+This function has to be named as "named_of_the_script-destroy"
 like valley-destroy.
 
 Taking in example, the "test" visual.
@@ -23,8 +23,14 @@ and the main function of the visual script have to be defined like this :
 (define (test id cross)
 To destroy a (build-cube) used in the test visual, use the function
 (define (test-destroy id)
-and place a (destroy) function inside.
+and place a (destroy x) function inside.
 
+Tips:
+To distinguish visuals tasks between same scripts, the "Id" argument can be used.
+It contain the Visu% object attached to the script.
+To get an tangible value, you can use the get-name function of the object to get an string identifier composed with XXX-YYY-visual
+XXX is the attached crossfader, and YYY is the attached level of the crossfader.
+To use this in a script, you can type (send id get-name)
 
 *Triggers----------------------------------------------------------------
 The triggers are the midi, osc or keybooard event which can
