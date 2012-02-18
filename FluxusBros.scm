@@ -40,6 +40,8 @@
     (osc-launch)
 )
 
+(define load-visu-file-force #f)
+
 (define normal-var #t)
 (define (show-n text . other)
 ;(show text)
@@ -60,7 +62,12 @@
     )
 )
 
-(define Mapping-Surface%
+
+; define mapping Get-Mesh-Size
+; define mapping Get-Mesh
+; define mapping Get-Renderer
+
+(define Mapping%
     (class object%
         (init-field
             (mesh build-plane)
@@ -87,7 +94,7 @@
                 (pixels-upload)
             )
             (with-state
-                (scale 5)
+                (scale 10)
                 (multitexture 0 (pixels->texture renderer))
                 (texture-params 0
                     (list
@@ -112,20 +119,80 @@
             )
         )
         (define/public (Get-Renderer)
-            (show "")
-            (show "Renderer: ")
-            (show renderer)
-            (show "Mask:")
-            (show mask)
-            (show "Surface :")
-            (show surface)
             renderer
+        )
+        (define/public (Get-Mesh-Size)
+            (with-primitive surface
+                (pdata-size)
+            )
+        )
+        
+        (define/public (Get-Mesh)
+            surface
+        )
+        (define/public (Set-Position position)
+            (show "Set Position entry")
+            (show (Get-Mesh-Size))
+            (show (length position))
+            (when (= (Get-Mesh-Size) (* 2 (length position)))
+                (show "Corresponding length")
+                (with-primitive surface
+                    (pdata-index-map!
+                        (lambda (i p)
+                            (list-ref position (modulo i (length position)))
+                        )
+                        "p"
+                    )
+                )
+            )
         )
         (super-new)
     )
 )
 
-(define Mapping (new Mapping-Surface%))
+(define Mappings%
+    (class object%
+        (field
+            (mapping-list (make-hash))
+        )
+        (define/private (Get-Mapping name)
+            (hash-ref mapping-list name #f)
+        )
+        (define/public (Add-Mapping name #:meshe (meshe build-plane) #:position (position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0))))
+            (hash-set! mapping-list name (new Mapping% (mesh meshe)))
+            (send (Get-Mapping name) Set-Position position)
+            (Get-Mapping name)
+        )
+        (define/public (Get-Renderer name)
+            (let ((mapp (Get-Mapping name)))
+                (show "debug get-renderer :")
+                (show mapp)
+                (show (send mapp Get-Renderer))
+                (cond
+                    (mapp
+                        (show "get renderer!")
+                        (send mapp Get-Renderer)
+                    )
+                    (else
+                        (send (Add-Mapping name) Get-Renderer)
+                    )
+                )
+            )
+        )
+        (define/public (Set-Mapping name (position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0))))
+            (if (Get-Mapping name)
+                (send (Get-Mapping name) Set-Position position)
+                (Add-Mapping name #:position position)
+            )
+        )
+        (define/public (Show-Mapping-List)
+            mapping-list
+        )
+        (super-new)
+    )
+)
+
+(define Mappings (new Mappings%))
 
 (define Crossfaders-Interface
     (interface ()
@@ -348,6 +415,25 @@
             (let ((cross (get-crossfader-from-player #:player player)))
                 (when cross
                     (send (get-crossfader cross) crossfader-save-controls #:player player)
+                )
+            )
+        )
+        (define/public (set-mapping #:player player #:mapping mapp #:position (position #f) #:crossfader (cross #f))
+            (show "Mapping Crossfader cross Entry")
+            (show (get-crossfader-from-player #:crossfader cross #:player player))
+            (let ((crossf (get-crossfader-from-player #:crossfader cross #:player player)))
+                (when crossf
+                    (show "Mapping Crossfader founded")
+                    (show mapp)
+                    (show position)
+                    (if position
+                        (send Mappings Set-Mapping mapp position)
+                        (send Mappings Set-Mapping mapp)
+                    )
+                    (show "Mapping Crossfader Set")
+                    ;(show (get-crossfader crossf))
+                    (send (get-crossfader crossf) set-mapping mapp)
+                    (show "Mapping Crossfader Set-Mapping")
                 )
             )
         )
@@ -717,12 +803,12 @@
                     ((zero? level)
                         (hash-for-each
                             visu-list
-                                (lambda (n_level visu-h)
-                                    (send visu-h visu-stop)
-                                        (when (= n_level (hash-ref player-level player #f))
-                                            (send (get-visu n_level) set-visu-to-locked #:player player)
-                                    )
+                            (lambda (n_level visu-h)
+                                (send visu-h visu-stop)
+                                    (when (= n_level (hash-ref player-level player #f))
+                                        (send (get-visu n_level) set-visu-to-locked #:player player)
                                 )
+                            )
                         )
                     )
                     (else    
@@ -766,6 +852,17 @@
         )
         (define/public (crossfader-get-visu)
             visu
+        )
+        (define/public (set-mapping mapping)
+            (hash-for-each
+                visu-list
+                (lambda (n-level visu-h)
+                    (show "Debug Set Mapping Visu Level")
+                    (show n-level)
+                    (show visu-h)
+                    (send visu-h set-mapping mapping)
+                )
+            )
         )
         (super-new)
     )
@@ -974,6 +1071,7 @@
             (controls (make-hash))
             (players (make-hash))
             (mode 1)
+            (mapping #f)
         )
         (define/private (control-assign name)
             (cond
@@ -1013,6 +1111,9 @@
         (define/private (get-control-object name)
             (hash-ref controls name #f)
         )
+        (define/public (get-name)
+            id
+        )
         (define/private (get-visu-task-name)
             (string->symbol
                 (string-append
@@ -1048,7 +1149,7 @@
                 (file
                     (cond
                         ((task-running? (get-visu-task-name))
-                            (visu-stop #:bank bank #:level level)
+                            (visu-stop)
                             (set! file visu)
                             (set! mode n_mode)
                             (load-player #:player player)
@@ -1072,40 +1173,60 @@
 ;(show-d "visu-launch entry")
 ;(show-d file)
             (when file
-                (unless (defined? file)
-                    ;(show-n "Load file" file)
+                (unless (or (defined? file) load-visu-file-force)
                     (load (string-append "visus/" file ".scm"))
                 )
-                (with-pixels-renderer (send Mapping Get-Renderer)
+                (show "debug visu mapping :")
+                (show mapping)
+                (show (send Mappings Show-Mapping-List))
+                ;(show (send Mappings Get-Renderer 1))
+                (if mapping
+                    (spawn-task (lambda () (with-pixels-renderer (send Mappings Get-Renderer mapping) ((eval-string file) this 1))) (get-visu-task-name))
                     (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
                 )
 ;(show-d "debug visu-launch spawn-task")
 ;;(show-d (ls-tasks))
             )
         )
-        (define/public (visu-stop #:bank (bank #f) #:level (level 1))
+        (define/public (visu-stop)
 ;(show-d "debug visu-stop entry")
             (when file
                 (when (task-running? (get-visu-task-name))
 ;(show-d "debug visu-stop when task running")
                     (rm-task (get-visu-task-name))
 ;(show-d "debug visu-stop rm-task")
-                    (
-                        (eval-string
-                            (string-append
-                                file
-                                "-"
-                                "destroy"
-                            )
-                            (lambda ()
-;                                (show
- ;                                   (string-append file "-destroy not found")
-  ;                              )
-                                (eval-string "void")
+                    (if mapping
+                        (with-pixels-renderer (send Mappings Get-Renderer mapping)
+                            (
+                                (eval-string
+                                    (string-append
+                                        file
+                                        "-"
+                                        "destroy"
+                                    )
+                                    (lambda ()
+                                        (eval-string "void")
+                                    )
+                                )
+                                this
                             )
                         )
-                        this
+                        (
+                            (eval-string
+                                (string-append
+                                    file
+                                    "-"
+                                    "destroy"
+                                )
+                                (lambda ()
+                                    (eval-string "void")
+                                )
+                            )
+                            this
+                        )
                     )
+
+                        
 ;(show-d "debug visu-stop destroy")
                 )
             )
@@ -1464,6 +1585,18 @@
         )
         (define/public (get-visu)
             file
+        )
+        (define/public (set-mapping mapp)
+            (cond
+                ((task-running? (get-visu-task-name))
+                    (visu-stop)
+                    (set! mapping mapp)
+                    (visu-launch)
+                )
+                (else
+                    (set! mapping mapp)
+                )
+            )
         )
         (super-new)
     )
