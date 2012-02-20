@@ -112,49 +112,51 @@
 )
 
 (define (beat-sphere-launcher-swap id)
-            (let*
-                (
-                    (first-swap (inexact->exact (beat-sphere-find-swap id)))
+    (let*
+        (
+            (first-swap (inexact->exact (beat-sphere-find-swap id)))
 ;                    (second-swap (+ first-swap 3))
-                    (second-swap (inexact->exact (beat-sphere-find-swap id)))
-                    (first-parm (vector (pdata-ref "p" first-swap) (pdata-ref "p" (+ first-swap 1)) (pdata-ref "p" (+ first-swap 2))))
-                    (second-parm (vector (pdata-ref "p" second-swap) (pdata-ref "p" (+ second-swap 1)) (pdata-ref "p" (+ second-swap 2))))
-                    (function-name (string->symbol (string-append (send id get-name) "-" "swap" "-" (number->string (inexact->exact first-swap)))))
-                )
-                (spawn-task
-                    (lambda ()
-                        (beat-sphere-swap
-                            id
-                            first-swap
-                            second-swap
-                            first-parm
-                            second-parm
-                        )
-                    )
-                    function-name
+            (second-swap (inexact->exact (beat-sphere-find-swap id)))
+            (first-parm (vector (pdata-ref "p" first-swap) (pdata-ref "p" (+ first-swap 1)) (pdata-ref "p" (+ first-swap 2))))
+            (second-parm (vector (pdata-ref "p" second-swap) (pdata-ref "p" (+ second-swap 1)) (pdata-ref "p" (+ second-swap 2))))
+            (function-name (string->symbol (string-append (send id get-name) "-" "swap" "-" (number->string (inexact->exact first-swap)))))
+        )
+        (spawn-task
+            (lambda ()
+                (beat-sphere-swap
+                    id
+                    first-swap
+                    second-swap
+                    first-parm
+                    second-parm
                 )
             )
+            function-name
+        )
+    )
 )
 
 (define (beat-sphere id cross)
     (unless (hash-has-key? beat-sphere-prims id)
         (beat-sphere-build id)
     )
+    (with-state
 ;        (rotate (vmul (vector (* (time) 1.987) (* (time) 1.0789) (* (time) 0.51245)) 0.05))
-    (with-primitive (hash-ref beat-sphere-prims id)
-        (when (beat-catch (send id get-name) "swap")
-            (beat-sphere-launcher-swap id)
-            (beat-sphere-launcher-swap id)
-            (beat-sphere-launcher-swap id)
-        )
-        (let ((g (c "gain" id)))
-            (pdata-index-map!
-                (lambda (i color)
-                    (vector (* (gh2 2 g) (c "Rouge" id)) (* (gh2 (* i 2) g) (c "Vert" id)) (* (gh2 (* i 4) g) (c "Bleu" id)) 1)
-                )
-                "c"
+        (with-primitive (hash-ref beat-sphere-prims id)
+            (when (beat-catch (send id get-name) "swap")
+                (beat-sphere-launcher-swap id)
+                (beat-sphere-launcher-swap id)
+                (beat-sphere-launcher-swap id)
             )
+            (let ((g (c "gain" id)))
+                (pdata-index-map!
+                    (lambda (i color)
+                        (vector (* (gh2 2 g) (c "Rouge" id)) (* (gh2 (* i 2) g) (c "Vert" id)) (* (gh2 (* i 4) g) (c "Bleu" id)) 1)
+                    )
+                    "c"
+                )
+            )
+            (rotate (vmul (vector (* 1.2 (delta)) (* 1.05 (delta)) (* 0.985 (delta))) (c "speed" id #:coeff 50)))
         )
-        (rotate (vmul (vector (* 1.2 (delta)) (* 1.05 (delta)) (* 0.985 (delta))) (c "speed" id #:coeff 50)))
     )
 )
