@@ -62,14 +62,39 @@
     )
 )
 
+(define Renderer%
+    (class object%
+        (init-field
+            (surface-resolution (vector 500 500))
+        )
+        (field
+            (renderer
+                (with-state
+                    (scale 0)
+                    (build-pixels (vector-ref surface-resolution 0) (vector-ref surface-resolution 1) #t)
+                )
+            )
+        )
+        (define/public (Get-Renderer)
+            renderer
+        )
+        (super-new)
+    )
+)            
 
-; define mapping Get-Mesh-Size
-; define mapping Get-Mesh
-; define mapping Get-Renderer
+(define Renderer-Fake%
+    (class object%
+        (define/public (Get-Renderer)
+            #f
+        )
+        (super-new)
+    )
+)
 
 (define Mapping%
     (class object%
         (init-field
+            renderer
             (mesh build-plane)
             (surface-resolution (vector 500 500))
         )
@@ -80,13 +105,9 @@
                     (build-pixels (vector-ref surface-resolution 0) (vector-ref surface-resolution 1) #t)
                 )
             )
-            (renderer
-                (with-state
-                    (scale 0)
-                    (build-pixels (vector-ref surface-resolution 0) (vector-ref surface-resolution 1) #t)
-                )
-            )
             (surface (Init-Surface))
+            (visu-list '())
+            (mesh-position #f)
         )
         (define/private (Init-Surface)
             (with-primitive mask
@@ -94,8 +115,8 @@
                 (pixels-upload)
             )
             (with-state
-                (scale 10)
-                (multitexture 0 (pixels->texture renderer))
+;                (scale 10)
+                (multitexture 0 (pixels->texture (Get-Renderer)))
                 (texture-params 0
                     (list
                         'min 'nearest
@@ -118,24 +139,37 @@
                 (mesh)
             )
         )
+        (define/public (Set-Renderer R)
+            (set! renderer R)
+            #(destroy surface)
+            #(set! surface (Init-Surface))
+            #(when mesh-position
+                (Set-Position mesh-position)
+            )
+            (with-primitive surface
+                (multitexture 0 (pixels->texture (Get-Renderer)))
+            )
+        )
+        (define/public (UnSet-Renderer)
+            (let ((old-renderer renderer))
+                (set! renderer (new Renderer-Fake%))
+                old-renderer
+            )
+        )
         (define/public (Get-Renderer)
-            renderer
+            (send renderer Get-Renderer)
         )
         (define/public (Get-Mesh-Size)
             (with-primitive surface
                 (pdata-size)
             )
         )
-        
         (define/public (Get-Mesh)
             surface
         )
         (define/public (Set-Position position)
-            (show "Set Position entry")
-            (show (Get-Mesh-Size))
-            (show (length position))
             (when (= (Get-Mesh-Size) (* 2 (length position)))
-                (show "Corresponding length")
+                (set! mesh-position position)
                 (with-primitive surface
                     (pdata-index-map!
                         (lambda (i p)
@@ -146,6 +180,32 @@
                 )
             )
         )
+        (define/public (Get-Visu)
+            visu-list
+        )
+        (define/public (Set-Visu names)
+            (set! visu-list (sort (remove-duplicates (append visu-list (flatten (list names)))) string<?))
+            (with-primitive surface
+                (hide 0)
+            )
+        )
+        (define/public (UnSet-Visu name)
+            (set!
+                visu-list 
+                (remove
+                    name
+                    visu-list
+                    (lambda (n v)
+                        (equal? n v)
+                    )
+                )
+            )
+        )
+        (define/public (Hide-Surface)
+            (with-primitive surface
+                (hide 1)
+            )
+        )
         (super-new)
     )
 )
@@ -154,36 +214,191 @@
     (class object%
         (field
             (mapping-list (make-hash))
+            (renderer-list '())
+            (free-renderer '())
+            (setting-mode "bank")
+        )
+        (define/public (Set-Mapping-Mode mode)
+            (set! setting-mode mode)
+        )
+        (define/public (Get-Mapping-Mode)
+            setting-mode
         )
         (define/private (Get-Mapping name)
             (hash-ref mapping-list name #f)
         )
-        (define/public (Add-Mapping name #:meshe (meshe build-plane) #:position (position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0))))
-            (hash-set! mapping-list name (new Mapping% (mesh meshe)))
+        (define/public (Add-Mapping name #:renderer (n-renderer (Add-Renderer)) #:meshe (meshe build-plane) #:position (position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0))))
+            (hash-set! mapping-list name (new Mapping% (renderer n-renderer) (mesh meshe)))
             (send (Get-Mapping name) Set-Position position)
             (Get-Mapping name)
         )
-        (define/public (Get-Renderer name)
-            (let ((mapp (Get-Mapping name)))
-                (show "debug get-renderer :")
-                (show mapp)
-                (show (send mapp Get-Renderer))
-                (cond
-                    (mapp
-                        (show "get renderer!")
-                        (send mapp Get-Renderer)
+        (define/private (Add-Renderer)
+            (show "Debug Add-Renderer")
+            (cond
+                ((empty? free-renderer)
+                    (show "Empty free-renderer")
+                    (show free-renderer)
+                    (show renderer-list)
+                    (let ((new-renderer (new Renderer%)))
+                        (set! renderer-list (append renderer-list (list new-renderer)))
+                        new-renderer
                     )
-                    (else
-                        (send (Add-Mapping name) Get-Renderer)
+                )
+                (else
+                    (let ((first-free-renderer (list-ref free-renderer 0)))
+                        (set! free-renderer (list-tail free-renderer 1))
+                        (set! renderer-list (append renderer-list (list first-free-renderer)))
+                        first-free-renderer
                     )
                 )
             )
         )
-        (define/public (Set-Mapping name (position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0))))
-            (if (Get-Mapping name)
-                (send (Get-Mapping name) Set-Position position)
-                (Add-Mapping name #:position position)
+        (define/private (Find-Same-Render-Visuals Map Name Names)
+            (let*
+                (
+                    (mapped-visuals (send Map Get-Visu))
+                    (sorted-mapped-visuals (sort mapped-visuals string<?))
+                    (other-mapped-visuals
+                        (for/list
+                            (
+                                (n Names)
+                                #:when (not (equal? Name n))
+                            )
+                            (show "Debug Find-Same-Render :")
+                            
+                            (show sorted-mapped-visuals)
+                            (show n)
+                            (sort (send n Get-Visu) string<?)
+                        )
+                    )                                
+                )
+                (for/first
+                    (
+                        (other-map other-mapped-visuals)
+                        #:when (equal? other-map sorted-mapped-visuals)
+                    )
+                    (send other-map Get-Renderer)
+                )
             )
+        )
+        (define/public (Get-Renderer names)
+            (let
+                (
+                    (Render-List
+                        (map
+                            (lambda (name)
+                                (let ((mapp (Get-Mapping name)))
+                                    (cond
+                                        (mapp
+                                            (let ((Same-Renderer (Find-Same-Render-Visuals mapp name (flatten (list names)))))
+                                                (cond
+                                                    (Same-Renderer
+                                                        (show "Same Renderer Found!")
+                                                        Same-Renderer
+                                                    )
+                                                    (else
+                                                        (let ((render (send mapp Get-Renderer)))
+                                                            (unless render
+                                                                (show "Mapping exists but no existing Renderer")
+                                                                (send mapp Set-Renderer (Add-Renderer))
+                                                            )
+                                                            (send mapp Get-Renderer)
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                        (else
+                                            (let ((new-map (Add-Mapping name #:renderer (Add-Renderer))))
+                                                (show "No existing Mapping and no Renderer -> Created")
+                                                (send new-map Get-Renderer)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            (flatten (list names))
+                        )
+                    )
+                )
+                (show "Debug Get-Renderer")
+                (show Render-List)
+                (remove-duplicates Render-List)
+            )
+        )
+        (define/public (Get-Renderer-Pass names)
+            (let
+                (
+                    (Render-List
+                        (map
+                            (lambda (n)
+                                (let ((mapp (Get-Mapping n)))
+                                    (when mapp
+                                        (send mapp Get-Renderer)
+                                    )
+                                )
+                            )
+                            (flatten (list names))
+                        )
+                    )
+                )
+                (remove-duplicates Render-List)
+            )
+        )
+        (define/public (Set-Mapping name (position #f))
+            (cond
+                ((Get-Mapping name)
+                    (when position
+                        (send (Get-Mapping name) Set-Position position)
+                    )
+                )
+                (else
+                    (if position
+                        (Add-Mapping name #:position position)
+                        (Add-Mapping name)
+                    )
+                )
+            )
+        )
+        (define/public (Visu-On id names)
+            (for-each
+                (lambda (n)
+                    (send (Get-Mapping n) Set-Visu id)
+                )
+                (flatten (list names))
+            )
+        )
+        (define/public (Visu-Off id names)
+            (for-each
+                (lambda (n)
+                    (let ((mapp (Get-Mapping n)))
+                        (send mapp UnSet-Visu id)
+                        
+                        (show "Debug Visu-Off")
+                        (show (send mapp Get-Visu))
+                        (when (empty? (send mapp Get-Visu))
+                            (show "Mapping Empty Visu-List")
+                            (send mapp Hide-Surface)
+                            (let ((n-free-renderer (send mapp UnSet-Renderer)))                            
+                                (set!
+                                    renderer-list
+                                    (remove
+                                        n-free-renderer
+                                        renderer-list
+                                        (lambda (n r)
+                                            (equal? (send n Get-Renderer) (send r Get-Renderer))
+                                        )
+                                    )
+                                )
+                                (set! free-renderer (append free-renderer (list n-free-renderer)))
+                            )
+                        )
+                    )
+                )
+                (flatten (list names))
+            )
+            (show "free-renderer :")
+            (show free-renderer)
         )
         (define/public (Show-Mapping-List)
             mapping-list
@@ -419,23 +634,18 @@
             )
         )
         (define/public (set-mapping #:player player #:mapping mapp #:position (position #f) #:crossfader (cross #f))
-            (show "Mapping Crossfader cross Entry")
-            (show (get-crossfader-from-player #:crossfader cross #:player player))
             (let ((crossf (get-crossfader-from-player #:crossfader cross #:player player)))
                 (when crossf
-                    (show "Mapping Crossfader founded")
-                    (show mapp)
-                    (show position)
                     (if position
                         (send Mappings Set-Mapping mapp position)
                         (send Mappings Set-Mapping mapp)
                     )
-                    (show "Mapping Crossfader Set")
-                    ;(show (get-crossfader crossf))
-                    (send (get-crossfader crossf) set-mapping mapp)
-                    (show "Mapping Crossfader Set-Mapping")
+                    (send (get-crossfader crossf) set-mapping mapp player)
                 )
             )
+        )
+        (define/public (unrecord-mapping #:player player #:mapping mapping)
+            #t
         )
         (super-new)
     )
@@ -853,14 +1063,39 @@
         (define/public (crossfader-get-visu)
             visu
         )
-        (define/public (set-mapping mapping)
-            (hash-for-each
-                visu-list
-                (lambda (n-level visu-h)
-                    (show "Debug Set Mapping Visu Level")
-                    (show n-level)
-                    (show visu-h)
-                    (send visu-h set-mapping mapping)
+        (define/public (set-mapping mapping player)
+            (letrec
+                (
+                    (set-mapping-mode-bank
+                        (lambda ()
+                            (hash-for-each
+                                visu-list
+                                (lambda (n-level visu-h)
+                                    (show "Debug Set Mapping Visu Level")
+                                    (show n-level)
+                                    (show visu-h)
+                                    (send visu-h set-mapping mapping)
+                                )
+                            )
+                        )
+                    )
+                    (set-mapping-mode-single
+                        (lambda ()
+                            (let ((visu-target (get-visu (crossfader-get-player-level #:player player))))
+                                (when visu-target
+                                    (send visu-target set-mapping mapping)
+                                )
+                            )
+                        )
+                    )
+                )
+                (cond
+                    ((equal? "Single" (send Mappings Get-Mapping-Mode))
+                        (set-mapping-mode-single)
+                    )
+                    (else
+                        (set-mapping-mode-bank)
+                    )
                 )
             )
         )
@@ -1176,13 +1411,19 @@
                 (unless (or (defined? file) load-visu-file-force)
                     (load (string-append "visus/" file ".scm"))
                 )
-                (show "debug visu mapping :")
-                (show mapping)
-                (show (send Mappings Show-Mapping-List))
-                ;(show (send Mappings Get-Renderer 1))
-                (if mapping
-                    (spawn-task (lambda () (with-pixels-renderer (send Mappings Get-Renderer mapping) ((eval-string file) this 1))) (get-visu-task-name))
-                    (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
+                (cond
+                    (mapping
+                        (send Mappings Visu-On id mapping)
+                        (for-each
+                            (lambda (R)
+                                (spawn-task (lambda () (with-pixels-renderer R ((eval-string file) this 1))) (get-visu-task-name))
+                            )
+                            (send Mappings Get-Renderer mapping)
+                        )
+                    )
+                    (else
+                        (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
+                    )
                 )
 ;(show-d "debug visu-launch spawn-task")
 ;;(show-d (ls-tasks))
@@ -1195,8 +1436,31 @@
 ;(show-d "debug visu-stop when task running")
                     (rm-task (get-visu-task-name))
 ;(show-d "debug visu-stop rm-task")
-                    (if mapping
-                        (with-pixels-renderer (send Mappings Get-Renderer mapping)
+                    (cond
+                        (mapping
+                            (for-each
+                                (lambda (R)
+                                   (with-pixels-renderer R
+                                        (
+                                            (eval-string
+                                                (string-append
+                                                    file
+                                                    "-"
+                                                    "destroy"
+                                                )
+                                                (lambda ()
+                                                    (eval-string "void")
+                                                )
+                                            )
+                                            this
+                                        )
+                                    )
+                                )
+                                (send Mappings Get-Renderer-Pass mapping)
+                            )
+                            (send Mappings Visu-Off id mapping)
+                        )
+                        (else
                             (
                                 (eval-string
                                     (string-append
@@ -1210,19 +1474,6 @@
                                 )
                                 this
                             )
-                        )
-                        (
-                            (eval-string
-                                (string-append
-                                    file
-                                    "-"
-                                    "destroy"
-                                )
-                                (lambda ()
-                                    (eval-string "void")
-                                )
-                            )
-                            this
                         )
                     )
 
@@ -1588,13 +1839,17 @@
         )
         (define/public (set-mapping mapp)
             (cond
-                ((task-running? (get-visu-task-name))
-                    (visu-stop)
-                    (set! mapping mapp)
-                    (visu-launch)
-                )
-                (else
-                    (set! mapping mapp)
+                ((not (equal? mapp mapping))
+                    (cond
+                        ((task-running? (get-visu-task-name))
+                            (visu-stop)
+                            (set! mapping mapp)
+                            (visu-launch)
+                        )
+                        (else
+                            (set! mapping mapp)
+                        )
+                    )
                 )
             )
         )
