@@ -32,7 +32,7 @@
 (smoothing-bias 0.7)
 
 (define OSC-SOURCE "3333")
-(define osc-enable #f)
+(define osc-enable #t)
 (define (osc-launch)
     (osc-source OSC-SOURCE)
 )
