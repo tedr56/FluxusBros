@@ -1,2 +1,2 @@
-(load "load-config-Korg-Bitstream")
-#(send Triggers-List load-triggers "Config-Ted/Trigger-test")
+;(load "load-config-Korg-Bitstream")
+(load "Config-Ted/load-config")
