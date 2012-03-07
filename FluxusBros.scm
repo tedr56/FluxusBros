@@ -32,9 +32,12 @@
 (smoothing-bias 0.7)
 
 (define OSC-SOURCE "3333")
-(define osc-enable #t)
+(define osc-enable #f)
 (define (osc-launch)
     (osc-source OSC-SOURCE)
+    (unless (task-running? 'Osc-Detect)
+        (spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
+    )
 )
 (when osc-enable
     (osc-launch)
@@ -3013,7 +3016,8 @@
     )
     #t
 )
-(spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
+
+;(spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
 
 (define (gain-task)
     (let ((var-mouse-wheel (mouse-wheel)))
