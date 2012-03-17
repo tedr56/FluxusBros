@@ -36,12 +36,7 @@
 (define (osc-launch)
     (osc-source OSC-SOURCE)
     (unless (task-running? 'Osc-Detect)
-        (spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
-    )
-)
-(when osc-enable
-    (osc-launch)
-)
+        (spawn-task (lambda () (osc-event Triggers-List)) 'Osc-
 
 (define load-visu-file-force #f)
 
@@ -119,6 +114,7 @@
             )
             (with-state
 ;                (scale 10)
+                (hide 1)
                 (multitexture 0 (pixels->texture (Get-Renderer)))
                 (texture-params 0
                     (list
@@ -203,6 +199,9 @@
                     )
                 )
             )
+            (when (empty? visu-list)
+                (Hide-Surface)
+            )
         )
         (define/public (Hide-Surface)
             (with-primitive surface
@@ -236,12 +235,8 @@
             (Get-Mapping name)
         )
         (define/private (Add-Renderer)
-            (show "Debug Add-Renderer")
             (cond
                 ((empty? free-renderer)
-                    (show "Empty free-renderer")
-                    (show free-renderer)
-                    (show renderer-list)
                     (let ((new-renderer (new Renderer%)))
                         (set! renderer-list (append renderer-list (list new-renderer)))
                         new-renderer
@@ -267,10 +262,6 @@
                                 (n Names)
                                 #:when (not (equal? Name n))
                             )
-                            (show "Debug Find-Same-Render :")
-                            
-                            (show sorted-mapped-visuals)
-                            (show n)
                             (sort (send n Get-Visu) string<?)
                         )
                     )                                
@@ -296,13 +287,11 @@
                                             (let ((Same-Renderer (Find-Same-Render-Visuals mapp name (flatten (list names)))))
                                                 (cond
                                                     (Same-Renderer
-                                                        (show "Same Renderer Found!")
                                                         Same-Renderer
                                                     )
                                                     (else
                                                         (let ((render (send mapp Get-Renderer)))
                                                             (unless render
-                                                                (show "Mapping exists but no existing Renderer")
                                                                 (send mapp Set-Renderer (Add-Renderer))
                                                             )
                                                             (send mapp Get-Renderer)
@@ -313,7 +302,6 @@
                                         )
                                         (else
                                             (let ((new-map (Add-Mapping name #:renderer (Add-Renderer))))
-                                                (show "No existing Mapping and no Renderer -> Created")
                                                 (send new-map Get-Renderer)
                                             )
                                         )
@@ -324,8 +312,6 @@
                         )
                     )
                 )
-                (show "Debug Get-Renderer")
-                (show Render-List)
                 (remove-duplicates Render-List)
             )
         )
@@ -376,11 +362,7 @@
                 (lambda (n)
                     (let ((mapp (Get-Mapping n)))
                         (send mapp UnSet-Visu id)
-                        
-                        (show "Debug Visu-Off")
-                        (show (send mapp Get-Visu))
                         (when (empty? (send mapp Get-Visu))
-                            (show "Mapping Empty Visu-List")
                             (send mapp Hide-Surface)
                             (let ((n-free-renderer (send mapp UnSet-Renderer)))                            
                                 (set!
@@ -400,8 +382,6 @@
                 )
                 (flatten (list names))
             )
-            (show "free-renderer :")
-            (show free-renderer)
         )
         (define/public (Show-Mapping-List)
             mapping-list
@@ -549,7 +529,7 @@
         (define/private (get-crossfader-access #:crossfader cross #:player player)
             (find cross (hash-ref owners player '()))
         )
-        (define/public (set-crossfader-launch #:visu (visu (void)) #:crossfader (cross #f) #:player player #:mode (mode #f) #:velocity (velocity 1) #:level (level #f) #:bank (bank #f) #:auto (auto #f) #:swap (swap #f))
+        (define/public (set-crossfader-launch #:visu (visu (void)) #:crossfader (cross #f) #:player player #:mode (mode #f) #:mapping (mapping #f) #:velocity (velocity 1) #:level (level #f) #:bank (bank #f) #:auto (auto #f) #:swap (swap #f))
 ;(show-d "debug set-crossfader-launch entry")
             (let ((crossfader (get-crossfader-from-player #:crossfader cross #:player player)))
                 (crossfader-check #:crossfader crossfader #:player player #:bank bank)
@@ -560,8 +540,15 @@
                 (cond
                     ((get-crossfader-access #:crossfader crossfader #:player player)
 ;(show-d "debug crossfader-visu-launch crossfader-access")
-                        (when (and (not (eq? visu (void))) (not (send (get-crossfader crossfader) crossfader-get-visu)))
-                            (set-crossfader-visu #:crossfader cross #:visu visu #:mode mode #:velocity velocity #:player player #:auto auto #:swap swap)
+                        (cond
+                            ((and (not (eq? visu (void))) (not (send (get-crossfader crossfader) crossfader-get-visu)))
+                                (set-crossfader-visu #:crossfader cross #:visu visu #:mode mode #:mapping mapping #:velocity velocity #:player player #:auto auto #:swap swap)
+                            )
+                            (else
+                                (when mapping
+                                    (set-mapping #:player player #:mapping mapping #:crossfader crossfader #f)
+                                )
+                            )
 ;(show-d "debug crossfader-visu-launch set-crossfader-visu passed")
                         )
                         (send (get-crossfader crossfader) crossfader-visu-launch #:player player #:bank bank #:level level #:swap swap)
@@ -603,7 +590,7 @@
             )
             cross
         )
-        (define/public (set-crossfader-visu #:visu visu #:crossfader (crossfader #f) #:player player #:mode (mode 1) #:velocity (velocity 1) #:auto (auto #f) #:swap (swap #f) #:bank (bank #t) #:level (level 1))
+        (define/public (set-crossfader-visu #:visu visu #:crossfader (crossfader #f) #:player player #:mode (mode 1) #:mapping (mapping #f) #:velocity (velocity 1) #:auto (auto #f) #:swap (swap #f) #:bank (bank #t) #:level (level 1))
 ;(show-d "debug set-crossfader-visu entry")
             (let
                 (
@@ -625,6 +612,9 @@
                 (when cross
 ;(show-d "debug set-crossfader-visu cross found")
                     (send (get-crossfader cross) crossfader-set-visu #:player player #:visu visu #:mode mode #:auto auto #:swap swap)
+                    (when mapping
+                        (set-mapping #:player player #:mapping mapping #:crossfader cross)
+                    )
 ;(show-d "debug set-crossfader-visu cross crossfader-set-visu")
                 )
             )
@@ -2992,6 +2982,9 @@
                             )
                         )
                     )
+                    ((equal? path-type "Mapping")
+                        (show path-trigger)
+                    )
                     (else
                         (let* ((Trigger-Object (send Triggers-List Trigger-Address-Search "osc" path-split)))
                             (cond
@@ -3017,7 +3010,9 @@
     #t
 )
 
-;(spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
+(when osc-enable
+    (osc-launch)
+)
 
 (define (gain-task)
     (let ((var-mouse-wheel (mouse-wheel)))

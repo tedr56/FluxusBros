@@ -1,0 +1,1 @@
+(send Triggers-List load-triggers "Config-Ted/Blade-FingerPlay")

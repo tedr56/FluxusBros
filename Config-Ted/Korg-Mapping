@@ -1,0 +1,21 @@
+KORG-SET-MAPPING-1
+Korg
+note
+(vector 0 18)
+(send god set-mapping #:player "Korg" #:mapping 1 #:position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0)))
+(void)
+#f
+KORG-SET-MAPPING-2
+Korg
+note
+(vector 0 20)
+(send god set-mapping #:player "Korg" #:mapping 2 #:position (list (vector -1.5 -0.5 0) (vector -0.5 -0.5 0) (vector -0.5 0.5 0) (vector -1.5 0.5 0)))
+(void)
+#f
+KORG-SET-MAPPING-3
+Korg
+note
+(vector 0 22)
+(send god set-mapping #:player "Korg" #:mapping 3  #:position (list (vector 0.5 -0.5 0) (vector 1.5 -0.5 0) (vector 1.5 0.5 0) (vector 0.5 0.5 0)))
+(void)
+#f

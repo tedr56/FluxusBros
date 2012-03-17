@@ -1,0 +1,21 @@
+WAIT-FOCUS-KORG
+Blade
+osc
+/fingerplay/control/24
+(send god set-focus #:player "Blade")
+(void)
+#f
+BLADE-1
+Korg
+osc
+/fingerplay/control/30
+(send god set-crossfader-launch #:player "Blade" #:visu "tennis" #:crossfader 601 #:bank #t #:level 1 #:swap #t)
+(void)
+#f
+BLADE-CUBE
+Korg
+osc
+/fingerplay/control/31
+(send god set-crossfader-launch #:player "Blade" #:visu "valley" #:crossfader 602 #:visu "cube" #:bank #t #:level 1 #:swap #t)
+(void)
+#f
