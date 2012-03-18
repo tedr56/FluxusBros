@@ -36,7 +36,9 @@
 (define (osc-launch)
     (osc-source OSC-SOURCE)
     (unless (task-running? 'Osc-Detect)
-        (spawn-task (lambda () (osc-event Triggers-List)) 'Osc-
+        (spawn-task (lambda () (osc-event Triggers-List)) 'Osc-Detect)
+    )
+)
 
 (define load-visu-file-force #f)
 
@@ -252,6 +254,7 @@
             )
         )
         (define/private (Find-Same-Render-Visuals Map Name Names)
+            #f
             (let*
                 (
                     (mapped-visuals (send Map Get-Visu))
@@ -284,7 +287,11 @@
                                 (let ((mapp (Get-Mapping name)))
                                     (cond
                                         (mapp
-                                            (let ((Same-Renderer (Find-Same-Render-Visuals mapp name (flatten (list names)))))
+                                            (let
+                                                (
+;                                                    (Same-Renderer (Find-Same-Render-Visuals mapp name (flatten (list names))))
+                                                    (Same-Renderer #f)
+                                                )
                                                 (cond
                                                     (Same-Renderer
                                                         Same-Renderer
@@ -546,7 +553,7 @@
                             )
                             (else
                                 (when mapping
-                                    (set-mapping #:player player #:mapping mapping #:crossfader crossfader #f)
+                                    (set-mapping #:player player #:mapping mapping #:crossfader crossfader #:level level #:mode mode)
                                 )
                             )
 ;(show-d "debug crossfader-visu-launch set-crossfader-visu passed")
@@ -613,7 +620,7 @@
 ;(show-d "debug set-crossfader-visu cross found")
                     (send (get-crossfader cross) crossfader-set-visu #:player player #:visu visu #:mode mode #:auto auto #:swap swap)
                     (when mapping
-                        (set-mapping #:player player #:mapping mapping #:crossfader cross)
+                        (set-mapping #:player player #:mapping mapping #:crossfader cross #:level level #:mode mode)
                     )
 ;(show-d "debug set-crossfader-visu cross crossfader-set-visu")
                 )
@@ -626,14 +633,15 @@
                 )
             )
         )
-        (define/public (set-mapping #:player player #:mapping mapp #:position (position #f) #:crossfader (cross #f))
+        (define/public (set-mapping #:player player #:mapping mapp #:position (position #f) #:crossfader (cross #f) #:level (level 1) #:mode (mode 1))
             (let ((crossf (get-crossfader-from-player #:crossfader cross #:player player)))
                 (when crossf
+
                     (if position
                         (send Mappings Set-Mapping mapp position)
                         (send Mappings Set-Mapping mapp)
                     )
-                    (send (get-crossfader crossf) set-mapping mapp player)
+                    (send (get-crossfader crossf) set-mapping mapp player level mode)
                 )
             )
         )
@@ -800,7 +808,7 @@
             
         )
         (define/private (get-visu level)
-            (hash-ref visu-list level)
+            (hash-ref visu-list level #f)
         )
         (define/private (get-level-from-id id)
 ;;(show-d "debug get-level-from-id")
@@ -912,9 +920,7 @@
             )
         )
         (define/public (add-visu #:level level #:player player)
-;(show-d "add-visu entry")
             (del-visu #:level level)
-;(show-d "add-visu del-visu")
             (hash-set!
                 visu-list
                 level
@@ -944,7 +950,7 @@
         (define/private (del-visu #:level level)
             (when (hash-has-key? visu-list level)
                 (send (get-visu level) visu-stop)
-                (hash-remove! visu-list n)
+                (hash-remove! visu-list level)
             )
         )
         (define/public (crossfader-visu-launch #:bank (bank #t) #:level (level 1) #:velocity (velocity 1) #:player player #:swap (swap-v #f))
@@ -1056,7 +1062,7 @@
         (define/public (crossfader-get-visu)
             visu
         )
-        (define/public (set-mapping mapping player)
+        (define/public (set-mapping mapping player level mode)
             (letrec
                 (
                     (set-mapping-mode-bank
@@ -1064,9 +1070,6 @@
                             (hash-for-each
                                 visu-list
                                 (lambda (n-level visu-h)
-                                    (show "Debug Set Mapping Visu Level")
-                                    (show n-level)
-                                    (show visu-h)
                                     (send visu-h set-mapping mapping)
                                 )
                             )
@@ -1074,7 +1077,25 @@
                     )
                     (set-mapping-mode-single
                         (lambda ()
-                            (let ((visu-target (get-visu (crossfader-get-player-level #:player player))))
+                            (let*
+                                (
+                                    (level-target (crossfader-get-player-level #:player player))
+                                    (level-safe-target
+                                        (cond
+                                            (level-target
+                                                level-target
+                                            )
+                                            ((hash-has-key? visu-list level)
+                                                level
+                                            )
+                                            (else
+                                                (add-visu #:level level #:player owner)
+                                                (crossfader-set-visu #:visu visu #:player player #:level level #:mode mode)
+                                            )
+                                        )
+                                    )
+                                    (visu-target (get-visu level-safe-target))
+                                )
                                 (when visu-target
                                     (send visu-target set-mapping mapping)
                                 )
@@ -1104,9 +1125,6 @@
 ;            (note-event (midi-note))
             (cc-event (midi-cc-event))
         )
-(show "")
-(show File)
-(show Name)
         (letrec
             (
                 (control-record

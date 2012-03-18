@@ -1,3 +1,4 @@
+(show "Mapping-WLI")
 (send Mappings Set-Mapping "1-1" (list (vector -7.2 1.2 0) (vector -3.6 -1.6 0) (vector -3.8 2.2 0) (vector -8 4.9 0)))
 (send Mappings Set-Mapping "1-2" (list (vector -8 4.9 0) (vector -3.9 2.1 0) (vector 0.2 5.1 0) (vector -3.8 7.2 0)))
 (send Mappings Set-Mapping "1-3" (list (vector -3.8 -1.6 0) (vector 0.25 1.2 0) (vector 0 5.3 0) (vector -4.1 2.2 0)))
@@ -23,7 +24,9 @@
 #(send Mappings Set-Mapping "3-2" (list (vector 0 0 0) (vector 3 -1.5 0) (vector 6 0 0) (vector 3 1.5 0)))
 #(send Mappings Set-Mapping "3-3" (list (vector 3 -5.5 0) (vector 6 -4 0) (vector 6 0 0) (vector 3 -1.5 0)))
 
+(send Mappings Set-Mapping-Mode "Single")
 
+(show "Mapping-WLI SetVisu Mapping")
 
 (send god set-crossfader-visu #:visu "mur" #:player "Korg" #:crossfader 901)
 (send god set-crossfader-visu #:visu "mur" #:player "Korg" #:crossfader 901 #:level 1 #:mode 1 #:mapping (list "1-1"))
@@ -60,4 +63,5 @@
 #(send Mappings Set-Mapping "3-2" (list (vector 0 0 0) (vector 3 -1.5 0) (vector 6 0 0) (vector 3 1.5 0)))
 #(send Mappings Set-Mapping "3-3" (list (vector 3 -5.5 0) (vector 6 -4 0) (vector 6 0 0) (vector 3 -1.5 0)))
 
+(show "Mapping-WLI Load-Triggers")
 (send Triggers-List load-triggers "Config-Ted/Korg-Mapping-WLI")
