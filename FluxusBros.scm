@@ -14,7 +14,7 @@
 
 ;(current-directory "/Users/TchernoBob/Fluxus/FluxusBros6")
 ;(current-directory "/home/ted/Fluxus/FluxusBros6")
-(current-directory "/home/ted/Sources/git/FluxusBros")
+;(current-directory "/home/ted/Sources/git/FluxusBros")
 
 (require "vjbros.scm")
 (require "beat-module.scm")
