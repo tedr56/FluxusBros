@@ -1,2 +1,1 @@
-;(load "load-config-Korg-Bitstream")
 (load "Config-Ted/load-config")
