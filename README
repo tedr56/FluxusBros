@@ -3,29 +3,37 @@ FluxusBros
 Fluxus Visuals Mixing Script
 
 *Scripts-Visuals----------------------------------------------------------------
-Rules too devellop new scripts inside
+Rules to devellop new scripts inside
 
 All the visuals scripts must in /Visu folder.
 The script's file name must have the same name of the main function script.
 The main function script must have two parameters : id and crossfader
-The id parameter is a different string for each running script and compose of
+The id parameter is a different identifier for each running script.
+It contain the visu object of the running instance.
+To get a string identifier from several reasons, you can use (send id Get-Name)
+to obtain the string attached identifier.
+It is made by :
     3nb-3nb-name_of_script
-    like "901-001-valley"
-For example, this id is used in "c" function to find the appropriate control (see Controls section).
+like "901-001-valley".
+For example, this id is used in "c" function to find the appropriate control
+(see Controls section)
 
 Constructor:
-A function can be created for the launch of the visual to initialise objects and usefull variables.
-This function is automatically launched and must be name like the visual script followed by "-build" and id parameter.
+A function can be created for the launch of the visual to initialise objects
+and usefull variables. This function is automatically launched and must be name
+like the visual script followed by "-build" and id parameter.
 
 Destructor:
-A function can be created for the end of the visual, to destroy build object or reinitialize variables.
-This function has to be named as "named_of_the_script-destroy" and followed by the id parameter.
+A function can be created for the end of the visual,
+to destroy build object or reinitialize variables. This function has to be
+named as "named_of_the_script-destroy" and followed by the id parameter.
 
 Taking in example, the "test" visual.
 The file have to be named "test.scm"
 and the main function of the visual script have to be defined like this :
 (define (test id cross)
-To insert a cube primitive with (build-cube) and retain its value, you must create:
+To insert a cube primitive with (build-cube) and retain its value,
+you must create:
 (define test-primitives (make-hash))
 (define (test-build id)
     (hash-set! test-primitives id (build-cube))
@@ -35,27 +43,31 @@ To destroy the (build-cube) used in the test visual, use the function
 and place a (destroy x) function inside.
 
 Tips:
-To distinguish visuals tasks between same scripts, the "Id" argument can be used.
+To distinguish visuals tasks between same scripts,
+the "Id" argument can be used.
 It contain the Visu% object attached to the script.
-To get an tangible value, you can use the get-name function of the object to get an string identifier composed with XXX-YYY-visual
+To get an tangible value, you can use the get-name function
+of the object to get an string identifier composed with XXX-YYY-visual
 XXX is the attached crossfader, and YYY is the attached level of the crossfader.
 To use this in a script, you can type (send id get-name)
 
 *Triggers----------------------------------------------------------------
-The triggers are the midi, osc or keybooard event which can
+The triggers are the midi, osc or keyboard event which can
 launch, kill, choose viuals and other few actions.
 It is the managing system of the visuals.
 The basic "Save-Trigger-File" can be use to place new triggers.
 To make your own and complexer config :
  - create your folder
- - replace the name of the folder in the "load-config" file by your folder.
- - if you use multiple triggers file, make another load-config and load the different files.
+ - replace the name of the folder in the "load-config"
+   file by your folder.
+ - if you use multiple triggers file, make another load-config
+   and load the different files.
  - make your trigger file in your folder.
 
 To add a new trigger in the file, the syntax is like this :
 
 NAME_OF_THE_TRIGGER
-Hardware (a way to separate multiple players or multiple hardwares on a same session)
+Hardware (just identify your different controlers)
 type-of-control
 address-to-catch-the-control
 function-linked-to-the-trigger-when-activated
@@ -73,7 +85,8 @@ The different type of triggers are :
 The address of controls:
 midi address : (vector midi-channel number-of-the-control)
 keyboard normal keys : character of the key
-keyboard special keys : special number of the key (cf (help keys-special-down) or (help keys-special-pressed) in Fluxus)
+keyboard special keys : special number of the key
+(cf (help keys-special-down) or (help keys-special-pressed) in Fluxus)
 
 *Controls----------------------------------------------------------------
 The control part is to act on the inside of a visual.
@@ -84,10 +97,12 @@ and the manager script will search in the config files to
 which midi,osc or keyboard control it is linked to.
 To configure these links, the files are in the "controls" folder.
 The basic Save-Control-File can be use to place your control config.
-To make complex config, the system use on config file for one visual with the same name.
-To use the multiple hardware separation system, you can specify the hardware at the end of the file name.
-For example, for the test.scm visual used with your FAVORITE-MIDI-CONTROLLER, create the file "test.FAVORITE-MIDI-CONTROLLER"
-in the "controls" folder.
+To make complex config, the system use on config file for one visual
+with the same name. To use the multiple hardware separation system,
+you can specify the hardware at the end of the file name.
+For example, for the test.scm visual used with
+your FAVORITE-MIDI-CONTROLLER, create thefile
+"test.FAVORITE-MIDI-CONTROLLER" in the "controls" folder.
 To add a new control in your file, here is the syntax :
 
 name-of-the-visual (even in a same named file)
@@ -112,7 +127,8 @@ The different type of control are :
 
 The default-mode value act on the value to catch on the visual loading:
  -1 : connect to the hardware control
+ 0  : automatic setting
  1  : use the first default value
  2  : use the second default value
- 1  : use the third default value
- 1  : use the fourth default value
+ 3  : use the third default value
+ 4  : use the fourth default value
