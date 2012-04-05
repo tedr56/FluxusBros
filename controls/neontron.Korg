@@ -44,6 +44,17 @@ midi-ccn
 0.2
 neontron
 Korg
+global-speed-ctrl
+midi-ccn
+#(1 24)
+0
+-1
+0.22047244012355804
+0.20472441613674164
+0.3
+0.20472441613674164
+neontron
+Korg
 rotate-global-ctrl
 midi-ccn
 #(1 23)
@@ -53,28 +64,6 @@ midi-ccn
 1.0
 0.3
 1.0
-neontron
-Korg
-random-sens-ctrl
-midi-ccn
-#(1 26)
-0
--1
-0.18110236525535583
-0.0
-0.3
-0.2
-neontron
-Korg
-rotate-local-ctrl
-midi-ccn
-#(1 17)
-0
--1
-0.8
-0.28346458077430725
-0.28346458077430725
-0.0
 neontron
 Korg
 gain-neon
@@ -105,9 +94,9 @@ midi-ccn
 0
 -1
 1.0
-0.06299212574958801
+0.8897637724876404
 0.3
-0.2
+1.0
 neontron
 Korg
 rotate-global-speed
@@ -126,21 +115,32 @@ midi-ccn
 #(1 27)
 0
 -1
-0.6377952694892883
-0.6377952694892883
+1.0
+0.4645669162273407
 0.3
 0.2
 neontron
 Korg
-global-speed-ctrl
+random-sens-ctrl
 midi-ccn
-#(1 24)
+#(1 26)
 0
 -1
-0.22047244012355804
-0.18897637724876404
+1.0
+0.3779527544975281
 0.3
-0.22047244012355804
+1.0
+neontron
+Korg
+rotate-local-ctrl
+midi-ccn
+#(1 17)
+0
+-1
+0.8
+0.28346458077430725
+0.28346458077430725
+0.0
 neontron
 Korg
 size-plane-ctrl
