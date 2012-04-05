@@ -9,6 +9,9 @@
         (destroy (hash-ref valley-prims id))
         (hash-remove! valley-prims id)
     )
+    (hash-remove! master-time-hash id)
+    (hash-remove! slave-time-hash  id)
+
 )
 ;(define line (build-seg-plane 20 10))
 
@@ -56,41 +59,43 @@
     (* a (/ (* 2 pi) 360))
 )
 
+(define master-time-hash (make-hash))
+(define slave-time-hash  (make-hash))
+
 (define (valley-build id)
-    (with-state
-        (hash-set! valley-prims id (build-seg-plane 20 10))
-        (with-primitive (hash-ref valley-prims id)
-        ;    (backfacecull 1)
-        ;    (hint-none)
-        ;    (hint-unlit)
-            (hint-wire)
-            (line-width 2)
-            (hint-vertcols)
-            (pdata-add "master" "f")
-            (pdata-add "slave" "f")
-            #(pdata-index-map!
-                (lambda (i c)
-        ;            (vector 1 1 1 1)
-                    (corner-select i)
-                )
-                "c"
+    (hash-set! valley-prims id (build-seg-plane 20 10))
+    (with-primitive (hash-ref valley-prims id)
+    ;    (backfacecull 1)
+    ;    (hint-none)
+    ;    (hint-unlit)
+        (hint-wire)
+        (line-width 2)
+        (hint-vertcols)
+        (pdata-add "master" "f")
+        (pdata-add "slave" "f")
+        #(pdata-index-map!
+            (lambda (i c)
+    ;            (vector 1 1 1 1)
+                (corner-select i)
             )
-            (pdata-set! "c" 0 (vector 0 1 0))
-            (pdata-set! "c" 1 (vector 1 0 0))
-            (pdata-set! "c" 2 (vector 1 0 0))
-            (pdata-set! "c" 3 (vector 1 0 0))
-            (shinyness 20)
-            (recalc-normals 1)
+            "c"
         )
+        (pdata-set! "c" 0 (vector 0 1 0))
+        (pdata-set! "c" 1 (vector 1 0 0))
+        (pdata-set! "c" 2 (vector 1 0 0))
+        (pdata-set! "c" 3 (vector 1 0 0))
+        (shinyness 20)
+        (recalc-normals 1)
     )
+    (hash-set! master-time-hash id (time))
+    (hash-set! slave-time-hash  id (time))
 )
 
 ;(set-gain! 0.1)
 ;(smoothing-bias 0.4)
 ;(blur 0.3)
 
-(define master-time (time))
-(define slave-time  (time))
+
 
 (define (valley id cross)
     (blur (c "blur" id))
@@ -98,8 +103,8 @@
     (flxseed (inexact->exact (floor 1.2)))
     (letrec
         (
-            (master-time (time))
-            (slave-time  (time))
+            (master-time (hash-ref master-time-hash id))
+            (slave-time  (hash-ref slave-time-hash  id))
             (ncube (inexact->exact (floor (max 3 (c "ncube" id #:coeff 127)))))
             (diametre (c "diametre" id #:coeff 10))
             (coeff-d-gl (c "coeff-d-gh" id #:coeff 10))
@@ -231,4 +236,4 @@
         )
     )
 )
- 
+
