@@ -6,11 +6,12 @@
     (hash-remove! transform-cube-seed id)
 )
 
+(define (transform-cube-build id)
+    (hash-set! transform-cube-hash id (build-cube))
+    (hash-set! transform-cube-seed id (+ (vector-ref (midi-position) 0) (vector-ref (midi-position) 1)))
+)
+
 (define (transform-cube id cross)
-    (unless (hash-has-key? transform-cube-hash id)
-        (hash-set! transform-cube-hash id (build-cube))
-        (hash-set! transform-cube-seed id (+ (vector-ref (midi-position) 0) (vector-ref (midi-position) 1)))
-    )
     (let
         (
             (b (c "blur" id))

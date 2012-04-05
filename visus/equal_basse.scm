@@ -7,7 +7,7 @@
         )
 
 ;mouvement de la camera
-        (set-camera-transform
+        #(set-camera-transform
             (mtranslate
                 (vector
                     (* (- (* 2 (c "cam-x" id)) 1) 100)
@@ -96,6 +96,13 @@
 
 (define (equal_basse id cross)
     (push)
+        (translate
+            (vector
+                (* (- (* 2 (c "cam-x" id)) 1) 500)
+                (* (- (* 2 (c "cam-y" id)) 1) 500)
+                (* (c "cam-z" id) -1000)
+            )
+        )
         (rotate (vector  (* (c "R-G-X" id) 360) (* (c "R-G-Y" id) 360)  (* (c "R-G-Z" id) 360)))
         (rotate (vector  (* (time2) (* (c "R-G-X-time" id) 360)) (* (time2) (* (c "R-G-Y-time" id) 360))  (* (time2) (* (c "R-G-Z-time" id) 360))))
         (equal_basse_sub 16 id)

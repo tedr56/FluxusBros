@@ -1424,6 +1424,19 @@
                 (when (or (not (defined? file)) load-visu-file-force)
                     (load (string-append "visus/" file ".scm"))
                 )
+                (
+                    (eval-string
+                        (string-append
+                            file
+                            "-"
+                            "build"
+                        )
+                        (lambda ()
+                            (eval-string "void")
+                        )
+                    )
+                    this
+                )
                 (cond
                     (mapping
                         (send Mappings Visu-On id mapping)

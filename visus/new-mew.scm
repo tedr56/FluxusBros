@@ -10,9 +10,10 @@
     )
 )
 (define new-mew-prims (make-hash))
-(define (new-mew-build id (nb 10))
-    (let
+(define (new-mew-build id)
+    (let*
         (
+            (nb number-points)
             (particles (build-particles nb))
         )
         (grab particles)
@@ -112,11 +113,6 @@
         )
         (with-state
             (blur (c "blur" id))
-            ;(line-width (c "line-width" id #:coeff 10))
-
-            (unless (hash-has-key? new-mew-prims id)
-                (new-mew-build id number-points)
-            )
             (let
                 (
                     (prim (hash-ref new-mew-prims id))

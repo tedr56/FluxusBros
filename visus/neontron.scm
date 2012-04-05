@@ -12,10 +12,14 @@
 (define bevel-ratio       (* bevel-prim-ratio 1.6))
 (define bevel-long-ratio  (* bevel-prim-ratio 6.5))
 
-(define (neontron-build id n)
+(define nb-neon 60)
+(define nb-neon-per-row 6)
+
+(define (neontron-build id)
     (with-state
         (let*
             (
+                (n nb-neon)
                 (name-rnd
                     (lambda ()
                         (if (> (flxrnd) 0.5) #t #f))
@@ -103,11 +107,9 @@
     (hash-remove! neontron-prims-plane id)
     (hash-remove! neontron-prims-size id)
 )
+
 (define (neontron id cross)
-    (let* ((nb-neon 60)(nb-neon-per-row 6)(nb-row (quotient nb-neon nb-neon-per-row)))
-        (unless (hash-has-key? neontron-prims id)
-            (neontron-build id nb-neon)
-        )
+    (let* ((nb-row (quotient nb-neon nb-neon-per-row)))
         (with-state
             (flxseed 1)
             (blur (+ (c "blur" id) 0.1))

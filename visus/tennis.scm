@@ -58,87 +58,80 @@
 
 
 (define (tennis id cross)
-    (cond
-        ((not (hash-has-key? tennis-list id))
-            (tennis-build id)
-        )
-        (else
-            (let ((g (* (c "gain-low" id) (* (c "gain-high" id) 5))))
-                (for-each
-                    (lambda (n)
-                        (let*
-                            (
-                                (prim n)
-                                (A (* (c "a" id) 10))
-                                (B (* (c "b" id) 10))
-                                (C (* (c "c" id) 10))
-                                (e (+ (* (c "ecart-low" id) 0.1) (c "ecart-high" id)))
-                                (v (* (c "vitesse" id) 5))
-                                (freq (* (get-num-frequency-bins) (flxrnd)))
-                                (color (+ (c "color-base" id) (* (c "color-large" id) (flxrnd))))
-                                (gh-freq (gl freq g))
-                            )
-                            (with-primitive prim
-                                (blur (c "blur" id))
-                                (cond
-                                    ((positive? (c "unlit" id))
-                                        (hint-unlit))
-                                    (else
-                                        (hint-none)
-                                        (hint-solid)
-                                        (hint-vertcols)
-                                    )
-                                )
-                                (flxseed prim)
-                                (identity)
-                                (rotate (vmul (vector (* 360 (flxrnd)) (* 360 (flxrnd)) (* 360 (flxrnd))) 1))
-                                (rotate (vmul (vector (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd))) 0.1))
-    
-                                (let ((pos-offset (* (flxrnd) (* (c "pos-offset" id) 127))))
-                                    (pdata-index-map!
-                                        (lambda (i p)
-                                            (vector
-                                                (+ (* A (cos (+ (* i e) (* (+ pos-offset (time)) v)))) (* B (cos (* 3 (+ (* i e) (* (+ pos-offset (time)) v))))))
-                                                (+ (* A (sin (+ (* i e) (* (+ pos-offset (time)) v)))) (* B (sin (* 3 (+ (* i e) (* (+ pos-offset (time)) v))))))
-                                                (* C (sin (* 2 (+ (* i e) (* (+ pos-offset (time)) v)))))
-                                            )
-                                        )
-                                        "p"
-                                    )
-                                )
-                                (pdata-index-map!
-                                    (lambda (i w)
-                                        (let*
-                                            (
-                                                (size (* (* (c "size-body" id) 30) (* i (/ 0.1 (pdata-size)))))
-                                            )
-                                            (if (= i (- (pdata-size) 2))
-                                                (+ (* (c "size-head" id) 5) size)
-                                                size
-                                            )
-                                        )
-                                    )
-                                    "w"
-                                )
-                                (pdata-index-map!
-                                    (lambda (i t)
-                                        (hsv->rgb
-                                            (vector
-                                                color
-                                                gh-freq
-                                                (* i (/ 1 (pdata-size)))
-                                                (* 5 (c "opa-along" id) i (/ 1 (* (pdata-size) 1)))
-                                            )
-                                        )
-                                    )
-                                    "c"
-                                )
+    (let ((g (* (c "gain-low" id) (* (c "gain-high" id) 5))))
+        (for-each
+            (lambda (n)
+                (let*
+                    (
+                        (prim n)
+                        (A (* (c "a" id) 10))
+                        (B (* (c "b" id) 10))
+                        (C (* (c "c" id) 10))
+                        (e (+ (* (c "ecart-low" id) 0.1) (c "ecart-high" id)))
+                        (v (* (c "vitesse" id) 5))
+                        (freq (* (get-num-frequency-bins) (flxrnd)))
+                        (color (+ (c "color-base" id) (* (c "color-large" id) (flxrnd))))
+                        (gh-freq (gl freq g))
+                    )
+                    (with-primitive prim
+                        (blur (c "blur" id))
+                        (cond
+                            ((positive? (c "unlit" id))
+                                (hint-unlit))
+                            (else
+                                (hint-none)
+                                (hint-solid)
+                                (hint-vertcols)
                             )
                         )
+                        (flxseed prim)
+                        (identity)
+                        (rotate (vmul (vector (* 360 (flxrnd)) (* 360 (flxrnd)) (* 360 (flxrnd))) 1))
+                        (rotate (vmul (vector (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd))) 0.1))
+
+                        (let ((pos-offset (* (flxrnd) (* (c "pos-offset" id) 127))))
+                            (pdata-index-map!
+                                (lambda (i p)
+                                    (vector
+                                        (+ (* A (cos (+ (* i e) (* (+ pos-offset (time)) v)))) (* B (cos (* 3 (+ (* i e) (* (+ pos-offset (time)) v))))))
+                                        (+ (* A (sin (+ (* i e) (* (+ pos-offset (time)) v)))) (* B (sin (* 3 (+ (* i e) (* (+ pos-offset (time)) v))))))
+                                        (* C (sin (* 2 (+ (* i e) (* (+ pos-offset (time)) v)))))
+                                    )
+                                )
+                                "p"
+                            )
+                        )
+                        (pdata-index-map!
+                            (lambda (i w)
+                                (let*
+                                    (
+                                        (size (* (* (c "size-body" id) 30) (* i (/ 0.1 (pdata-size)))))
+                                    )
+                                    (if (= i (- (pdata-size) 2))
+                                        (+ (* (c "size-head" id) 5) size)
+                                        size
+                                    )
+                                )
+                            )
+                            "w"
+                        )
+                        (pdata-index-map!
+                            (lambda (i t)
+                                (hsv->rgb
+                                    (vector
+                                        color
+                                        gh-freq
+                                        (* i (/ 1 (pdata-size)))
+                                        (* 5 (c "opa-along" id) i (/ 1 (* (pdata-size) 1)))
+                                    )
+                                )
+                            )
+                            "c"
+                        )
                     )
-                    (hash-ref tennis-list id)
                 )
             )
+            (hash-ref tennis-list id)
         )
     )
 )

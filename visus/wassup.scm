@@ -45,9 +45,6 @@
 )
 
 (define (wassup id cross)
-    (unless (hash-has-key? wassup-prims id)
-        (wassup-build id)
-    )
     (letrec
         (
             (increment

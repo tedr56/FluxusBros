@@ -1,23 +1,23 @@
 (define (growing-cubes-destroy id)
     (when (hash-has-key? growing-cubes-prims id)
-    (for-each
-        (lambda (l)
-            (let*
-                (
-                    (Name (send id get-name))
-                    (prim (car l))
-                    (travel-function (string->symbol (string-append "growing-cubes" "-" Name "-" (number->string prim))))
+        (for-each
+            (lambda (l)
+                (let*
+                    (
+                        (Name (send id get-name))
+                        (prim (car l))
+                        (travel-function (string->symbol (string-append "growing-cubes" "-" Name "-" (number->string prim))))
+                    )
+                    (when (task-running? travel-function)
+                        (travel-end (string-append "growing-cubes" "-" Name "-" (number->string prim)))
+                        (rm-task travel-function)
+                    )
+                    (destroy prim)
                 )
-                (when (task-running? travel-function)
-                    (travel-end (string-append "growing-cubes" "-" Name "-" (number->string prim)))
-                    (rm-task travel-function)
-                )
-                (destroy prim)
             )
+            (hash-ref growing-cubes-prims id)
         )
-        (hash-ref growing-cubes-prims id)
-    )
-    (hash-remove! growing-cubes-prims id)
+        (hash-remove! growing-cubes-prims id)
     )
 )
 

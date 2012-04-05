@@ -1,16 +1,17 @@
 (define bully-hash (make-hash))
 (define bully-seed (make-hash))
 
+(define (bully-build id)
+    (hash-set! bully-hash id (build-disk 20))
+    (hash-set! bully-seed id (+ (vector-ref (midi-position) 0) (vector-ref (midi-position) 1)))
+)
+    
 (define (bully-destroy id)
     (destroy (hash-ref bully-hash id))
     (hash-remove! bully-hash id)
 )
 
 (define (bully id cross)
-    (unless (hash-has-key? bully-hash id)
-        (hash-set! bully-hash id (build-disk 20))
-        (hash-set! bully-seed id (+ (vector-ref (midi-position) 0) (vector-ref (midi-position) 1)))
-    )
     (let
         (
             (name (send id get-name))

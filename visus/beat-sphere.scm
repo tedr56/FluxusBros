@@ -9,7 +9,7 @@
             (with-primitive (hash-ref beat-sphere-prims id)
                 (hint-vertcols)
                 (scale 10)
-(emissive (vector .1 .1 .1))
+                (emissive (vector .1 .1 .1))
                 (backfacecull 0)
             )
         )
@@ -137,9 +137,6 @@
 )
 
 (define (beat-sphere id cross)
-    (unless (hash-has-key? beat-sphere-prims id)
-        (beat-sphere-build id)
-    )
     (with-state
 ;        (rotate (vmul (vector (* (time) 1.987) (* (time) 1.0789) (* (time) 0.51245)) 0.05))
         (with-primitive (hash-ref beat-sphere-prims id)

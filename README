@@ -13,15 +13,24 @@ The id parameter is a different string for each running script and compose of
     like "901-001-valley"
 For example, this id is used in "c" function to find the appropriate control (see Controls section).
 
-A function can be created when a script is stopped, to destroy build object or reinitialize variables.
-This function has to be named as "named_of_the_script-destroy"
-like valley-destroy.
+Constructor:
+A function can be created for the launch of the visual to initialise objects and usefull variables.
+This function is automatically launched and must be name like the visual script followed by "-build" and id parameter.
+
+Destructor:
+A function can be created for the end of the visual, to destroy build object or reinitialize variables.
+This function has to be named as "named_of_the_script-destroy" and followed by the id parameter.
 
 Taking in example, the "test" visual.
 The file have to be named "test.scm"
 and the main function of the visual script have to be defined like this :
 (define (test id cross)
-To destroy a (build-cube) used in the test visual, use the function
+To insert a cube primitive with (build-cube) and retain its value, you must create:
+(define test-primitives (make-hash))
+(define (test-build id)
+    (hash-set! test-primitives id (build-cube))
+)
+To destroy the (build-cube) used in the test visual, use the function
 (define (test-destroy id)
 and place a (destroy x) function inside.
 

@@ -1,10 +1,3 @@
-; remplacer (rot-mid chann input) par ((rot-mid name) (tempo name (c name id))
-; supprimer opa-mid
-; 2nde ligne correspond aux paramètres d'origines - rechercher les noms d'origine
-
-;(circles chann cross (+ (m chann 43) 1) (* (mn chann 44) 8) (* (mn chann 8) (m chann 9)))
-;(circles chann cross n param-c g)
-
 (define (circle id cross)
     (let
         (

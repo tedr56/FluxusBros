@@ -10,11 +10,10 @@
 (define space-bpm-mode (make-hash))
 (define space-bpm-prims (make-hash))
 
-
+(define (space-bpm-build id)
+    (hash-set! space-bpm-mode id #t)
+)
 (define (space-bpm id cross)
-    (unless (hash-has-key? space-bpm-mode id)
-        (hash-set! space-bpm-mode id #t)
-    )
     (letrec
         (
             (Name (send id get-name))
