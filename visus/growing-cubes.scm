@@ -26,6 +26,9 @@
     (letrec
         (
             (Name (send id get-name))
+            (g (c "gain" id))
+            (control-scale (c "scale" id))
+            (control-colour (c "colour" id #:coeff 3))
             (add-cube
                 (lambda ()
                     (let
@@ -145,9 +148,9 @@
                                             (rotate (vmul voyage 90))
                                             (translate (vadd origine voyage))
 ;// SCALE (optional)
-                                            (scale (vmul (vector (min (gh prim) 1) (min (gh (+ prim 2)) 1) (min (gh (- prim 2)) 1)) 0.5))
-                        (colour (vmul (vector (gh prim) (gh (+ 3 prim)) (gh (+ prim 6))) 1))
-                        (wire-colour (vmul (vector (gh prim) (gh (+ 2 prim)) (gh (- prim 2))) 1))
+                                            (scale (vmul (vector (min (gl prim g) 2) (min (gl prim g) 2) (min (gl prim g) 2)) (* 0.5 control-scale)))
+                                            (colour (vmul (vector (gl prim g) (gl (+ 3 prim) g) (gl (+ prim 6) g)) control-colour))
+                                            (wire-colour (vmul (vector (gl prim g) (gl (+ 2 prim) g) (gl (- prim 2) g)) control-colour))
                                         )
                                     )
                                 )
@@ -219,8 +222,8 @@
                 (let ((prim (car l)))
 
                     (with-primitive prim
-                        (colour (vmul (vector (gh prim) (gh (+ 3 prim)) (gh (+ prim 6))) .00000))
-                        (wire-colour (vmul (vector (gh prim) (gh (+ 2 prim)) (gh (- prim 2))) 0))
+                        (colour (vmul (vector (gl prim g) (gl (+ 3 prim) g) (gl (+ prim 6) g)) .00000))
+                        (wire-colour (vmul (vector (gl prim g) (gl (+ 2 prim) g) (gl (- prim 2) g)) 0))
                     )
                 )
             )
