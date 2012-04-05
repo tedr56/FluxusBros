@@ -1398,12 +1398,14 @@
                             (visu-stop)
                             (set! file visu)
                             (set! mode n_mode)
+                            (set! controls (make-hash))
                             (load-player #:player player)
                             (visu-launch)
                         )
                         (else
                             (set! file visu)
                             (set! mode n_mode)
+                            (set! controls (make-hash))
                             (load-player #:player player)
                         )
                     )
@@ -1419,7 +1421,7 @@
 ;(show-d "visu-launch entry")
 ;(show-d file)
             (when file
-                (unless (or (defined? file) load-visu-file-force)
+                (when (or (not (defined? file)) load-visu-file-force)
                     (load (string-append "visus/" file ".scm"))
                 )
                 (cond
@@ -1427,13 +1429,13 @@
                         (send Mappings Visu-On id mapping)
                         (for-each
                             (lambda (R)
-                                (spawn-task (lambda () (with-pixels-renderer R ((eval-string file) this 1))) (get-visu-task-name))
+                                (spawn-task (lambda () (with-pixels-renderer R (with-state ((eval-string file) this 1)))) (get-visu-task-name))
                             )
                             (send Mappings Get-Renderer mapping)
                         )
                     )
                     (else
-                        (spawn-task (lambda () ((eval-string file) this 1)) (get-visu-task-name))
+                        (spawn-task (lambda () (with-state ((eval-string file) this 1))) (get-visu-task-name))
                     )
                 )
 ;(show-d "debug visu-launch spawn-task")
@@ -1978,11 +1980,11 @@
                                     (cond
                                         (last-check-hand
                                             (cond
-                                                ((< (check-ecart current-value current-player-value) 0.05)
+                                                ((< (check-ecart current-value current-player-value) 0.01)
 ;(show "equal values passed")
                                                     (when
                                                         (or
-                                                            (> (check-ecart current-value last-check-hand) 0.1)
+                                                            (> (check-ecart current-value last-check-hand) 0.01)
                                                             (check-hand-ecart-passed? player)
                                                         )
 ;(show "check-hand-passed")
@@ -1992,7 +1994,7 @@
                                                     )
                                                 )
                                                 (else
-                                                    (when (> (check-ecart current-player-value last-check-hand) 0.1)
+                                                    (when (> (check-ecart current-player-value last-check-hand) 0.01)
 ;(show "check-ecart passed")
                                                         (hash-set! check-hand-ecart player #t)
                                                     )
