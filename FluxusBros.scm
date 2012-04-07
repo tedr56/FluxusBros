@@ -1,4 +1,6 @@
-;----- FluxusBros v6 -------
+; ----- FluxusBros -------
+;; Adrien Rocher http://www.facebook.com/vjbros
+;
 ; TODOS
 ;       fix : visu multi players
 ;       fix : set-focus sur Crossfader%
@@ -6,15 +8,10 @@
 ;       implement : fade in/out sur cross -> opacity
 ;       implement : auto-load visu dans banks
 ;       implement : trigger lock visu on (touches noires clavier)
-;       implement : mapping visual surface
+; (ok)  wip : mapping visual surface
 ; (nok) implement : gogol
 ; (ok)  fix : enlever lock-controls sur visu-stop
-; (ok)  fix : fonction beat-catch
 ; (ok)  implement : save-controls
-
-;(current-directory "/Users/TchernoBob/Fluxus/FluxusBros6")
-;(current-directory "/home/ted/Fluxus/FluxusBros6")
-;(current-directory "/home/ted/Sources/git/FluxusBros")
 
 (require "vjbros.scm")
 (require "beat-module.scm")
