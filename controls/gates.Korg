@@ -1,0 +1,77 @@
+gates
+BitStream
+gain
+midi-ccn
+(vector 1 16)
+0
+-1
+0.8
+0.7
+0.3
+0.2
+gates
+BitStream
+blur
+midi-ccn
+(vector 1 17)
+0
+-1
+0.8
+0.7
+0.3
+0.2
+gates
+BitStream
+scale-z-gh
+midi-ccn
+(vector 1 24)
+0
+-1
+0.8
+0.7
+0.3
+0.2
+gates
+BitStream
+scale
+midi-ccn
+(vector 1 25)
+0
+-1
+0.8
+0.7
+0.3
+0.2
+gates
+BitStream
+scale-gh
+midi-ccn
+(vector 1 26)
+0
+-1
+0.8
+0.7
+0.3
+0.2
+gates
+BitStream
+scale-gh-base
+midi-ccn
+(vector 1 27)
+0
+-1
+0.8
+0.7
+0.3
+0.2
+gates
+BitStream
+colour
+midi-ccn
+(vector 1 31)
+0
+-1
+0.8
+0.7
+0.3
+0.2
