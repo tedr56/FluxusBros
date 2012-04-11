@@ -3,5 +3,5 @@ echo "Starting JACK Audio Connection Kit..."
 qjackctl -s &
 sleep 4
 echo "Starting Fluxus..."
-optirun fluxus FluxusBros.scm
+optirun fluxus FluxusBrosLauncher.scm
 
