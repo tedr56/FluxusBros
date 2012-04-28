@@ -23,7 +23,9 @@
         neg
         degre->pi
         cylindric->cartesien
+        cylindric-rad->cartesien
         cartesien->cylindric
+        cartesien->cylindric-deg
         find
     	vector-non-empty?
 	    defil-x
@@ -83,6 +85,9 @@
                     (Korg-in
                         (midiin-open Korg-in)
 (show "Connected to Korg microKONTROL input port")
+                    )
+                    (else
+                        (midiin-open 0)
                     )
                 )
                 (when bit-out
@@ -222,6 +227,9 @@
     (define (degre->pi a)
         (* a (/ (* 2 pi) 360))
     )
+    (define (rad->degre a)
+        (/ (* 360 a) (* 2 pi))
+    )
     (define (cylindric->cartesien c)
         (let
             (
@@ -235,7 +243,21 @@
                 z
             )
         )
-    )    
+    )
+    (define (cylindric-rad->cartesien c)
+        (let
+            (
+                (p (vector-ref c 0))
+                (g (vector-ref c 1))
+                (z (vector-ref c 2))
+            )
+            (vector
+                (* p (cos g))
+                (* p (sin g))
+                z
+            )
+        )
+    )
     (define (cartesien->cylindric c)
         (let*
             (
@@ -244,7 +266,38 @@
                 (z (vector-ref c 2))
     
                 (p (sqrt (+ (sqr x) (sqr y))))
-                (g (acos (/ x p)))
+                (g 
+                    (cond
+                        ((positive? x)
+                            (atan (/ y x))
+                        )
+                        ((negative? x)
+                            (cond
+                                ((positive? y)
+                                    (+ (atan (/ y x)) pi)
+                                )
+                                ((negative? y)
+                                    (- (atan (/ y x)) pi)
+                                )
+                            )
+                            
+                        )
+                        (else 0)
+                    )
+                )
+            )
+            (vector p g z)
+        )
+    )
+    (define (cartesien->cylindric-deg c)
+        (let*
+            (
+                (x (vector-ref c 0))
+                (y (vector-ref c 1))
+                (z (vector-ref c 2))
+    
+                (p (sqrt (+ (sqr x) (sqr y))))
+                (g (rad->degre (acos (/ x p))))
             )
             (vector p g z)
         )
