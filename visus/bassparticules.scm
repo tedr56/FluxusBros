@@ -1,9 +1,7 @@
-(require "beat-module.scm")
 (require scheme/list)
 (define bassparicules-number 100)
 (define BassParticules-prims (make-hash))
 (define BassParticules-prims-torus (make-hash))
-(define BassParticulesTexture (load-texture "splat.png"))
 (define (bassparticules-build id)
     (letrec
         (
@@ -12,7 +10,7 @@
                     (with-state
                         (hint-ignore-depth)
                         (blend-mode 'src-alpha 'one)
-                        (texture BassParticulesTexture)
+                        (texture (load-texture "splat.png"))
                         (build-particles bassparicules-number)
                     )
                 )
@@ -63,6 +61,28 @@
         )
         (set-bassparticules)
         (set-basstorus)
+    )
+)
+(define BassParticules-prims (make-hash))
+(define BassParticules-prims-torus (make-hash))
+(define (bassparticules-destroy id)
+    (let
+        (
+            (destroy-prim
+                (lambda (l)
+                    (for-each
+                        (lambda (p)
+                            (destroy p)
+                        )
+                        l
+                    )
+                )
+            )
+        )
+        (destroy-prim (hash-ref BassParticules-prims id))
+        (destroy-prim (hash-ref BassParticules-prims-torus id))
+        (hash-remove! BassParticules-prims id)
+        (hash-remove! BassParticules-prims-torus id)
     )
 )
 
