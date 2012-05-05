@@ -1641,6 +1641,9 @@
         ;(show-d controls)
                                     )
                                 )
+                                (when in
+                                    (close-input-port in)
+                                )
                             )
                         )
                     )
