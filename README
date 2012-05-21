@@ -1,19 +1,51 @@
 FluxusBros
+===========
 
-Fluxus Visuals Mixing Script
 
-*Scripts-Visuals----------------------------------------------------------------
-Rules to devellop new scripts inside
+What is FluxusBros?
+---------------------------------------------------------------------------------
+FluxusBros is a Visuals Mixing Script for Fluxus software. Fluxus is a 3D scheme
+environement for realtime animation from mutiple inputs like midi, osc and sound.
 
-All the visuals scripts must in /Visu folder.
+
+Introdution
+---------------------------------------------------------------------------------
+The FluxusBros script mix different Fluxus visuals scripts with user triggers.
+The visuals scripts contains abstracted controls, and the FluxusBros script
+re-attribute the abstracted controls to actual controls depending of the actual
+player controls mapping.
+The FluxusBros system allow to map visuals to different areas.
+
+How to Launch?
+---------------------------------------------------------------------------------
+FluxusBros-Start will launch JackServer, then Fluxus with FluxusBros loaded.
+If you want to launch FluxusBros from Fluxus, for devellopement for instance,
+prefer FluxusBrosLauncher.scm to load. Options can be passed and all scripts
+will be actualised at relaunch of FluxusBrosLauncher.scm to catch
+modifications.
+
+Folder Organisation
+---------------------------------------------------------------------------------
+visus    : all visuals scripts.
+controls : control mappings.
+utils    : tools files.
+
+Visuals-Scripts
+---------------------------------------------------------------------------------
+
+Rules to devellop new scripts inside:
+
+All the visuals scripts must in /visu folder.
 The script's file name must have the same name of the main function script.
 The main function script must have two parameters : id and crossfader
 The id parameter is a different identifier for each running script.
 It contain the visu object of the running instance.
-To get a string identifier from several reasons, you can use (send id Get-Name)
+To get a string identifier for several reasons, you can use (send id Get-Name)
 to obtain the string attached identifier.
 It is made by :
     3nb-3nb-name_of_script
+It match :
+    CrossfaderNumber-CrossfaderBankLevel-NameOfScript
 like "901-001-valley".
 For example, this id is used in "c" function to find the appropriate control
 (see Controls section)
@@ -25,8 +57,9 @@ like the visual script followed by "-build" and id parameter.
 
 Destructor:
 A function can be created for the end of the visual,
-to destroy build object or reinitialize variables. This function has to be
-named as "named_of_the_script-destroy" and followed by the id parameter.
+to destroy build objects or reinitialize variables. This function has to be
+named as "name_of_the_script-destroy" and followed by the id parameter.
+This function is also automatically called by the manager script.
 
 Taking in example, the "test" visual.
 The file have to be named "test.scm"
@@ -40,20 +73,13 @@ you must create:
 )
 To destroy the (build-cube) used in the test visual, use the function
 (define (test-destroy id)
-and place a (destroy x) function inside.
+and place a (destroy (hash-ref test-primitives id)) function inside.
 
-Tips:
-To distinguish visuals tasks between same scripts,
-the "Id" argument can be used.
-It contain the Visu% object attached to the script.
-To get an tangible value, you can use the get-name function
-of the object to get an string identifier composed with XXX-YYY-visual
-XXX is the attached crossfader, and YYY is the attached level of the crossfader.
-To use this in a script, you can type (send id get-name)
+Triggers
+---------------------------------------------------------------------------------
 
-*Triggers----------------------------------------------------------------
-The triggers are the midi, osc or keyboard event which can
-launch, kill, choose viuals and other few actions.
+The triggers are the midi, osc or keyboard events which can
+launch, kill, choose visuals and other few actions.
 It is the managing system of the visuals.
 The basic "Save-Trigger-File" can be use to place new triggers.
 To make your own and complexer config :
@@ -88,9 +114,11 @@ keyboard normal keys : character of the key
 keyboard special keys : special number of the key
 (cf (help keys-special-down) or (help keys-special-pressed) in Fluxus)
 
-*Controls----------------------------------------------------------------
+Controls
+---------------------------------------------------------------------------------
+
 The control part is to act on the inside of a visual.
-In the visual, the function to use is "c" like control.
+In the visual, the function to use is "c", like control.
 The basic way to use this is :
 (c "name-of-the-control-in-a-string" id)
 and the manager script will search in the config files to
