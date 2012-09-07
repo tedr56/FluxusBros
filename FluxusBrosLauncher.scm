@@ -2,5 +2,5 @@
 
 (load "FluxusBros.scm")
 
-(set! load-visu-file-force #f)
+(set! load-visu-file-force #t)
 
