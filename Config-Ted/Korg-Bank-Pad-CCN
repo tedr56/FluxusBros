@@ -142,14 +142,14 @@ BANK-PAD-CC-2-5
 Korg
 midi-ccn
 (vector 1 68)
-(send god set-crossfader-launch #:visu "hyperbol" #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
+(send god set-crossfader-launch #:visu "tennis" #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 167 #:bank #t #:level 1)
 #f
 BANK-PAD-CC-2-6
 Korg
 midi-ccn
 (vector 1 69)
-(send god set-crossfader-launch #:visu "transform-cube" #:player "Korg" #:crossfader 168 #:bank #t #:level 1)
+(send god set-crossfader-launch #:visu "valley" #:player "Korg" #:crossfader 168 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 168 #:bank #t #:level 1)
 #f
 BANK-PAD-CC-2-7
@@ -179,4 +179,11 @@ midi-ccn
 (vector 1 73)
 (send god set-crossfader-launch #:visu "bassparticules" #:player "Korg" #:crossfader 172 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 172 #:bank #t #:level 1)
+#f
+BANK-PAD-CC-2-11
+Korg
+midi-ccn
+(vector 1 74)
+(send god set-crossfader-launch #:visu "wiretriangle" #:player "Korg" #:crossfader 173 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "Korg" #:crossfader 173 #:bank #t #:level 1)
 #f
