@@ -1,0 +1,144 @@
+wiretriangle
+Korg
+blur
+ccn
+(vector 1 31)
+0
+1
+1
+1
+1
+1
+wiretriangle
+Korg
+gain
+ccn
+(vector 1 16)
+0
+1
+1
+1
+1
+1
+wiretriangle
+Korg
+offset-y
+ccn
+(vector 1 17)
+0
+1
+0.5
+0.5
+0.5
+0.5
+wiretriangle
+Korg
+coeff-x
+ccn
+(vector 1 24)
+0
+1
+0.5
+0.5
+0.5
+0.5
+wiretriangle
+Korg
+coeff-y
+ccn
+(vector 1 25)
+0
+1
+0.5
+0.5
+0.5
+0.5
+wiretriangle
+Korg
+coeff-z
+ccn
+(vector 1 26)
+0
+1
+0.5
+0.5
+0.5
+0.5
+wiretriangle
+Korg
+r-x
+ccn
+(vector 1 28)
+0
+1
+0
+0
+0
+0
+wiretriangle
+Korg
+r-y
+ccn
+(vector 1 29)
+0
+1
+0
+0
+0
+0
+wiretriangle
+Korg
+scale
+ccn
+(vector 1 30)
+0
+1
+1
+1
+1
+1
+wiretriangle
+Korg
+r-x-time
+ccn
+(vector 1 21)
+0
+1
+0
+0
+0
+0
+wiretriangle
+Korg
+r-y-time
+ccn
+(vector 1 22)
+0
+1
+0
+0
+0
+0
+wiretriangle
+Korg
+r-time
+ccn
+(vector 1 23)
+0
+1
+0
+0
+0
+0
+wiretriangle
+Korg
+beat
+ccn
+(vector 1 20)
+0
+1
+0
+0
+0
+0
+
