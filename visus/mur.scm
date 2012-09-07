@@ -6,6 +6,7 @@
             (Name (send id get-name))
             (g (c "gain-a" id #:coeff 10))
             (blur-control (c "blur" id))
+            (wire-hint (c "wire-hint" id))
             (clr-coeff (c "clr-coeff" id #:coeff 0.1))
             (scale-gh-y-incomplete-coeff (c "scale-gh-y-incomplete-coeff" id #:coeff 10))
             (scale-x (+ 0.001 (c "scale-x" id)))
@@ -86,7 +87,10 @@
             )
 
             (hint-none)
-            (hint-solid)
+            (if (zero? wire-hint)
+                (hint-solid)
+                (hint-wire)
+            )
             (blur blur-control)
 ;            (opacity  cross)
 

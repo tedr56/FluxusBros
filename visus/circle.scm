@@ -43,7 +43,7 @@
 ;    (show param-n)
 ;    (show param-c)
             (cond
-                ((= (c "switch-wire" id) 127)
+                ((positive? (c "switch-wire" id))
                     (hint-wire)
                     (line-width 0.1))
                 (else
