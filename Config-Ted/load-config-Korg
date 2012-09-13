@@ -3,4 +3,5 @@
 (send Triggers-List load-triggers "Config-Ted/Korg-Bank-Pad-Note")
 (send Triggers-List load-triggers "Config-Ted/Korg-Bank-Pad-CCN")
 ;(send Triggers-List load-triggers "Config-Ted/Korg-Kb-Triggers")
-(load "Config-Ted/Korg-DemoA")
+;(load "Config-Ted/Korg-DemoA")
+(load "Config-Ted/Mapping-Fake")
