@@ -1,0 +1,67 @@
+tunnel-wall
+VMX
+rotate-local
+midi-ccn
+#(0 1)
+0
+-1
+0.913385808467865
+0.4
+0.6
+0.913385808467865
+tunnel-wall
+VMX
+rotate-global
+midi-ccn
+#(0 0)
+0
+-1
+1.0
+0.2
+0.5
+0.8
+tunnel-wall
+VMX
+gain-a
+midi-ccn
+#(0 26)
+0
+-1
+0.11023622006177902
+0.22047244012355804
+0.07086614519357681
+0.03937007859349251
+tunnel-wall
+VMX
+gain-b
+midi-ccn
+#(0 25)
+0
+-1
+0.748031497001648
+0.3700787425041199
+1.0
+1.0
+tunnel-wall
+VMX
+max-size
+midi-ccn
+#(1 26)
+0
+-1
+1.0
+0.4
+0.6
+1.0
+tunnel-wall
+VMX
+scale-gh-coeff
+midi-ccn
+#(1 27)
+0
+-1
+1.0
+0.4
+0.6
+1.0
+
