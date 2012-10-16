@@ -3,7 +3,6 @@
 ;
 ; TODOS
 ;       fix : visu multi players
-;       fix : set-focus sur Crossfader%
 ;       fix : midi-connect avec VMX
 ;       implement : fade in/out sur cross -> opacity
 ;       implement : auto-load visu dans banks
@@ -522,14 +521,9 @@
             (players (make-hash))
         )
         (define/public (get-control name id)        ; recuperation de la valeur du control - appel get-control du crossfader
-;;(show-d "debug get-control entry")
-;;(show-d id)
-;;(show-d name)
             (send (get-crossfader-from-id id) get-control name id)
         )
         (define/private (get-crossfader-from-id id)     ; recuperation du crossfader correspondant a l'Id du visu
-;;(show-d "debug get-crossfader-from-id entry")
-;;(show-d (substring id 0 3))
             (get-crossfader (string->number (substring id 0 3)))
         )
         (define/public (set-focus #:player player #:crossfader (cross #f) #:bank (bank #f) #:level (level #f))     ; attribution du focus au crossfader/level
@@ -543,21 +537,17 @@
             )
         )
         (define/public (set-focus-on-player #:player player #:player-target player-target)
-;(show-n "debug set-focus-on-player entry")
             (cond
                 ((crossfader-check #:crossfader (get-crossfader-from-player #:player player-target) #:player player-target)
-;(show-n "debug set-focus-on-player crossfader-check")
                     (set-crossfader-player
                         #:player player
                         #:crossfader (get-crossfader-from-player #:player player-target)
                         #:level (send (get-crossfader (get-crossfader-from-player #:player player-target)) crossfader-get-player-level #:player player-target)
                     )
-;(show-n (get-crossfader-from-player #:player player))
                 )
             )
         )
         (define/private (set-crossfader-player #:player player #:crossfader cross #:level (level #f))        ; ajoute le player au crossfader
-;(show-n "debug set-crossfader-player entry")
             (let ((old-cross (get-crossfader-from-player #:player player)))
                 (when old-cross
                     (unset-crossfader-player #:player player #:crossfader old-cross #:level level)
@@ -568,7 +558,6 @@
             )
         )
         (define/private (unset-crossfader-player #:player player #:crossfader cross #:level (level #f))
-;(show-d "debug unset-crossfader-player entry")
             (send (get-crossfader cross) crossfader-unset-player #:player player)
             (hash-remove! players player)
         )
@@ -596,18 +585,14 @@
             (hash-ref crossfader-list cross #f)
         )
         (define/private (crossfader-check #:crossfader crossfader #:player player #:bank (bank #t))
-;(show-d "debug crossfader-check entry")
             (cond
                 (crossfader
                     (cond
                         ((hash-has-key? crossfader-list crossfader)
-;(show-d "debug crossfader-check crossfader-founded")
                             #t
                         )
                         (else
-;(show-d "debug crossfader-check else")
                             (crossfader-create #:crossfader crossfader #:player player #:bank bank)
-;(show-d "debug crossfader-check create")
                             #t
                         )
                     )
@@ -671,17 +656,8 @@
             )
         )
         (define/private (crossfader-create #:crossfader cross #:player player #:bank (bank #f))
-;(show-d "debug crossfader-create entry")
-            (cond
-                (bank
-                    (hash-set! crossfader-list cross (new Crossfader-Bank% (num (number->string cross)) (owner player)))
-                    (set-crossfader-access #:player player #:crossfader cross)
-                )
-                (else
-                    (hash-set! crossfader-list cross (new Crossfader% (num (number->string cross)) (owner player)))
-                    (set-crossfader-access #:player player #:crossfader cross)
-                )
-            )
+            (hash-set! crossfader-list cross (new Crossfader-Bank% (num (number->string cross)) (owner player)))
+            (set-crossfader-access #:player player #:crossfader cross)
             cross
         )
         (define/public (set-crossfader-visu #:visu visu #:crossfader (crossfader #f) #:player player #:mode (mode 1) #:mapping (mapping #f) #:velocity (velocity 1) #:auto (auto #f) #:swap (swap #f) #:bank (bank #t) #:level (level 1))
@@ -733,125 +709,6 @@
         )
         (define/public (unrecord-mapping #:player player #:mapping mapping)
             #t
-        )
-        (super-new)
-    )
-)
-
-;Crossfader-public-interface
-; get-control
-; crossfader-set-visu*
-; crossfader-visu-launch*
-; crossfader-visu-stop*
-; crossfader-set-player*
-; crossfader-unset-player*
-; crossfader-set-visu-to-locked*
-; crossfader-set-visu-to-unlocked*
-; save-controls
-; crossfader-get-visu
-; crossfader-get-player-level
-
-;Crossfader-private-interface
-
-
-(define Crossfader-Interface
-    (interface ()
-        get-control
-        crossfader-set-visu
-        crossfader-visu-launch
-        crossfader-visu-stop
-        crossfader-set-player
-        crossfader-unset-player
-        crossfader-set-visu-to-locked
-        crossfader-set-visu-to-unlocked
-        crossfader-save-controls
-        crossfader-get-player-level
-;        save-controls
-    )
-)
-
-(define Crossfader%
-    (class* object% (Crossfader-Interface)
-        (init-field
-            num
-            owner
-        )
-        (field
-            (side 0)
-            (pause #f)
-            (visu (new Visu% (id num)))
-            (wait-default #f)
-            (auto-mode #f)
-            (swap-mode #f)
-        )
-        (define/public (get-control name id)
-            (send visu get-control name)
-        )
-        (define/public (crossfader-set-player #:player player #:level (level #f))
-;(show-d "debug crossfader-set-player entry")
-            (send visu set-visu-player #:player player)
-        )
-        (define/public (crossfader-unset-player #:player player)
-            (send visu unset-visu-player #:player player)
-        )
-        (define/public (crossfader-visu-launch #:bank (bank #f) #:level (level 1) #:player player #:swap (swap #f))
-;(show-d "debug crossfader-visu-launch entry")
-;(show-d pause)
-;(show-d swap-mode)
-            (cond
-                (swap-mode
-                    (cond
-                        (pause
-                            (send visu visu-launch)
-                            (set! pause #f)
-                        )
-                        (else
-                            (crossfader-visu-stop #:player player #:level level #:force #t)
-                            (set! pause #t)
-                        )
-                    )
-                )
-                (else
-;(show-d "debug crossfader-visu-launch no swap mode")
-                    (crossfader-visu-stop #:player player #:level level #:force #t)
-;(show-d "debug crossfader-visu-launch crossfader-visu-stop")
-                    (send visu visu-launch)
-;(show-d "debug crossfader-visu-launch visu-launch")
-                    (set! pause #f)
-                )
-            )
-        )
-        (define/public (crossfader-visu-stop #:player player #:bank (bank #f) #:level (level 1) #:force (force #f))
-            (cond
-                ((not (and auto-mode (not force) swap-mode))
-                    (send visu visu-stop)
-                    (set! pause #t)
-                )
-                
-            )
-        )
-        (define/public (crossfader-set-visu #:visu visual #:mode (mode #f) #:velocity (velocity 1) #:player player #:auto (auto #f) #:swap (swap #f) #:mapping (mapp #f))
-;(show-d "debug crossfader-set-visu entry")
-;(show-d visual)
-            (set! auto-mode auto)
-            (set! swap-mode swap)
-            (set! pause #t)
-            (send visu set-visu #:visu visual #:mode mode #:velocity velocity #:player player #:mapping mapp)
-        )
-        (define/public (crossfader-set-visu-to-locked #:player player)
-            (send visu set-visu-to-locked #:player player)
-        )
-        (define/public (crossfader-set-visu-to-unlocked #:player player)
-            (send visu set-visu-to-unlocked #:player player)
-        )
-        (define/public (crossfader-save-controls #:player player)
-            (send visu visu-save-controls #:player player)
-        )
-        (define/public (crossfader-get-player-level #:player player)
-            #f
-        )
-        (define/public (crossfader-get-visu)
-            (send visu get-visu)
         )
         (super-new)
     )
