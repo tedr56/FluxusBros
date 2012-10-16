@@ -216,9 +216,9 @@
     (class object%
         (init-field
             (surface-resolution (vector 500 500))
-            (plugin
-                (ffgl-load "PosterizeVFX" (vector-ref surface-resolution 0) (vector-ref surface-resolution 1))
-            )
+;            (plugin
+;                (ffgl-load "PosterizeVFX" (vector-ref surface-resolution 0) (vector-ref surface-resolution 1))
+;            )
         )
         (field
             (renderer
@@ -234,9 +234,9 @@
                 (pixels-render-to (pixels->texture p 0))
                 (pixels-display (pixels->texture p 1))
             )
-            (with-ffgl plugin
-                (ffgl-process p (pixels->texture p 1) (pixels->texture p 0))
-            )
+;            (with-ffgl plugin
+;                (ffgl-process p (pixels->texture p 1) (pixels->texture p 0))
+;            )
         )   
         (define/public (Get-Renderer)
             renderer
@@ -267,7 +267,16 @@
                 (hide 1)
             )
         )
-
+        (define/public (Set-Position (position (list (vector -0.5 -0.5 0) (vector 0.5 -0.5 0) (vector 0.5 0.5 0) (vector -0.5 0.5 0))))
+            (with-primitive renderer
+                (pdata-index-map!
+                    (lambda (p i)
+                        (take position (inexact->exact (modulo i 4)))
+                    )
+                    "p"
+                )
+            )
+        )
         (super-new)
     )
 )            
