@@ -1,0 +1,51 @@
+VisualControl%
+    name
+    (defaultValues '())
+    (level 0)
+AbstractControl%
+    Value
+    Type
+    Player
+
+TriggerControl%
+    (onTrigg "")
+    (offTrigg "")
+    (onRule (lambda (n) (if (> n DEFAULT_THRESHOLD_TRIGGER_VALUE) #t #f)))
+    (offRule (lambda (n) (if (<= n DEFAULT_THRESHOLD_TRIGGER_VALUE) #t #f)))
+AbstractControl%
+    Value
+    Player
+    Type
+
+FilterControl%
+    Abtract             ;reference to AbstractControl% for getValue()
+    tablePlayer         ;player who own the TableControl%
+    (eventpart 0)       ;value(s) to take from Table event
+    (valcoeff 127)      ;maximum value of Table event, for coeff proportion
+    (assign "assign")   ;type of assignement, "assign" "increment" "decrement"
+    (abstractpart 0)    ;value(s) of AbstractControl% to send/modify
+
+TableControl% object%
+            type
+            address
+
+Player%
+    name                        ;name of the player
+    controlMapper               ;ControlMapper% control signal mapper
+    visuVisualControlNamesList  ;Hash[visu]'(visuControlsNames)
+    visualList                  ;Hash[CrossLevel]Visuals%
+    
+Visual
+    name
+    crosslevel
+    (visualControlList (make-hash))
+
+
+
+
+
+Test Variables
+Hash# VisualList[crossLevel]Visual%
+Hash# VisualNameList[visu]'(VisualControlNames)
+Hash# PlayerList["Name"]Player%
+Mapper ControlMapper%

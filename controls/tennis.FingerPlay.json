@@ -1,0 +1,162 @@
+{
+    "gain-low": {
+        "type": "osc",
+        "address": "/fingerplay/control/68",
+        "defaults": [
+            1.0,
+            0.9291338324546814,
+            0.34645670652389526,
+            0.9921259880065918
+        ]
+    },
+    "gain-high": {
+        "type": "osc",
+        "address": "/fingerplay/control/70",
+        "defaults": [
+            1.0,
+            1.0,
+            0.34645670652389526,
+            1.0
+        ]
+    },
+    "a": {
+        "type": "osc",
+        "address": "/fingerplay/control/44",
+        "defaults": [
+            0.20472441613674164,
+            1.0,
+            0.6771653294563293,
+            0.4566929042339325
+        ]
+    },
+    "b": {
+        "type": "osc",
+        "address": "/fingerplay/control/46",
+        "defaults": [
+            0.31496062874794006,
+            0.5669291615486145,
+            0.29921260476112366,
+            1.0
+        ]
+    },
+    "c": {
+        "type": "osc",
+        "address": "/fingerplay/control/48",
+        "defaults": [
+            1.0,
+            1.0,
+            0.34645670652389526,
+            1.0
+        ]
+    },
+    "ecart-low": {
+        "type": "osc",
+        "address": "/fingerplay/control/50",
+        "defaults": [
+            0.4960629940032959,
+            0.3700787425041199,
+            1.0,
+            0.7795275449752808
+        ]
+    },
+    "ecart-high": {
+        "type": "osc",
+        "address": "/fingerplay/control/52",
+        "defaults": [
+            0.0,
+            0.11811023950576782,
+            0.9291338324546814,
+            0.0
+        ]
+    },
+    "vitesse": {
+        "type": "osc",
+        "address": "/fingerplay/control/40",
+        "defaults": [
+            0.20472441613674164,
+            0.20472441613674164,
+            0.33070865273475647,
+            0.33070865273475647
+        ]
+    },
+    "color-base": {
+        "type": "osc",
+        "address": "/fingerplay/control/62",
+        "defaults": [
+            0.0,
+            0.4173228442668915,
+            0.34645670652389526,
+            0.7165354490280151
+        ]
+    },
+    "color-large": {
+        "type": "osc",
+        "address": "/fingerplay/control/64",
+        "defaults": [
+            0.33070865273475647,
+            0.14960630238056183,
+            0.0,
+            0.6614173054695129
+        ]
+    },
+    "blur": {
+        "type": "osc",
+        "address": "/fingerplay/control/56",
+        "defaults": [
+            0.0,
+            0.5039370059967041,
+            0.34645670652389526,
+            0.5196850299835205
+        ]
+    },
+    "pos-offset": {
+        "type": "osc",
+        "address": "/fingerplay/control/60",
+        "defaults": [
+            0.16535432636737823,
+            0.0,
+            1.0,
+            0.13385826349258423
+        ]
+    },
+    "size-body": {
+        "type": "osc",
+        "address": "/fingerplay/control/42",
+        "defaults": [
+            0.06299212574958801,
+            0.06299212574958801,
+            0.015748031437397003,
+            0.03937007859349251
+        ]
+    },
+    "size-head": {
+        "type": "osc",
+        "address": "/fingerplay/control/58",
+        "defaults": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ]
+    },
+    "opa-along": {
+        "type": "osc",
+        "address": "/fingerplay/control/66",
+        "defaults": [
+            0.34645670652389526,
+            0.26771652698516846,
+            0.25196850299835205,
+            0.7322834730148315
+        ]
+    },
+    "prims-num": {
+        "type": "osc",
+        "address": "/fingerplay/control/54",
+        "defaults": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+        ]
+    }
+}

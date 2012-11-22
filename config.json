@@ -1,0 +1,44 @@
+{
+    "audio": ["system:capture_1", 1024, 44100],
+    "gain": 1,
+    "interfaceControl": true,
+    "interfaceCallBack": true,
+    "loadPlayers": {
+        "Korg": true,
+        "Bitstream": false,
+        "FingerPlay": true
+    },
+    "players": {
+        "Korg": {
+            "MidiInputPort": {
+                "microKONTROL:1": true,
+                "microKONTROL:2": true
+            },
+            "defaultDirectory": "config/",
+            "loadFocus": {
+                "Korg-Focus": true
+            },
+            "loadTriggers": {
+                "Korg-Triggers": true
+            },
+            "loadMapping": {
+                "Korg-Mapping": true
+            },
+            "loadVisuals": {
+                "Korg-Visuals": true
+            }
+        },
+        "Bitstream": {
+            "MidiInputPort": "Bitstream 3X:0",
+            "defaultDirectory": "config/"
+        },
+        "FingerPlay": {
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "FingerPlay-Triggers": true
+            }
+        }
+    }
+}
+
+
