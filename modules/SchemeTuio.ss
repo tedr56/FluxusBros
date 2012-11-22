@@ -60,7 +60,7 @@
 ;
 ; binds listener, starts a loop for updating main Cursor/Object lists, which are accessable anytime
 ; NOTE: thread needs to be killed manually (Ctrl-K in DrScheme or see demo file for example)
-(define (start-tuio-client stx ip port)
+(define (start-tuio-client ip port)
   (udp-bind! LISTENER ip port) ; bind listener
   (thread tuio-r) ; initiate listen loop
   )

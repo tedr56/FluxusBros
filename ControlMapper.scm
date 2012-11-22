@@ -6,7 +6,7 @@
     mzlib/string
     json
 )
-(require "modules/SchemeTuio.ss")
+(require "modules/Tuio.ss")
 
 ;defaults variables
 (define DEFAULT_THRESHOLD_TRIGGER_VALUE 0.5)
@@ -326,6 +326,7 @@
             address
 
         )
+        (inspect #f)
         (define/public (equal-to? other recur)
             (if
                 (and
@@ -482,8 +483,6 @@
                         )
                     )
                     (addressT
-                        (begin
-                            (show typeT)
                         (cond
                             ((or (equal? typeT "midi-ccn") (equal? typeT "midi-note"))
                                 (eval-string  (parseJson '(address) TableJson "0"))
@@ -491,7 +490,9 @@
                             ((equal? typeT "osc")
                                 (parseJson '(address) TableJson "/")
                             )
-                        )
+                            (else
+                                (eval-string  (parseJson '(address) TableJson "0"))
+                            )
                         )
                     )
                     (tableT (new TableControl% (type typeT) (address addressT)))
@@ -1468,6 +1469,7 @@
 (loadConfig PlayerList Mapper VisualNameList VisualList)
 
 ;(send (hash-ref PlayerList "Korg") setVisual "tennis" "901")
-;(send (hash-ref PlayerList "Korg") setVisual "quartertracker" "902")
-;(send (hash-ref PlayerList "Korg") visualStart)
-(send (hash-ref PlayerList "FingerPlay") setVisual "tennis" "901")
+(send (hash-ref PlayerList "Korg") setVisual "quartertracker" "902")
+(send (hash-ref PlayerList "Korg") visualStart)
+;(send (hash-ref PlayerList "FingerPlay") setVisual "tennis" "901")
+;(send (hash-ref PlayerList "FingerPlay") visualStart)
