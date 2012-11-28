@@ -5,7 +5,8 @@
 
 (provide
     CalibrateTuioCursor
-    CalibrateTuioCursors 
+    CalibrateTuioCursors
+    PersistentTuioCursor
 )
 
 (define (CalibrateTuioCursor cursor2D coeffX coeffY)
@@ -38,3 +39,36 @@
         )
     )
 )
+
+(define persistent2Dcursors (make-hash))
+
+(define (PersistentTuioCursor cursors2D delay)
+    (let*
+        (
+            (secondDelay (* 1000 delay))
+            (updateCursor '())
+            (currentTime (current-inexact-milliseconds))
+        )
+        (for-each
+            (lambda (cursor2D)
+                (hash-set! persistent2Dcursors (2Dcur-sID cursor2D) (cons currentTime cursor2D))
+            )
+            cursors2D
+        )
+        (hash-for-each 
+            persistent2Dcursors
+            (lambda (id Time.persistCur)
+                (cond
+                    ((< (+ (car Time.persistCur) secondDelay) currentTime)
+                        (hash-remove! persistent2Dcursors id)
+                    )
+                    (else
+                        (set! updateCursor (append updateCursor (list (cdr Time.persistCur))))  
+                    )
+                )
+            )
+        )
+        updateCursor
+    )
+)
+        
