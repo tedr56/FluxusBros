@@ -4,6 +4,7 @@
     (require fluxus-018/time)
     (require scheme/math)
     (require scheme/string)
+    (require scheme/list)
     (provide
         midi-connect
         m
@@ -33,6 +34,8 @@
         defil-y
         defil-z
         modulo-d
+        list-insert
+        list-remove
     )
     (define (midi-connect)
         (letrec
@@ -357,6 +360,28 @@
                 )        
                 (* (expt 10 -20) (modulo v-p d-p))
             )
+        )
+    )
+    (define (list-insert liste pos val)
+        (let*-values
+            (
+                [(prev aft) (split-at liste (min pos (- (length liste) 1)))]
+            )
+            (append prev (list val) aft)
+        )
+    )
+    (define (list-remove liste pos)
+        (let*-values
+            (
+                [(prev aft) (split-at liste (min pos (- (length liste) 1)))]
+                [(aftdrop)
+                    (if (empty? drop)
+                        '()
+                        (drop aft 1)
+                    )
+                ]
+            )
+            (append prev aftdrop)
         )
     )
 )
