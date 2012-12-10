@@ -12,8 +12,8 @@
 ; (ok)  fix : enlever lock-controls sur visu-stop
 ; (ok)  implement : save-controls
 
-(require "vjbros.scm")
-(require "beat-module.scm")
+(require "modules/vjbros.scm")
+(require "modules/beat-module.scm")
 (require scheme/class)
 (require mzlib/string)
 (require scheme/bool)
@@ -732,7 +732,7 @@
 ; get-level-from-id
 
 (define Crossfader-Bank%
-    (class* object% (Crossfader-Interface)
+    (class object% ;(Crossfader-Interface)
         (init-field
             num
             owner
