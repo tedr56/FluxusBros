@@ -6,7 +6,10 @@
     mzlib/string
     json
 )
-(require "modules/Tuio.ss")
+(require
+    "modules/vjbros.scm"
+    "modules/Tuio.ss"
+)
 
 ;defaults variables
 (define DEFAULT_THRESHOLD_TRIGGER_VALUE 0.5)
@@ -33,7 +36,7 @@
 )
 
 ;Configuration TUIO
-(define DEFAULT_TUIO_SOURCE 3333)
+(define DEFAULT_TUIO_SOURCE 3332)
 (define TUIO_SOURCE DEFAULT_TUIO_SOURCE)
 (define previous_tuio_source_enable #f)
 (when (defined? 'tuio-source-enable) (set! previous_tuio_source_enable tuio-source-enable))  ;check for previous session tuio server state
@@ -42,6 +45,17 @@
     (when (and (not tuio-source-enable) (equal? TUIO_SOURCE DEFAULT_TUIO_SOURCE))
         (start-tuio-client #f TUIO_SOURCE)
         (set! tuio-source-enable #t)
+    )
+)
+
+(define previous-debug #f)
+(when (defined? 'debug)
+    (set! previous-debug debug)
+)
+(define debug previous-debug)
+(define (show-d t)
+    (when debug
+        (show t)
     )
 )
 
@@ -133,18 +147,18 @@
         )
         (inherit setValue getValue)
         (define/private (initLevelDefault)
-            (show "->initLevelDefault")
-            (show level)
+            (show-d "->initLevelDefault")
+            (show-d level)
             (when level
                 (setLevel level)
             )
         )
         (define/public (setLevel lev)
-            (show "->setLevel")
+            (show-d "->setLevel")
             (set! level (min lev (- (length defaultValues) 1)))
-            (show (getValue))
+            (show-d (getValue))
             (setValue (list-ref defaultValues level))  ; TODO Task for fading VisualControl to next level
-            (show (getValue))
+            (show-d (getValue))
         )
         (define/public (setDefaultValues valuesList)
             (set! defaultValues valuesList)
@@ -173,14 +187,14 @@
                 ((and (not triggerStatus) (onRule val))
                     (when onTrigg
                         (display "onTrigg : ")(show onTrigg)
-                        (eval-string onTrigg (lambda (error) (show error)))
+                        (eval-string onTrigg (lambda (error) (show-d error)))
                     )
                     (set! triggerStatus #t)
                 )
                 ((and triggerStatus (offRule val))
                     (when offTrigg
                         (display "offTrigg : ")(show offTrigg)
-                        (eval-string offTrigg (lambda (error) (show error)))
+                        (eval-string offTrigg (lambda (error) (show-d error)))
                     )
                     (set! triggerStatus #f)
                 )
@@ -208,8 +222,8 @@
             (FilterFunction (initFilterFunction))
         )
         (define/private (initFilterFunction)
-            (show "->initFilterFunction")
-            (show abstractType)
+            (show-d "->initFilterFunction")
+            (show-d abstractType)
             (cond
                 ((or (equal? abstractType "number") (equal? abstractType "coord1D"))
                     (set! valcoeff (checkNumListType valcoeff "number" DEFAULT_VAL_COEFF))
@@ -313,6 +327,9 @@
         (define/public (updateControl val)
             (send Abstract updateControl (FilterFunction val) tablePlayer)
         )
+        (define/public (setPlayer p)
+            (send Abstract setPlayer p)
+        )
         (define/public (getPlayer)
             tablePlayer
         )
@@ -371,14 +388,14 @@
             running
         )
         (define/public (setVisualControls controlList)  ; controlList '('(TableControl% VisualControl%))
-            (show "->setVisualControls ")
+            (show-d "->setVisualControls ")
             (for-each
                 (lambda (visualControlParams)
-                    (hash-set! visualControlList (send (second visualControlParams) getName) (second visualControlParams))
+                    (hash-set! visualControlList (send (third visualControlParams) getName) (third visualControlParams))
                 )
                 controlList
             )
-            (show "  setVisualControls->")
+            (show-d "  setVisualControls->")
         )
         (define/public (Start)
             (unless running
@@ -395,6 +412,7 @@
                     )
                     this
                 )
+                ;(thread (with-state ((eval-string name) this 1)))
                 (spawn-task (lambda () (with-state ((eval-string name) this 1))) (get-visu-task-name))
                 (set! running #t)
             )
@@ -466,14 +484,15 @@
         )
         (field
             (focus '())
-            (lastFocus #f)
+            (waitFocus #f)
+            (lastFocus '())
             (focusTable #f)                ; List to store Focus's TableControl Mapping    '( '( '(Zone1-1) '(Zone1-2)) '( '(Zone2-1) '(Zone2-2)))
             (visuTempTableControl (make-hash))       ; List to store TableValuesVisualControl list  hash["name"]'(TableControl DefaultValues VisualControls)
             (defaultDirectory "")
             (triggersControlList (make-hash))
         )
         (define/private (generateTableControl TableJson (player name))
-            (show "->genTableControl")
+            (show-d "->genTableControl")
             (let*
                 (
                     (typeT
@@ -497,13 +516,13 @@
                     )
                     (tableT (new TableControl% (type typeT) (address addressT)))
                 )
-                (show addressT)
-                (show "  genTableControl->")
+                (show-d addressT)
+                (show-d "  genTableControl->")
                 tableT
             )
         )
         (define/private (generateVisualControl VisualJson nameV visuV LevelV)
-            (show "->genVisualControl")
+            (show-d "->genVisualControl")
             (let*
                 (
                     (typeV (loadVisualControlType visuV nameV))
@@ -529,14 +548,14 @@
                     (visualV (new VisualControl% (Value valueV) (Player playerV) (Type typeV) (name nameV) (defaultValues defaultsV) (level levelV)))
                 )
                 (send visualV setLevel levelV)
-                (show "typev")
-                (show typeV)
-                (show "  genVisualControl->")
+                (show-d "typev")
+                (show-d typeV)
+                (show-d "  genVisualControl->")
                 visualV
             )
         )
         (define/private (generateTriggerControl TriggerJson)
-            (show "->genTriggerControl")
+            (show-d "->genTriggerControl")
             (let*
                 (
                     (rawTrigg->Trigg
@@ -558,12 +577,12 @@
                     (typeT "number")
                     (triggerT (new TriggerControl% (Type typeT) (Player playerT) (Value valueT) (onTrigg onTriggT) (offTrigg offTriggT)))
                 )
-                (show "  genTriggerControl->")
+                (show-d "  genTriggerControl->")
                 triggerT
             )
         )
         (define/private (generateFilterControl FilterJson AbstractF)
-            (show "->genFilterControl")
+            (show-d "->genFilterControl")
             (let*
                 (
                     (playerF name)
@@ -573,7 +592,7 @@
                     (abstractpartF (parseJson '(abstractPart) FilterJson 0))
                     (filterF (new FilterControl% (Abstract AbstractF) (tablePlayer playerF) (eventpart eventpartF) (valcoeff valcoeffF) (assign assignF) (abstractpart abstractpartF)))
                 )
-                (show "  genFilterControl->")
+                (show-d "  genFilterControl->")
                 filterF
             )
         )
@@ -630,10 +649,9 @@
             )    
         )
         (define/public (loadTriggerControls files)
-            (show "->loadTriggerControls")
             (for-each
                 (lambda (f)
-                    (show f)
+                    (show-d f)
                     (let*
                         (
                             (jsonFile (open-input-file f))
@@ -660,6 +678,7 @@
             )
         )
         (define/public (setVisual visual (cross #f) (level #f)) ;loadVisu defaultValue
+            (show "->setVisual")
             (let
                 (
                     (CrossLevel (getCrossLevel cross level))
@@ -670,7 +689,8 @@
                         )
                     )
                 )
-                (show "->setVisual")
+                (show lastFocus)
+                (show CrossLevel)
                 (cond
                     ((and CrossLevel (file-exists? (string-append DEFAULT_VISUAL_PATH visu ".scm")))
                         (let*
@@ -691,79 +711,62 @@
                                 (Visuals (map (lambda (key) (hash-ref visualList key)) CrossKeys))
                                 (VisualsRunning? (map (lambda (V) (if (send V running?) #t #f)) Visuals))
                             )
-                            (for-each       ; stop and unrecord running visuals in cross-Levels
-                                (lambda (K running)
-                                    (let ((visualK (hash-ref visualList K)))
-                                        (when running
-                                            (send visualK Stop)
-                                        )
-                                        (send controlMapper unrecordControl (loadTableValuesVisualControls (send visualK getVisual) (send visualK getCrossLevel) #t))
-                                    )
-                                )
-                                CrossKeys VisualsRunning?
-                            )
-                            (for-each           
-                                (lambda (key)
-                                    (when (and (member key focus) (hash-has-key? visuTempTableControl key))
-                                        (hash-remove! visuTempTableControl key)                                                   ; remove visuTemp if crossLevel in Focus[]
-                                    )
-                                )
-                                CrossKeys
-                            )
-                            (for-each       ;assign new Visual% to crossLevels
-                                (lambda (key)
-                                    (cond
-                                        ((member key focus)
-                                            (let
-                                                (
-                                                    (tablevisuControlList (loadTableValuesVisualControls visu key #t))
-                                                )
-                                                ;(send controlMapper recordControl tablevisuControlList)
-;;                                                 (show tablevisuControlList)
-                                                (hash-set! visualList key (addVisual visu CrossLevel))                                                     ; assign new Visual% to crossLevels
-                                                (send (hash-ref visualList key) setVisualControls tablevisuControlList)   ; assign VisualControls% to Visual
+                            (show LevelKeys)
+                            (show CrossKeys)
+                            (unless (and (not (empty? LevelKeys)) (empty? CrossKeys))
+                                (for-each       ; stop and unrecord running visuals in cross-Levels
+                                    (lambda (K running)
+                                        (let ((visualK (hash-ref visualList K)))
+                                            (when running
+                                                (send visualK Stop)
                                             )
+                                (show "debug setVisual")
+;;                                 (show visualK)
+;;                                 (show (send visualK getVisual))
+;;                                 (show (send visualK getCrossLevel))
+                                            (send controlMapper unRecordControl (loadTableValuesVisualControls (send visualK getVisual) (send visualK getCrossLevel)))
                                         )
-                                        ((and (empty? focus) (equal? key CrossLevel))
-                                            (let
-                                                (
-                                                    (tablevisuControlList (loadTableValuesVisualControls visu key #t))
-                                                )
-                                                ;(send controlMapper recordControl tablevisuControlList)
-                                                (show tablevisuControlList)
-                                                (hash-set! visualList key (addVisual visu CrossLevel))                                                     ; assign new Visual% to crossLevels
-                                                (send (hash-ref visualList key) setVisualControls tablevisuControlList)   ; assign VisualControls% to Visual
-                                                (set! focus (list key))
-                                                (set! lastFocus
-                                                    (list
-                                                        (substring key 0 DEFAULT_CROSS_SIZE)
-                                                        (substring key DEFAULT_CROSS_SIZE)
-                                                    )
+                                    )
+                                    CrossKeys VisualsRunning?
+                                )
+                                (for-each
+                                    (lambda (key)
+                                        (when (and (member key focus) (hash-has-key? visuTempTableControl key))
+                                            (hash-remove! visuTempTableControl key)                                                   ; remove visuTemp if crossLevel in Focus[]
+                                        )
+                                    )
+                                    CrossKeys
+                                )
+                                (for-each       ;assign new Visual% to crossLevels
+                                    (lambda (key)
+                                        (let*
+                                            (
+                                                (tablevisuControlList (loadTableValuesVisualControls visu key))
+                                            )
+                                            (hash-set! visualList key (addVisual visu CrossLevel))                    ; assign new Visual% to crossLevels
+                                            (send (hash-ref visualList key) setVisualControls tablevisuControlList)   ; assign VisualControls% to Visual
+                                            (when (member key focus)
+                                                (send Mapper recordControl tablevisuControlList)
+                                            )
+                                            (when (empty? focus)
+                                                (when (equal? key CrossLevel)
+                                                    (setFocus CrossLevel)
                                                 )
                                             )
                                         )
-                                        (else
-                                            (let
-                                                (
-                                                    (tablevisuControlList (loadTableValuesVisualControls visu key #f))
-                                                )
-                                                (hash-set! visualList key (addVisual visu CrossLevel))                                                     ; assign new Visual% to crossLevels
-                                                (send (hash-ref visualList key) setVisualControls tablevisuControlList)   ; assign VisualControls% to Visual
-                                            )
+                                    )
+                                    AllCrossKeys
+                                )
+                                (for-each
+                                    (lambda (key run)
+                                        (when run
+                                            (send (hash-ref visualList key) Start)
                                         )
                                     )
+                                    CrossKeys VisualsRunning?
                                 )
-                                AllCrossKeys
+                                ; TODO (for-each CrossKeys (send controlMapper recordControl (mapControls (loadTableControl visu))))
                             )
-                            (for-each
-                                (lambda (key run)
-                                    (when run
-                                        (send (hash-ref visualList key) Start)
-                                    )
-                                )
-                                CrossKeys VisualsRunning?
-                            )
-                            ; TODO (for-each CrossKeys (send controlMapper recordControl (mapControls (loadTableControl visu))))
                         )
                     )
                     (else
@@ -773,7 +776,7 @@
                     )
                 )
             )
-            (show "  setVisual->")
+            (show-d "  setVisual->")
             #f
         )
         (define/public (visualStart (cross #f) (level #f) (visual #f))
@@ -783,32 +786,39 @@
                         (setVisual (getCross cross) (getLevel level) visual)
                     )
                     (cond
-                        ((hash-has-key? visualList CrossLevel)
-                            (send (hash-ref visualList CrossLevel) Start)
+                        (waitFocus
+                            (setFocus CrossLevel)
                         )
                         (else
-                            (letrec
-                                (
-                                    (searchOtherLevel
-                                        (lambda ((levIter 0))
-                                            (let ((lev (number->string levIter)))
-                                                (cond
-                                                    ((hash-has-key? visualList (getCrossLevel cross lev))
-                                                        (setVisual (getCross cross) (getLevel level) visual)
-                                                        (send (hash-ref visualList CrossLevel) Start)
-                                                    )
-                                                    ((>= n DEFAULT_OTHER_LEVEL_SEARCH)
-                                                        #f
-                                                    )
-                                                    (else
-                                                        (searchOtherLevel (+ lev 1))
+                            (cond
+                                ((hash-has-key? visualList CrossLevel)
+                                    (send (hash-ref visualList CrossLevel) Start)
+                                )
+                                (else
+                                    (letrec
+                                        (
+                                            (searchOtherLevel
+                                                (lambda ((levIter 0))
+                                                    (let ((lev (number->string levIter)))
+                                                        (cond
+                                                            ((hash-has-key? visualList (getCrossLevel cross lev))
+                                                                (setVisual (send (hash-ref visualList (getCrossLevel cross lev)) getVisual) cross level)
+                                                                (visualStart cross level)
+                                                            )
+                                                            ((>= n DEFAULT_OTHER_LEVEL_SEARCH)
+                                                                #f
+                                                            )
+                                                            (else
+                                                                (searchOtherLevel (+ lev 1))
+                                                            )
+                                                        )
                                                     )
                                                 )
                                             )
                                         )
+                                        (searchOtherLevel)
                                     )
                                 )
-                                (searchOtherLevel)
                             )
                         )
                     )
@@ -832,19 +842,11 @@
                 ((or lastFocus cross)
                     (let*
                         (
-                            (crossfader
-                                (cond
-                                    ((number? cross) (number->string cross))
-                                    ((symbol? cross) (symbol->string cross))
-                                    ((string? cross) cross)
-                                    (else #f)
-                                )
-                            )
-                            (Crossfader (getCross crossfader))
-                            (Level (getLevel level))
-                            (CrossLevel (string-append Crossfader Level))
+                            (autocrossfader (getCross cross))
+                            (autolevel (getLevel level))
+                            (autocrosslevel (string-append autocrossfader autolevel))
                         )
-                        CrossLevel
+                        autocrosslevel
                     )
                 )
                 (else #f)
@@ -852,21 +854,43 @@
         )
         (define/private (getCross cross)
             (if cross
-                (string-append (build-string (- DEFAULT_CROSS_SIZE (string-length cross)) (lambda (i) #\0)) cross)
-                (if lastFocus
-                    (first lastFocus)
+                (let
+                    (
+                        (crossfader
+                            (cond
+                                ((number? cross) (number->string cross))
+                                ((symbol? cross) (symbol->string cross))
+                                ((string? cross) cross)
+                                (else #f)
+                            )
+                        )
+                    )
+                    (string-append (build-string (- DEFAULT_CROSS_SIZE (string-length crossfader)) (lambda (i) #\0)) crossfader) ;Add 0's in front of cross number when cross < 100
+                )
+                (if (empty? lastFocus)
                     #f
+                    (first lastFocus)
                 )
             )
         )
         (define/private (getLevel level)
             (cond
                 (level
-                    level
+                    (cond
+                        ((string? level)
+                            level
+                        )
+                        ((symbol? level)
+                            (symbol->string level)
+                        )
+                        ((number? level)
+                            (number->string level)
+                        )
+                    )
                 )
                 (else
                     (cond
-                        (lastFocus
+                        ((not (empty? lastFocus))
                             (second lastFocus)
                         )
                         (else
@@ -876,18 +900,18 @@
                 )
             )
         )
-        (define/private (loadTableValuesVisualControls visu cross record? #:forceReload (forceReload #f)) ; return '(TableControl% VisualControl%)
+        (define/private (loadTableValuesVisualControls visu cross #:forceReload (forceReload #f)) ; return '(TableControl% VisualControl%)
             (cond
                 ((and (hash-has-key? visuTempTableControl cross) (not forceReload))
                     (let ((visuTempControls (hash-ref visuTempTableControl visu)))
-                        (when record?
-                            (hash-for-each
-                                visuTempControls
-                                (lambda (TableKey FilterVisualVal)
-                                    (send controlMapper recordControl (list TableKey (first FilterVisualVal)))
-                                )
-                            )
-                        )
+;;                         (when record?
+;;                             (hash-for-each
+;;                                 visuTempControls
+;;                                 (lambda (TableKey FilterVisualVal)
+;;                                     (send controlMapper recordControl (list TableKey (first FilterVisualVal)))
+;;                                 )
+;;                             )
+;;                         )
                         visuTempControls
                     )
                 )
@@ -900,7 +924,7 @@
                             (visualControlsNamesFound '())
                             (parseControlFileJson ; return '(TableControl% VisualControl%) from file and ('(VisualControlNames) | '())
                                 (lambda (player visualNames (tablevisualList '()))
-                                    (show "->parseControlFileJson")
+                                    (show-d "->parseControlFileJson")
                                     (let ((inputFilePath (string-append DEFAULT_CONTROL_PATH visu "." player "." "json"))) ; Next - change to (string-append DEFAULT_CONTROL_PATH visu ".xml"
                                         (when (file-exists? inputFilePath)
                                             (let*
@@ -911,7 +935,7 @@
                                                 (hash-for-each
                                                     inputJson
                                                     (lambda (key val)
-                                                        ;(show "->parseControlFileJson hash-for-each")
+                                                        ;(show-d "->parseControlFileJson hash-for-each")
                                                         (let
                                                             (
                                                                 (nameV
@@ -923,32 +947,42 @@
                                                                 )
                                                                 (levelV Level)
                                                             )
-                                                            (show nameV)
-;;                                                             (show (string? nameV))
-;;                                                             (show visualNames)
-;;                                                             (show levelV)
-;;                                                             (show record?)
+                                                            (show-d nameV)
+;;                                                             (show-d (string? nameV))
+;;                                                             (show-d visualNames)
+;;                                                             (show-d levelV)
+;;                                                             (show-d record?)
                                                             (when (and (member nameV visualNames) (not (member nameV visualControlsNamesFound)))
-                                                                (cond
-                                                                    (record?
-                                                                        (let*
-                                                                            (
-                                                                                (TableC (generateTableControl val player))
-                                                                                (VisualC (generateVisualControl val nameV visu levelV))
-                                                                                (FilterC (generateFilterControl val VisualC))
-                                                                            )
-                                                                            (send controlMapper recordControl (list (list TableC FilterC)))
-                                                                            (set! tablevisualList (append tablevisualList (list (list TableC VisualC))))
-                                                                        )
+;;                                                                 (cond
+;;                                                                     (record?
+;;                                                                         (let*
+;;                                                                             (
+;;                                                                                 (TableC (generateTableControl val player))
+;;                                                                                 (VisualC (generateVisualControl val nameV visu levelV))
+;;                                                                                 (FilterC (generateFilterControl val VisualC))
+;;                                                                             )
+;; ;;                                                                             (when record?
+;; ;;                                                                                 (send controlMapper recordControl (list (list TableC FilterC)))
+;; ;;                                                                             )
+;;                                                                             (set! tablevisualList (append tablevisualList (list (list TableC VisualC))))
+;;                                                                         )
+;;                                                                     )
+;;                                                                     (else
+;;                                                                         (let*
+;;                                                                             (
+;;                                                                                 (VisualC (generateVisualControl VisualJson nameV visu levelV))
+;;                                                                             )
+;;                                                                             (set! tablevisualList (append tablevisualList (list (list #f visualC))))
+;;                                                                         )
+;;                                                                     )
+;;                                                                 )
+                                                                (let*
+                                                                    (
+                                                                        (TableC (generateTableControl val player))
+                                                                        (VisualC (generateVisualControl val nameV visu levelV))
+                                                                        (FilterC (generateFilterControl val VisualC))
                                                                     )
-                                                                    (else
-                                                                        (let*
-                                                                            (
-                                                                                (VisualC (generateVisualControl VisualJson nameV visu levelV))
-                                                                            )
-                                                                            (set! tablevisualList (append tablevisualList (list (list #f visualC))))
-                                                                        )
-                                                                    )
+                                                                    (set! tablevisualList (append tablevisualList (list (list TableC FilterC VisualC))))
                                                                 )
                                                                 (set! visualControlsNamesFound (append visualControlsNamesFound (list nameV)))
                                                             )
@@ -958,98 +992,8 @@
                                             )
                                         )
                                     )
-                                    (show "parseControlFileJson->")
+                                    (show-d "parseControlFileJson->")
                                     tablevisualList
-                                )
-                            )
-                            (parseControlFile ; return '(TableControl% VisualControl%) from file and ('(VisualControlNames) | '())
-                                (lambda (player visualNames)
-                                    (let ((inputFilePath (string-append DEFAULT_CONTROL_PATH visu "." player))) ; Next - change to (string-append DEFAULT_CONTROL_PATH visu ".xml"
-                                        (if (file-exists? inputFilePath)
-                                            (let*
-                                                (
-                                                    (inputFile (open-input-file inputFilePath))
-                                                    (inputJson (read-json inputFile))
-                                                    (parseControl
-                                                        (lambda ((tablevisualList '()))
-                                                            (let*
-                                                                (
-                                                                    (control (make-hash))
-                                                                    (parseC
-                                                                        (lambda ()
-                                                                            (hash-set! control "FILE"      (read-line inputFile))         ;File
-                                                                            (hash-set! control "PLAYER"    (read-line inputFile))         ;Player
-                                                                            (hash-set! control "NAME"      (read-line inputFile))         ;Name
-                                                                            (hash-set! control "CONTROL"   (read-line inputFile))         ;Control Type
-                                                                            (hash-set! control "ADDRESS"   (read-line inputFile))         ;Param value
-                                                                            (hash-set! control "MAPPING"   (read-line inputFile))         ;Option (Mapping)
-                                                                            (hash-set! control "ACTMODE"   (read-line inputFile))         ;ActMode
-                                                                            (hash-set! control "DEFAULTS"  (list (read-line inputFile) (read-line inputFile) (read-line inputFile) (read-line inputFile)))         ;Default Values
-                                                                        )
-                                                                    )
-                                                                )
-                                                                (parseC)
-                                                                (cond
-                                                                    ((member eof (flatten (hash-values control)))
-                                                                        tablevisualList
-                                                                    )
-                                                                    (else
-                                                                        (cond
-                                                                            ((and (member (hash-ref control "NAME") visualNames) (not (member (hash-ref control "NAME") visualControlsNamesFound)))
-                                                                                (hash-set! control "DEFAULTS" (map (lambda (i) (string->number i)) (hash-ref control "DEFAULTS")))
-                                                                                (hash-set! control "ADDRESS" (eval-string (hash-ref control "ADDRESS")))
-                                                                                (let*
-                                                                                    (
-                                                                                        (tableC
-                                                                                            (cond
-                                                                                                ((and (equal? (hash-ref control "PLAYER") name) (not (equal? (hash-ref control "CONTROL") "fake")))
-                                                                                                    (generateTableControl
-                                                                                                        (list
-                                                                                                            (hash-ref control "CONTROL")
-                                                                                                            (hash-ref control "ADDRESS")
-                                                                                                        )
-                                                                                                    )
-                                                                                                )
-                                                                                                (else
-                                                                                                    #f
-                                                                                                )
-                                                                                            )
-                                                                                        )
-                                                                                        (visualC
-                                                                                            (generateVisualControl
-                                                                                                (list
-                                                                                                    (first (hash-ref control "DEFAULTS"))
-                                                                                                    (hash-ref control "NAME")
-                                                                                                    (hash-ref control "DEFAULTS")
-                                                                                                    Level
-                                                                                                )
-                                                                                            )
-                                                                                        )
-                                                                                        (tablevisualC (list tableC visualC))
-                                                                                    )
-                                                                                    (set! visualControlsNamesFound (append visualControlsNamesFound (list (hash-ref control "NAME"))))
-                                                                                    (parseControl (append tablevisualList (list tablevisualC)))
-                                                                                )
-                                                                            )
-                                                                            (else
-                                                                                (parseControl tablevisualList)
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                                (file-position inputFile 0)
-                                                (let ((playerControl (parseControl)))
-                                                    (close-input-port inputFile)
-                                                    playerControl
-                                                )
-                                            )
-                                            '()
-                                        )
-                                    )
                                 )
                             )
                             (searchOtherPlayer ; return available '(players) for visual controls with Player%.name first
@@ -1075,7 +1019,7 @@
                                             tablevisuList
                                         )
                                         ((>= playersIter (length players))
-                                            (show (string-append "Controls Missing -" players))
+                                            (show-d (string-append "Controls Missing -" players))
                                             tablevisuList
                                         )
                                         (else
@@ -1101,8 +1045,8 @@
             (hash-keys (loadVisualControlsNamesTypes visu))
         )
         (define/private (loadVisualControlType visu control)
-            (show "->loadVisualControlType")
-            (show (loadVisualControlsNamesTypes visu))
+            (show-d "->loadVisualControlType")
+            (show-d (loadVisualControlsNamesTypes visu))
             (hash-ref (loadVisualControlsNamesTypes visu) control "number")
         )
         (define/private (loadVisualControlsNamesTypes visu)
@@ -1169,8 +1113,41 @@
                 controlList
             )
         )
-        (define/public (setFocus (F 1) (nFocus 1)) ;unrecordControl[F] & recordControl[F] -> ControlMapper
-            1
+        (define/public (setFocus (crosslevel #f) (nFocus 0)) ;unRecordControl[F] & recordControl[F] -> ControlMapper
+            (show "setFocus")
+            (cond
+                (crosslevel
+                    (unless (empty? lastFocus)
+                        (let ((oldLastFocus (string-append (first lastFocus) (second lastFocus))))
+                            (send controlMapper unRecordControl (loadTableValuesVisualControls (send (hash-ref visualList oldLastFocus) getVisual) oldLastFocus))
+                        )
+                    )
+                    (set! focus (list crosslevel))
+                    (set! lastFocus
+                        (list
+                            (substring crosslevel 0 DEFAULT_CROSS_SIZE)
+                            (substring crosslevel DEFAULT_CROSS_SIZE)
+                        )
+                    )
+                    (set! waitFocus #f)
+                    (when (hash-has-key? visualList crosslevel)
+                        (send controlMapper recordControl (loadTableValuesVisualControls (send (hash-ref visualList crosslevel) getVisual) crosslevel))
+                    )
+                )
+                (else
+                    (set! waitFocus #t)
+                )
+            )
+        )
+        (define/public (getFocus)
+            (show "")(show "")(show "")
+            (show lastFocus)
+            (show focus)
+            lastFocus
+        )
+        (define/public (getWaitFocus)
+            (show "")
+            (show waitFocus)
         )
         (super-new)
     )
@@ -1183,12 +1160,12 @@
             (numTypesEvents (make-hash)) ;Hash#[Type]numControl
             (TypesEvents (make-hash))    ;Hash#[Type]funct - for controlThread Queue
             (EventThread (launchThread))
-            
+
             (KbDown '())                ;'(Keys-Down) buffer save for keys up parsing
             (last-osc-peek "no message yet...")
         )
         (define/public (recordControl table-filterControls) ; table-filterControls '(TableControl% FilterControl%))
-            (show "->recordControl ")
+            (show-d "->recordControl ")
             (for-each
                 (lambda (table-filterControl)
                     (unless (hash-has-key? Map (first table-filterControl))  ; add a new control if no previous control recorded ; TODO : multi '(VisualControl% TriggerControls%) destination
@@ -1198,14 +1175,14 @@
                 )
                 table-filterControls
             )
-            (show "  recordControl->")
+            (show-d "  recordControl->")
         )
         (define/public (unRecordControl tableControls) ; tableControls '(TableControl%) ; TODO : send VisualControl setPlayer #f
             (for-each
                 (lambda (tableControl)
-                    (when (hash-has-key? Map tableControl)
-                        (send (hash-ref Map tableControl) setPlayer #f)
-                        (hash-remove! Map tableControl)
+                    (when (hash-has-key? Map (first tableControl))
+                        (send (hash-ref Map (first tableControl)) setPlayer #f)
+                        (hash-remove! Map (first tableControl))
                         (setTypeCounts (send (first tableControl) getType) -1)
                     )
                 )
@@ -1217,7 +1194,9 @@
             (if (zero? (hash-ref numTypesEvents type))
                 (hash-remove! TypesEvents type)
                 (unless (hash-has-key? TypesEvents type)
-                    (hash-set! TypesEvents type (getEventFunct type))
+                    (unless (equal? type "fake")
+                        (hash-set! TypesEvents type (getEventFunct type))
+                    )
                 )
             )
         )
@@ -1248,7 +1227,7 @@
         (define/public (getMap)
             Map
         )
-        (define/private (controlThread) ;main TableControl thread mapping
+        (define/public (controlThread) ;main TableControl thread mapping
             (hash-for-each
                 TypesEvents
                 (lambda (type funct)
@@ -1338,7 +1317,7 @@
                                                             ((equal? type #\s)
                                                                 (set! msg-convert (append msg-convert (list (list-ref msg-peek i))))
                                                             )
-                                                            (else (show "Osc Error Convert"))
+                                                            (else (show-d "Osc Error Convert"))
                                                         )
                                                     )
                                                 )
@@ -1369,9 +1348,13 @@
         )
         (define/private (updateVisualControl tableC Val (notfound-funct (lambda (C) (void))))
             (let ((match (hash-ref Map tableC #f)))
-                (if match
-                    (send match updateControl Val)
-                    (notfound-funct tableC)
+                (cond
+                    (match
+                        (send match updateControl Val)
+                    )
+                    (else
+                        (notfound-funct tableC)
+                    )
                 )
             )
         )
@@ -1430,9 +1413,12 @@
             (playersToLoad (parseJson '(loadPlayers * true) configJson))
             (playersJson (parseJson (list 'players playersToLoad) configJson))
             (audioConf (parseJson '(audio) configJson '("system:capture_1" 1024 44100)))
+            (midiInPorts '())
+            (midiOutPorts '())
         )
         (start-audio (list-ref audioConf 0) (list-ref audioConf 1) (list-ref audioConf 2))
         (set-gain! (parseJson '(gain) configJson DEFAULT_GAIN))
+        (midiin-open 0)
         (set! OSC_SOURCE (parseJson '(OscSource) configJson DEFAULT_OSC_SOURCE))
         (when (parseJson '(interfaceControl) configJson #f) (osc-source-launch))
         (hash-for-each
@@ -1442,7 +1428,21 @@
                     (send newPlayer loadPlayerConfig val)
                     (hash-set! playerList (symbol->string key) newPlayer)
                 )
+                (set! midiInPorts (append midiInPorts (list (parseJson '(MidiInputPort * true) val '()))))
+                (set! midiOutPorts (append midiOutPorts (list (parseJson '(MidiInputPort * true) val '()))))
             )
+        )
+        (cond
+            ((= (length midiInPorts) 1)
+                ;(midiin-open (first midi-info) (first midiInPorts)))
+                (show-d midiInPorts))
+            ((> (length midiInPorts) 1)
+                (midiin-open 0))
+            ((= (length midiOutPorts) 1)
+                ;(midiout-open (second (midi-info)) (first midiOutPorts)))
+                (show-d midiOutPorts))
+            ((> (length midiInPorts) 1)
+                (midiout-open 0))
         )
         (close-input-port configFile)
     )
@@ -1457,19 +1457,23 @@
 (define PlayerList (make-hash))
 (define Mapper (new ControlMapper%))
 
+(define (controlthread) (send Mapper controlThread))
 (define (to-player name)
     (hash-ref PlayerList name)
 )
- ;Cross interface
- ;setVisual ; params name 
-; setVisualControls ; params : '(VisualControlNames)
-; setVisualControlsValues : params : level
+
 (show "")(show "")(show "")
 (show "Executed")
 (loadConfig PlayerList Mapper VisualNameList VisualList)
 
-;(send (hash-ref PlayerList "Korg") setVisual "tennis" "901")
-(send (hash-ref PlayerList "Korg") setVisual "quartertracker" "902")
+(send (hash-ref PlayerList "Korg") setVisual "radiohazard" "901")
+;(send (hash-ref PlayerList "Korg") setVisual "sadray" "902")
 (send (hash-ref PlayerList "Korg") visualStart)
+
 ;(send (hash-ref PlayerList "FingerPlay") setVisual "tennis" "901")
 ;(send (hash-ref PlayerList "FingerPlay") visualStart)
+
+;(send (hash-ref PlayerList "Bitstream") setVisual "radiohazard" "902")
+;(send (hash-ref PlayerList "Bitstream") visualStart)
+;(send (hash-ref PlayerList "Bitstream") setFocus "901" "0")
+;(clear-colour (vector 0.2 0.2 0.2))
