@@ -28,6 +28,7 @@
         cartesien->cylindric-deg
         find
     	vector-non-empty?
+    	defil
 	    defil-x
         defil-y
         defil-z
@@ -315,29 +316,36 @@
             #t
         )
     )
-    (define (defil axis v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
+    (define (defil-v axis v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
         (cond
             ((>= (vector-ref v axis) v-max)
-;                (vector (vector-ref v 0) (vector-ref v 1) v-init)
                 (vector-set! v axis v-init)
-;                (vector-set! v axis (+ (modulo (vector-ref v axis) (- v-max v-min)) v-init))
             )
             ((<= (vector-ref v axis) v-min)
-;                (vector (vector-ref v 0) (vector-ref v 1) v-init)
                 (vector-set! v axis v-init)
-;                (vector-set! v axis (+ (modulo (vector-ref v axis) (- v-max v-min)) v-init))
             )
         )
         v
     )
     (define (defil-x v #:v-init (v-init 0) #:v-max (v-max 20) #:v-min (v-min -20))
-        (defil 0 v #:v-init v-init #:v-max v-max #:v-min v-min)
+        (defil-v 0 v #:v-init v-init #:v-max v-max #:v-min v-min)
     )
     (define (defil-y v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
-        (defil 1 v #:v-init v-init #:v-max v-max #:v-min v-min)
+        (defil-v 1 v #:v-init v-init #:v-max v-max #:v-min v-min)
     )
     (define (defil-z v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -10))
-        (defil 2 v #:v-init v-init #:v-max v-max #:v-min v-min)
+        (defil-v 2 v #:v-init v-init #:v-max v-max #:v-min v-min)
+    )
+    (define (defil v #:init (v-init 0) #:max (v-max 10) #:min (v-min -30))
+        (cond
+            ((>= v v-max)
+                v-init
+            )
+            ((<= v v-min)
+                v-init
+            )
+            (else v)
+        )
     )
     (define (modulo-d v d)
         (if (zero? d)
