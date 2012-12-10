@@ -36,6 +36,8 @@
         modulo-d
         list-insert
         list-remove
+        list-around
+        midpoint
     )
     (define (midi-connect)
         (letrec
@@ -383,5 +385,20 @@
             )
             (append prev aftdrop)
         )
+    )
+    (define (list-around liste pos)
+        (let*-values
+            (
+                [(doubleliste) (append liste liste)]
+                [(prev aft) (split-at doubleliste (+ (min pos (length liste)) (length liste)))]
+            )
+            (append (take-right prev 1) (take aft 1))
+        )
+    )
+    (define (midpoint p1 p2)
+        (define (midElmt e1 e2)
+            (/ (+ e1 e2) 2)
+        )
+        (vector (midElmt (vector-ref p1 0) (vector-ref p2 0)) (midElmt (vector-ref p1 1) (vector-ref p2 1)) (midElmt (vector-ref p1 2) (vector-ref p2 2)))
     )
 )
