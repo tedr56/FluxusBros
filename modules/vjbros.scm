@@ -387,10 +387,10 @@
         )
     )
     (define (list-around liste pos)
+        (define doubleliste (append liste liste))
         (let*-values
             (
-                [(doubleliste) (append liste liste)]
-                [(prev aft) (split-at doubleliste (+ (min pos (length liste)) (length liste)))]
+                [(prev aft) (split-at doubleliste (+ (length liste) (modulo pos (length liste))))]
             )
             (append (take-right prev 1) (take aft 1))
         )
