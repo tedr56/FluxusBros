@@ -365,7 +365,7 @@
     (define (list-insert liste pos val)
         (let*-values
             (
-                [(prev aft) (split-at liste (min pos (- (length liste) 1)))]
+                [(prev aft) (split-at liste (min pos (length liste)))]
             )
             (append prev (list val) aft)
         )
