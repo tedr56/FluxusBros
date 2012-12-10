@@ -19,45 +19,6 @@
     (hash-remove! tennis-list id)
 )
 
-(define (tennis-build id)
-;(texture (load-texture "neon.png"))
-    (hash-set! tennis-list id '())
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-    (hash-set! tennis-list id (append (hash-ref tennis-list id) (list (build-ribbon tennis-points))))
-
-    (for-each
-        (lambda (s)
-            (with-primitive s
-                (hint-none)
-                (hint-solid)
-                (hint-unlit)
-                (hint-vertcols)
-                (colour (vector 1 1 1))
-                (pdata-index-map!
-                    (lambda (i w)
-                        (if (= i (- (pdata-size) 2))
-                            0.7
-                            (* i (/ 0.1 (pdata-size)))
-                        )
-                    )
-                    "w"
-                )
-            )
-        )
-        (hash-ref tennis-list id)
-    )
-)
-
 (define (tennis-prims-check id)
     (let ((tennis-primsC (floor (+ 1 (* (c "prims-num" id) 100)))))
         (unless (= tennis-primsC (length (hash-ref tennis-list id)))
@@ -93,10 +54,15 @@
     )
 )
 
+(define (tennis-build id)
+    (hash-set! tennis-list id '())
+    (tennis-prims-check id)
+)
+
 (define (tennis id cross)
     (let
         (
-            (g (* (c "gain-low" id #:type "number") (* (c "gain-high" id) 5)))
+            (g (* (c "gain-low" id) (* (c "gain-high" id) 5)))
             (A (* (c "a" id) 10))
             (B (* (c "b" id) 10))
             (C (* (c "c" id) 10))
