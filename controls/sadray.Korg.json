@@ -1,0 +1,56 @@
+{
+    "points": {
+        "type": "tuio",
+        "address": "#t"
+    },
+    "prims-num": {
+        "type": "midi-ccn",
+        "address": "(vector 1 17)",
+        "defaults": [
+            0.2,
+            0.2,
+            0.2,
+            0.2
+        ]
+    },
+    "xLimit": {
+        "type": "midi-ccn",
+        "address": "(vector 1 18)",
+        "defaults": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+        ]
+    },
+    "zLimit": {
+        "type": "midi-ccn",
+        "address": "(vector 1 19)",
+        "defaults": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+        ]
+    },
+    "avoid-radius": {
+        "type": "midi-ccn",
+        "address": "(vector 1 25)",
+        "defaults": [
+            1,
+            1,
+            1,
+            1
+        ]
+    },
+    "speed": {
+        "type": "midi-ccn",
+        "address": "(vector 1 24)",
+        "defaults": [
+            0.2,
+            0.2,
+            0.2,
+            0.2
+        ]
+    }
+}
