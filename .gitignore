@@ -12,4 +12,5 @@ visus/A\ debugger/
 visus/Experimental
 #Tests files
 Tests/
+Tests/*
 temp.scm
