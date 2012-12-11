@@ -34,6 +34,7 @@
         defil-y
         defil-z
         modulo-d
+        list-set!
         list-insert
         list-remove
         list-around
@@ -365,7 +366,7 @@
         )
     )
     (define (list-insert liste pos val)
-        (let*-values
+        (let-values
             (
                 [(prev aft) (split-at liste (min pos (length liste)))]
             )
@@ -388,7 +389,7 @@
     )
     (define (list-around liste pos)
         (define doubleliste (append liste liste))
-        (let*-values
+        (let-values
             (
                 [(prev aft) (split-at doubleliste (+ (length liste) (modulo pos (length liste))))]
             )
@@ -400,5 +401,21 @@
             (/ (+ e1 e2) 2)
         )
         (vector (midElmt (vector-ref p1 0) (vector-ref p2 0)) (midElmt (vector-ref p1 1) (vector-ref p2 1)) (midElmt (vector-ref p1 2) (vector-ref p2 2)))
+    )
+    (define (list-set! liste pos val)
+        (when (< pos (length liste))
+            (let*-values
+                (
+                    [(prev aft) (split-at liste (min pos (- (length liste) 1)))]
+                    [(aftdrop)
+                        (if (empty? drop)
+                            '()
+                            (drop aft 1)
+                        )
+                    ]
+                )
+                (append prev (list val) aftdrop)
+            )
+        )
     )
 )
