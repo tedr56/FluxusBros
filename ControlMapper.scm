@@ -24,6 +24,10 @@
 ;Configuration OSC
 (define DEFAULT_OSC_SOURCE "3334")
 (define DEFAULT_OSC_DESTINATION "4444")
+
+;Configuration TUIO
+(define DEFAULT_TUIO_SOURCE 3332)
+
 (define OSC_SOURCE DEFAULT_OSC_SOURCE)
 (define previous_osc_source_enable #f)
 (when (defined? 'osc-source-enable) (set! previous_osc_source_enable osc-source-enable))    ;check for previous session osc server state
@@ -35,14 +39,13 @@
     )
 )
 
-;Configuration TUIO
-(define DEFAULT_TUIO_SOURCE 3332)
 (define TUIO_SOURCE DEFAULT_TUIO_SOURCE)
 (define previous_tuio_source_enable #f)
 (when (defined? 'tuio-source-enable) (set! previous_tuio_source_enable tuio-source-enable))  ;check for previous session tuio server state
 (define tuio-source-enable previous_tuio_source_enable)
 (define (tuio-source-launch)
     (when (and (not tuio-source-enable) (equal? TUIO_SOURCE DEFAULT_TUIO_SOURCE))
+        (show (string-append "Tuio activated on port " (number->string TUIO_SOURCE)))
         (start-tuio-client #f TUIO_SOURCE)
         (set! tuio-source-enable #t)
     )
@@ -78,6 +81,7 @@
         (field
             (valueLength (initValueLength))
             (filterFunction (initFilterPlayerFunction))
+            (id (gensym "AbsCtrl"))
         )
         (define/private (initValueLength)
             (cond
@@ -100,15 +104,19 @@
                     (lambda (val) (equal? val Value))
                 )
             )
-        )                           
+        )
         (define/public (updateControl val player)
             (filterUpdateValue val player)
         )
         (define/pubment (filterUpdateValue val player)
-            (if (equal? Player player)
-                (setValue val)
-                (when (filterFunction val)
-                    (set! Player player)
+            (cond
+                ((equal? Player player)
+                    (setValue val)
+                )
+                (else
+                    (when (filterFunction val)
+                        (set! Player player)
+                    )
                 )
             )
             Value
@@ -126,11 +134,12 @@
         (define/public (getValueLength)
             valueLength
         )
+        (define/pubment (getControl)
+            (inner (void) getControl)
+            Value
+        )
         (define/public (getValue)
             (getControl)
-        )
-        (define/public (getControl)
-            Value
         )
     )
 )
@@ -145,7 +154,8 @@
         (field
             (initLevel (initLevelDefault))
         )
-        (inherit setValue getValue)
+        (inherit-field Player Type Value id)
+        (inherit getValue setValue)
         (define/private (initLevelDefault)
             (show-d "->initLevelDefault")
             (show-d level)
@@ -165,6 +175,22 @@
         )
         (define/public (getName)
             name
+        )
+        #(define/augment (setControl val)
+        (show "->setControl")
+            (show name)
+            (show Value)
+            (show Player)
+            (show Type)
+            (show id)
+        )
+        #(define/augment (getControl)
+            (show "->getControl")
+            (show name)
+            (show Value)
+            (show Player)
+            (show Type)
+            (show id)
         )
         (super-new)
     )
@@ -509,6 +535,9 @@
                             ((equal? typeT "osc")
                                 (parseJson '(address) TableJson "/")
                             )
+                            ((equal? typeT "kb")
+                                (string-ref (parseJson '(address) TableJson "²") 0)
+                            )
                             (else
                                 (eval-string  (parseJson '(address) TableJson "0"))
                             )
@@ -689,8 +718,6 @@
                         )
                     )
                 )
-                (show lastFocus)
-                (show CrossLevel)
                 (cond
                     ((and CrossLevel (file-exists? (string-append DEFAULT_VISUAL_PATH visu ".scm")))
                         (let*
@@ -711,8 +738,6 @@
                                 (Visuals (map (lambda (key) (hash-ref visualList key)) CrossKeys))
                                 (VisualsRunning? (map (lambda (V) (if (send V running?) #t #f)) Visuals))
                             )
-                            (show LevelKeys)
-                            (show CrossKeys)
                             (unless (and (not (empty? LevelKeys)) (empty? CrossKeys))
                                 (for-each       ; stop and unrecord running visuals in cross-Levels
                                     (lambda (K running)
@@ -780,13 +805,14 @@
             #f
         )
         (define/public (visualStart (cross #f) (level #f) (visual #f))
+            (show "->visualStart")
             (let ((CrossLevel (getCrossLevel cross level)))
                 (when CrossLevel
                     (when visual
                         (setVisual (getCross cross) (getLevel level) visual)
                     )
                     (cond
-                        (waitFocus
+                        ((or waitFocus (empty? lastFocus))
                             (setFocus CrossLevel)
                         )
                         (else
@@ -839,7 +865,7 @@
         )
         (define/private (getCrossLevel cross level)
             (cond
-                ((or lastFocus cross)
+                ((or (not (empty? lastFocus)) cross)
                     (let*
                         (
                             (autocrossfader (getCross cross))
@@ -902,8 +928,8 @@
         )
         (define/private (loadTableValuesVisualControls visu cross #:forceReload (forceReload #f)) ; return '(TableControl% VisualControl%)
             (cond
-                ((and (hash-has-key? visuTempTableControl cross) (not forceReload))
-                    (let ((visuTempControls (hash-ref visuTempTableControl visu)))
+                ((and (hash-has-key? visuTempTableControl (string-append visu cross)) (not forceReload))
+                    (let ((visuTempControls (hash-ref visuTempTableControl (string-append visu cross))))
 ;;                         (when record?
 ;;                             (hash-for-each
 ;;                                 visuTempControls
@@ -1019,7 +1045,9 @@
                                             tablevisuList
                                         )
                                         ((>= playersIter (length players))
-                                            (show-d (string-append "Controls Missing -" players))
+                                            (show-d (string-append "Controls Missing -" (first players)))
+                                            (show "Controls Missing")
+                                            (for-each (lambda (miss) (show miss)) missingControl)
                                             tablevisuList
                                         )
                                         (else
@@ -1035,8 +1063,10 @@
                                     )
                                 )
                             )
+                            (visufiltercontrolList (parseAllPlayerControl))
                         )
-                        (parseAllPlayerControl)
+                        (hash-set! visuTempTableControl (string-append visu cross) visufiltercontrolList)
+                        visufiltercontrolList 
                     )
                 )
             )
@@ -1105,13 +1135,13 @@
             )
         )
         (define/private (mapControls visu)
-            (let
-                (
-                    (controlList (loadTableVisualControlList visu))
-                    (tableControlZone TableZoneList)
-                )
+            ;(let
+            ;    (
+            ;        (controlList (loadTableVisualControlList visu))
+            ;        (tableControlZone TableZoneList)
+            ;    )
                 controlList
-            )
+            ;)
         )
         (define/public (setFocus (crosslevel #f) (nFocus 0)) ;unRecordControl[F] & recordControl[F] -> ControlMapper
             (show "setFocus")
@@ -1162,6 +1192,8 @@
             (EventThread (launchThread))
 
             (KbDown '())                ;'(Keys-Down) buffer save for keys up parsing
+            (KbsDown '())                ;'(Keys-Special-Down) buffer save for special keys up parsing
+            (TuioDown #f)                ; Retain if last tuio message contained cursors to send one empty message
             (last-osc-peek "no message yet...")
         )
         (define/public (recordControl table-filterControls) ; table-filterControls '(TableControl% FilterControl%))
@@ -1247,24 +1279,76 @@
                     (keysDown (remove* KbDown newDown))
                 )
                 ; TODO : Send KbDown & KbUp Messages to VisualControl% or TriggerControl%
-                1
                 (set! KbDown newDown)
+                (for-each
+                    (lambda (k)
+                        (updateVisualControl (new TableControl% (type "kb") (address k)) (list 0))
+                    )
+                    keysUp
+                )
+                (for-each
+                    (lambda (k)
+                        (updateVisualControl (new TableControl% (type "kb") (address k)) (list 127))
+                    )
+                    keysDown
+                )
             )
         )
         (define/private (kbsEvents)
+            (let*
+                (
+                    (newDown (keys-down))
+                    (keysUp (remove* newDown KbsDown))
+                    (keysDown (remove* KbDown newDown))
+                )
+                ; TODO : Send KbDown & KbUp Messages to VisualControl% or TriggerControl%
+                (set! KbDown newDown)
+                (for-each
+                    (lambda (k)
+                        (updateVisualControl (new TableControl% (type "kb") (address k)) (list 0))
+                    )
+                    keysUp
+                )
+                (for-each
+                    (lambda (k)
+                        (updateVisualControl (new TableControl% (type "kb") (address k)) (list 127))
+                    )
+                    keysDown
+                )
+            )
             1
         )
-        (define/private (ccEvents)
-            (let ((e (midi-cc-event)))
+        (define/private (ccEvents (e (midi-cc-event)))
                 (when e
-                    (let
-                        (
-                            (Table (new TableControl% (type "midi-ccn") (address  (vector-take e 2))))
-                            (Value (vector-ref e 2))
+                    (let ((eNext (midi-cc-event)))
+                    (cond
+                        (eNext
+                            (cond
+                                ((equal? (vector-take e 2) (vector-take eNext 2))
+                                    (ccEvents eNext)
+                                )
+                                (else
+                                    (let
+                                        (
+                                            (Table (new TableControl% (type "midi-ccn") (address  (vector-take e 2))))
+                                            (Value (vector-ref e 2))
+                                        )
+                                        (updateVisualControl Table (list Value))
+                                    )
+                                    (ccEvents eNext)
+                                )
+                            )
                         )
-                        (updateVisualControl Table (list Value))
+                        (else
+                            (let
+                                (
+                                    (Table (new TableControl% (type "midi-ccn") (address  (vector-take e 2))))
+                                    (Value (vector-ref e 2))
+                                )
+                                (updateVisualControl Table (list Value))
+                            )
+                        )
                     )
-                    (ccEvents)
                 )
             )
         )
@@ -1338,12 +1422,25 @@
             )
         )
         (define/private (tuioEvents)
-            (let*
-                (
-                    (peekCursor (get-tuio-cursors))
-                    (newTuioControl (new TableControl% (type "tuio") (address #t)))
+            (let ((peekCursor (get-tuio-cursors)))
+                (cond
+                    ((empty? peekCursor)
+                        (cond
+                            (TuioDown
+                                (let ((newTuioControl (new TableControl% (type "tuio") (address #t))))
+                                    (set! TuioDown #f)
+                                    (updateVisualControl newTuioControl peekCursor)
+                                )
+                            )
+                        )
+                    )
+                    (else
+                        (let ((newTuioControl (new TableControl% (type "tuio") (address #t))))
+                            (set! TuioDown #t)
+                            (updateVisualControl newTuioControl peekCursor)
+                        )
+                    )
                 )
-                (updateVisualControl newTuioControl peekCursor)
             )
         )
         (define/private (updateVisualControl tableC Val (notfound-funct (lambda (C) (void))))
@@ -1361,6 +1458,8 @@
         (super-new)
     )
 )
+
+
 
 (define (parseJson parseList json (not_found '()))
     (if (empty? parseList)
@@ -1465,15 +1564,3 @@
 (show "")(show "")(show "")
 (show "Executed")
 (loadConfig PlayerList Mapper VisualNameList VisualList)
-
-(send (hash-ref PlayerList "Korg") setVisual "radiohazard" "901")
-;(send (hash-ref PlayerList "Korg") setVisual "sadray" "902")
-(send (hash-ref PlayerList "Korg") visualStart)
-
-;(send (hash-ref PlayerList "FingerPlay") setVisual "tennis" "901")
-;(send (hash-ref PlayerList "FingerPlay") visualStart)
-
-;(send (hash-ref PlayerList "Bitstream") setVisual "radiohazard" "902")
-;(send (hash-ref PlayerList "Bitstream") visualStart)
-;(send (hash-ref PlayerList "Bitstream") setFocus "901" "0")
-;(clear-colour (vector 0.2 0.2 0.2))
