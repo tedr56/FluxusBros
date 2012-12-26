@@ -39,6 +39,8 @@
         list-remove
         list-around
         midpoint
+        minv
+        maxv
     )
     (define (midi-connect)
         (letrec
@@ -417,5 +419,11 @@
                 (append prev (list val) aftdrop)
             )
         )
+    )
+    (define (minv v1 v2)
+        (vector (min (vector-ref v1 0) (vector-ref v2 0)) (min (vector-ref v1 1) (vector-ref v2 1)) (min (vector-ref v1 2) (vector-ref v2 2)))
+    )
+    (define (maxv v1 v2)
+        (vector (max (vector-ref v1 0) (vector-ref v2 0)) (max (vector-ref v1 1) (vector-ref v2 1)) (max (vector-ref v1 2) (vector-ref v2 2)))
     )
 )
