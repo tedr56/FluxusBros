@@ -9,7 +9,7 @@
     PersistentTuioCursor
 )
 
-(define (CalibrateTuioCursor cursor2D coeffX coeffY)
+(define (CalibrateTuioCursor cursor2D coeffX coeffY (offsetX 0) (offsetY 0))
     (let
         (
             (coeffCursor
@@ -18,25 +18,17 @@
                 )
             )
         )
-        (vector (coeffCursor cursor2D 2Dcur-posX coeffX) (coeffCursor cursor2D 2Dcur-posY (* coeffY -1)) 0)
+        (vector (+ offsetX (coeffCursor cursor2D 2Dcur-posX coeffX)) (+ offsetY (coeffCursor cursor2D 2Dcur-posY (* coeffY -1))) 0)
     )
 )
 
-(define (CalibrateTuioCursors cursors2D coeffX coeffY)
-    (let
-        (
-            (coeffCursor
-                (lambda (cursor cursorAxis coeff)
-                    (* (- (* (cursorAxis cursor) 2) 1) coeff)
-                )
-            )
+(define (CalibrateTuioCursors cursors2D coeffX coeffY (offsetX 0) (offsetY 0))
+    (map
+        (lambda (cursor2D)
+            ;(vector (coeffCursor cursor2D 2Dcur-posX coeffX) (coeffCursor cursor2D 2Dcur-posY (* coeffY -1)) 0)
+            (CalibrateTuioCursor cursor2D coeffX coeffY offsetX offsetY)
         )
-        (map
-            (lambda (cursor2D)
-                (vector (coeffCursor cursor2D 2Dcur-posX coeffX) (coeffCursor cursor2D 2Dcur-posY (* coeffY -1)) 0)
-            )
-            cursors2D
-        )
+        cursors2D
     )
 )
 
