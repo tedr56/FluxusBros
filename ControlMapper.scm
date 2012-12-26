@@ -20,6 +20,7 @@
 (define DEFAULT_VAL_COEFF 127)
 (define DEFAULT_HOOK_INTERVAL 0.05)
 (define DEFAULT_GAIN 1)
+(define DEFAULT_SMOOTHING_BIAS 0.2)
 
 ;Configuration OSC
 (define DEFAULT_OSC_SOURCE "3334")
@@ -76,12 +77,12 @@
             Value
             Player
             Type
+            (id (gensym "AbsCtrl"))
             ;Callback     TODO OSC Callback
         )
         (field
             (valueLength (initValueLength))
             (filterFunction (initFilterPlayerFunction))
-            (id (gensym "AbsCtrl"))
         )
         (define/private (initValueLength)
             (cond
@@ -155,7 +156,8 @@
             (initLevel (initLevelDefault))
         )
         (inherit-field Player Type Value id)
-        (inherit getValue setValue)
+        ;(inherit getValue setValue)
+        (inherit getValue)
         (define/private (initLevelDefault)
             (show-d "->initLevelDefault")
             (show-d level)
@@ -176,21 +178,26 @@
         (define/public (getName)
             name
         )
-        #(define/augment (setControl val)
-        (show "->setControl")
-            (show name)
-            (show Value)
-            (show Player)
-            (show Type)
-            (show id)
+        (define/augment (setValue val)
+            1
+            #(when (equal? Type "Tuio")
+                (show "->setControl")
+                (show name)
+                (show Value)
+                (show Player)
+                (show Type)
+                (show id)
+            )
         )
         #(define/augment (getControl)
-            (show "->getControl")
-            (show name)
-            (show Value)
-            (show Player)
-            (show Type)
-            (show id)
+            (when (equal? Type "Tuio")
+                (show "->getControl")
+                (show name)
+                (show Value)
+                (show Player)
+                (show Type)
+                (show id)
+            )
         )
         (super-new)
     )
@@ -367,7 +374,6 @@
         (init-field
             type
             address
-
         )
         (inspect #f)
         (define/public (equal-to? other recur)
@@ -577,9 +583,6 @@
                     (visualV (new VisualControl% (Value valueV) (Player playerV) (Type typeV) (name nameV) (defaultValues defaultsV) (level levelV)))
                 )
                 (send visualV setLevel levelV)
-                (show-d "typev")
-                (show-d typeV)
-                (show-d "  genVisualControl->")
                 visualV
             )
         )
@@ -707,7 +710,7 @@
             )
         )
         (define/public (setVisual visual (cross #f) (level #f)) ;loadVisu defaultValue
-            (show "->setVisual")
+            (show-d "->setVisual")
             (let
                 (
                     (CrossLevel (getCrossLevel cross level))
@@ -745,11 +748,7 @@
                                             (when running
                                                 (send visualK Stop)
                                             )
-                                (show "debug setVisual")
-;;                                 (show visualK)
-;;                                 (show (send visualK getVisual))
-;;                                 (show (send visualK getCrossLevel))
-                                            (send controlMapper unRecordControl (loadTableValuesVisualControls (send visualK getVisual) (send visualK getCrossLevel)))
+                                            (send controlMapper unRecordControl (loadTableValuesVisualControls (send visualK getVisual) (send visualK getCrossLevel)) #:force #t)
                                         )
                                     )
                                     CrossKeys VisualsRunning?
@@ -805,11 +804,11 @@
             #f
         )
         (define/public (visualStart (cross #f) (level #f) (visual #f))
-            (show "->visualStart")
+            (show-d "->visualStart")
             (let ((CrossLevel (getCrossLevel cross level)))
                 (when CrossLevel
                     (when visual
-                        (setVisual (getCross cross) (getLevel level) visual)
+                        (setVisual visual (getCross cross) (getLevel level))
                     )
                     (cond
                         ((or waitFocus (empty? lastFocus))
@@ -927,6 +926,7 @@
             )
         )
         (define/private (loadTableValuesVisualControls visu cross #:forceReload (forceReload #f)) ; return '(TableControl% VisualControl%)
+            (show-d "->loadTableValuesVisualControls")
             (cond
                 ((and (hash-has-key? visuTempTableControl (string-append visu cross)) (not forceReload))
                     (let ((visuTempControls (hash-ref visuTempTableControl (string-append visu cross))))
@@ -938,6 +938,7 @@
 ;;                                 )
 ;;                             )
 ;;                         )
+                        (show-d "->loadTableValuesVisualControls")
                         visuTempControls
                     )
                 )
@@ -1007,6 +1008,9 @@
                                                                         (TableC (generateTableControl val player))
                                                                         (VisualC (generateVisualControl val nameV visu levelV))
                                                                         (FilterC (generateFilterControl val VisualC))
+                                                                    )
+                                                                    (when (equal? (send TableC getType) "tuio")
+                                                                        (send controlMapper recordControl (list (list TableC FilterC VisualC)))
                                                                     )
                                                                     (set! tablevisualList (append tablevisualList (list (list TableC FilterC VisualC))))
                                                                 )
@@ -1144,7 +1148,6 @@
             ;)
         )
         (define/public (setFocus (crosslevel #f) (nFocus 0)) ;unRecordControl[F] & recordControl[F] -> ControlMapper
-            (show "setFocus")
             (cond
                 (crosslevel
                     (unless (empty? lastFocus)
@@ -1170,9 +1173,6 @@
             )
         )
         (define/public (getFocus)
-            (show "")(show "")(show "")
-            (show lastFocus)
-            (show focus)
             lastFocus
         )
         (define/public (getWaitFocus)
@@ -1187,6 +1187,7 @@
     (class object%
         (field
             (Map (make-hash))            ;Hash#[TableControl%] '(player FilterControl%)
+            (MapTuio (make-hash))
             (numTypesEvents (make-hash)) ;Hash#[Type]numControl
             (TypesEvents (make-hash))    ;Hash#[Type]funct - for controlThread Queue
             (EventThread (launchThread))
@@ -1200,22 +1201,38 @@
             (show-d "->recordControl ")
             (for-each
                 (lambda (table-filterControl)
-                    (unless (hash-has-key? Map (first table-filterControl))  ; add a new control if no previous control recorded ; TODO : multi '(VisualControl% TriggerControls%) destination
-                        (hash-set! Map (first table-filterControl) (second table-filterControl))
-                        (setTypeCounts (send (first table-filterControl) getType) 1)
+                    (cond
+                        ((equal? "tuio" (send (first table-filterControl) getType))
+                            (hash-set! MapTuio (second table-filterControl) #t)
+                            (setTypeCounts (send (first table-filterControl) getType) 1)
+                        )
+                        ((not (hash-has-key? Map (first table-filterControl)))  ; add a new control if no previous control recorded ; TODO : multi '(VisualControl% TriggerControls%) destination
+                            (hash-set! Map (first table-filterControl) (second table-filterControl))
+                            (setTypeCounts (send (first table-filterControl) getType) 1)
+                        )
                     )
                 )
                 table-filterControls
             )
             (show-d "  recordControl->")
         )
-        (define/public (unRecordControl tableControls) ; tableControls '(TableControl%) ; TODO : send VisualControl setPlayer #f
+        (define/public (unRecordControl tableControls #:force (force #f)) ; tableControls '(TableControl%) ; TODO : send VisualControl setPlayer #f
             (for-each
                 (lambda (tableControl)
-                    (when (hash-has-key? Map (first tableControl))
-                        (send (hash-ref Map (first tableControl)) setPlayer #f)
-                        (hash-remove! Map (first tableControl))
-                        (setTypeCounts (send (first tableControl) getType) -1)
+                    (cond
+                        ((equal? "tuio" (send (first tableControl) getType))
+                            (when force
+                                (hash-remove! MapTuio (second tableControl))
+                                (setTypeCounts (send (first tableControl) getType) -1)
+                            )
+                        )
+                        (else
+                            (when (hash-has-key? Map (first tableControl))
+                                (send (hash-ref Map (first tableControl)) setPlayer #f)
+                                (hash-remove! Map (first tableControl))
+                                (setTypeCounts (send (first tableControl) getType) -1)
+                            )
+                        )
                     )
                 )
                 tableControls
@@ -1429,7 +1446,7 @@
                             (TuioDown
                                 (let ((newTuioControl (new TableControl% (type "tuio") (address #t))))
                                     (set! TuioDown #f)
-                                    (updateVisualControl newTuioControl peekCursor)
+                                    (updateVisualControlTuio newTuioControl peekCursor)
                                 )
                             )
                         )
@@ -1437,20 +1454,30 @@
                     (else
                         (let ((newTuioControl (new TableControl% (type "tuio") (address #t))))
                             (set! TuioDown #t)
-                            (updateVisualControl newTuioControl peekCursor)
+                            (updateVisualControlTuio newTuioControl peekCursor)
                         )
                     )
                 )
             )
         )
-        (define/private (updateVisualControl tableC Val (notfound-funct (lambda (C) (void))))
-            (let ((match (hash-ref Map tableC #f)))
+        (define/private (updateVisualControlTuio tableC Val (table (hash->list Map)) (notfound-funct (lambda (C) (void))))
+            (hash-for-each
+                MapTuio
+                (lambda (key val)
+                    (send key updateControl Val)
+                )
+            )
+        )
+        (define/private (updateVisualControl tableC Val (table Map) (notfound-funct (lambda (C) (void))))
+            (let ((match (hash-ref table tableC #f)))
                 (cond
                     (match
                         (send match updateControl Val)
+                        #t
                     )
                     (else
                         (notfound-funct tableC)
+                        #f
                     )
                 )
             )
@@ -1458,8 +1485,6 @@
         (super-new)
     )
 )
-
-
 
 (define (parseJson parseList json (not_found '()))
     (if (empty? parseList)
@@ -1517,6 +1542,7 @@
         )
         (start-audio (list-ref audioConf 0) (list-ref audioConf 1) (list-ref audioConf 2))
         (set-gain! (parseJson '(gain) configJson DEFAULT_GAIN))
+        (smoothing-bias (parseJson '(smoothing-bias) configJson DEFAULT_SMOOTHING_BIAS))
         (midiin-open 0)
         (set! OSC_SOURCE (parseJson '(OscSource) configJson DEFAULT_OSC_SOURCE))
         (when (parseJson '(interfaceControl) configJson #f) (osc-source-launch))
