@@ -123,9 +123,49 @@
             0
         ]
     },
+    "tuioOffsetX": {
+        "type": "fake",
+        "address": "(vector 1 20)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "tuioOffsetY": {
+        "type": "fake",
+        "address": "(vector 1 21)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
     "size-all": {
         "type": "midi-ccn",
         "address": "(vector 1 21)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "link-opacity": {
+        "type": "midi-ccn",
+        "address": "(vector 1 19)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "link-gain": {
+        "type": "midi-ccn",
+        "address": "(vector 1 20)",
         "defaults": [
             0.5,
             0,

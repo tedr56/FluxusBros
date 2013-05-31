@@ -1,0 +1,1 @@
+{"tempo":{"address":"/fingerplay/control/45","defaults":[1,1,1,1],"type":"osc"},"gain":{"address":"/fingerplay/control/43","defaults":[1,1,1,1],"type":"osc"},"blur":{"address":"/fingerplay/control/41","defaults":[1,1,1,1],"type":"osc"}}

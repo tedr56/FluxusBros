@@ -175,6 +175,9 @@
         (define/public (setDefaultValues valuesList)
             (set! defaultValues valuesList)
         )
+        (define/public (getDefaultValues)
+            defaultValues
+        )
         (define/public (getName)
             name
         )
@@ -474,6 +477,9 @@
             ;(send (hash-ref! visualControlList N (new VisualControl% (name N) (Value 0.5) (Player #f))) getControl)
             (send (hash-ref visualControlList N) getControl)
         )
+        (define/public (getControls)
+            visualControlList
+        )
         (define/public (getCrossLevel)
             crosslevel
         )
@@ -513,6 +519,7 @@
             controlMapper               ;ControlMapper% control signal mapper
             visuVisualControlNamesList
             visualList                   ;Hash[CrossLevel]Visuals%
+            mappingManager
         )
         (field
             (focus '())
@@ -1138,6 +1145,21 @@
                 )
             )
         )
+        (define/public (saveControls (cross #f) (level #f))
+            (show "SaveControls")
+            (let ((crosslevel (getCrossLevel cross level)))
+                (show crosslevel)
+                (when crosslevel
+                    (saveCrossLevelControls crosslevel)
+                )
+            )
+        )
+        (define/private (saveCrossLevelControls crossLevel)
+            (show "->saveCrossLevelControls")
+            (when (hash-has-key? visualList crossLevel)
+                1
+            )
+        )
         (define/private (mapControls visu)
             ;(let
             ;    (
@@ -1185,6 +1207,10 @@
 
 (define ControlMapper%
     (class object%
+        (init-field
+            Players
+            Mappings
+        )
         (field
             (Map (make-hash))            ;Hash#[TableControl%] '(player FilterControl%)
             (MapTuio (make-hash))
@@ -1427,9 +1453,15 @@
                                         )
                                     )
                                 )
-                                ;(updateVisualControl newOscControl msg-peek (updateOscControl newOscControl msg-peek))
                                 (convert-msg)
-                                (updateVisualControl newOscControl msg-convert)
+                                (cond
+                                    ((equal? "FluxusBros" (first (string-split path-peek "/")))
+                                        (updateInterface newOscControl msg-convert)
+                                    )
+                                    (else
+                                        (updateVisualControl newOscControl msg-convert)
+                                    )
+                                )
                             )
                             (set! last-osc-peek peek)
                             (oscEvents)
@@ -1482,6 +1514,167 @@
                 )
             )
         )
+        (define/private (updateInterface oscObj msg)
+            (let*
+                (
+                    (splitPath (string-split (send oscObj getAddress) "/"))
+                    (typeOsc (second splitPath))
+                )
+                (cond
+                    ((equal? typeOsc "mapping")
+                        (when (and (= (length splitPath) 4) (= (length msg) 1))
+;;                     (Mapping% (setStripPoint strip point pos))
+                            (send Mappings setStripPoint (third splitPath) (fourth splitPath) (first msg))
+                        )
+                    )
+                    ((hash-has-key? typeOsc Players)
+                        1
+                    )
+                    ((number? typeOsc)
+                        1
+                    )
+                )
+            )
+        )
+        (super-new)
+    )
+)
+
+(define Strip%
+    (class object%
+        (field
+            (ProjPrim #f)
+            (MapPrim #f)
+            (ProjPoints '())
+            (MapPoints '())
+        )
+        (define/public (setProjPoint point pos)
+            (cond
+                (pos
+                    (set! ProjPoints (list-insert ProjPoints pos point))
+                    (set! MapPoints (list-insert MapPoints pos (midpoint MapPoints pos)))
+                    (updatePrims)
+                )
+                ((equal? point #f)
+                    (set! Projoints (list-remove ProjPoints pos))
+                    (set! Mapjoints (list-remove ProjPoints pos))
+                    (updatePrims)
+                )
+            )
+        )
+        (define/public (setMapPoint point pos)
+            (cond
+                (pos
+                    (set! MapPoints (list-insert ProjPoints pos point))
+                    (set! ProjPoints (list-insert MapPoints pos (midpoint MapPoints pos)))
+                    (updatePrims)
+                )
+                ((equal? point #f)
+                    (set! MapPoints (list-remove ProjPoints pos))
+                    (set! Projoints (list-remove ProjPoints pos))
+                    (updatePrims)
+                )
+            )
+        )
+        (define/private (updatePrims)
+            (when ProjPrim
+                (let ((ProjPrimPoints (with-primitive ProjPrim (pdata-size))))
+                    (unless (= ProjPrimPoints ProjPoints)
+                        (destroy ProjPrim)
+                    )
+                )
+            )
+            (when MapPrim
+                (let ((MapPrimPoints (with-primitive MapPrim (pdata-size))))
+                    (unless (= MapPrimPoints MapPoints)
+                        (destroy MapPrim)
+                    )
+                )
+            )
+            (set! ProjPrim (build-polygon (length ProjPoints) 'polygon))
+            (set! MapPrim (build-polygon (length ProjPoints 'polygon)))
+            (when (= (length ProjPoints) (length MapPoints))
+                (with-primitive ProjPrim
+                    (pdata-index-map!
+                        (lambda (p)
+                            (list-ref ProjPoints i)
+                        )
+                        "p"
+                    )
+                )
+                (with-primitive MapPrim
+                    (pdata-index-map!
+                        (lambda (p)
+                            (list-ref MapPoints i)
+                        )
+                        "p"
+                    )
+                )
+            )
+        )
+        (super-new)
+    )
+)
+
+(define Mapping%
+    (class object%
+        (field
+            (StripList '())
+            (StripConfig (make-hash))
+        )
+        (define/public (setStripPoint strip point pos)
+            (let ((targetStrip (getStrip strip)))
+                (when targetStrip
+                    (send targetStrip setProjPoint point pos)
+                )
+            )
+        )
+        (define/public (setMapPoint strip point pos)
+            (let ((targetStrip (getStrip strip)))
+                (when targetStrip
+                    (send targetStrip setMapPoint point pos)
+                )
+            )
+        )
+        (define/private (getStrip strip)
+            (cond
+                ((hash-has-key? StripList strip)
+                    (list-ref StripList strip)
+                )
+                (else
+                    (cond
+                        ((= strip (length StripList))
+                            (set! StripList (append StripList (new Strip%)))
+                            (list-ref StripList strip)
+                        )
+                        (else #f)
+                    )
+                )
+            )
+        )
+        (define/public (setVisualMapConfig crosslevel config)
+            1
+        )
+        (define/public (getRenderer crosslevel)
+            1
+        )
+        (define/private (getConfig crosslevel)
+            (cond
+                ((hash-has-key? StripConfig crossLevel)
+                    (hash-key StripConfig crossLevel)
+                )
+                (else
+                    (cond
+                        ((empty? StripList)
+                            (list 0)
+                        )
+                        (else
+                            1
+                        )
+                    )
+                )
+            )
+        )
         (super-new)
     )
 )
@@ -1529,7 +1722,7 @@
     )
 )
 
-(define (loadConfig playerList mapper visualnameList visualList)
+(define (loadConfig playerList mapper visualnameList visualList mappings)
     (let*
         (
             (configFile (open-input-file "config.json"))
@@ -1549,7 +1742,7 @@
         (hash-for-each
             playersJson
             (lambda (key val)
-                (let ((newPlayer (new Player% (name (symbol->string key)) (controlMapper mapper) (visuVisualControlNamesList visualnameList) (visualList visualList))))
+                (let ((newPlayer (new Player% (name (symbol->string key)) (controlMapper mapper) (visuVisualControlNamesList visualnameList) (visualList visualList) (mappingManager mappings))))
                     (send newPlayer loadPlayerConfig val)
                     (hash-set! playerList (symbol->string key) newPlayer)
                 )
@@ -1580,7 +1773,8 @@
 (define VisualList (make-hash))
 (define VisualNameList (make-hash))
 (define PlayerList (make-hash))
-(define Mapper (new ControlMapper%))
+(define MappingManager (new Mapping%))
+(define Mapper (new ControlMapper% (Players PlayerList) (Mappings MappingManager)))
 
 (define (controlthread) (send Mapper controlThread))
 (define (to-player name)
@@ -1589,4 +1783,4 @@
 
 (show "")(show "")(show "")
 (show "Executed")
-(loadConfig PlayerList Mapper VisualNameList VisualList)
+(loadConfig PlayerList Mapper VisualNameList VisualList MappingManager)

@@ -1,0 +1,36 @@
+{
+    "points": {
+        "type": "tuio",
+        "address": "#t"
+    },
+    "persistTuioDelay": {
+        "type": "midi-ccn",
+        "address": "(vector 1 40)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "point-radius": {
+        "type": "midi-ccn",
+        "address": "(vector 1 46)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "speed": {
+        "type": "midi-ccn",
+        "address": "(vector 1 47)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    }
+}

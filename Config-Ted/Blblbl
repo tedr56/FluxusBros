@@ -1,0 +1,13 @@
+(define blbl (load-primitive "blblbl.obj"))
+(define blbl0 (load-primitive "Blblbl0.obj"))
+(define blbl1 (load-primitive "Blblbl1.obj"))
+(define blbl2 (load-primitive "Blblbl2.obj"))
+(define blbl3 (load-primitive "Blblbl3.obj"))
+(with-primitive blbl (hide 1))
+(with-primitive blbl0 (hide 0))
+(with-primitive blbl1 (hide 1))
+(with-primitive blbl2 (hide 1))
+(with-primitive blbl3 (hide 1))
+
+
+

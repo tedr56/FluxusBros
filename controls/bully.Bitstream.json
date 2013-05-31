@@ -1,0 +1,1 @@
+{"tempo":{"address":"(vector 3 45)","defaults":[1,1,1,1],"type":"ccn"},"gain":{"address":"(vector 3 46)","defaults":[1,1,1,1],"type":"ccn"},"blur":{"address":"(vector 3 47)","defaults":[1,1,1,1],"type":"ccn"}}

@@ -1,3 +1,5 @@
 (load "Config-Ted/load-config-Korg")
-;(load "Config-Ted/load-config-Bitstream")
+(load "Config-Ted/load-config-Bitstream")
 ;(load "Config-Ted/load-config-Korg-mapping")
+(load "Config-Ted/Blblbl")
+(send Triggers-List load-triggers "Config-Ted/Blblbl-Kb")

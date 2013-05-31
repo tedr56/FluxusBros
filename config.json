@@ -1,12 +1,14 @@
 {
-    "audio": ["system:capture_1", 1024, 44100],
-    "gain": 1,
+    "audio": ["system:capture_1", 512, 44100],
+    "gain": 2,
+    "smoothing-bias": 0.2,
     "interfaceControl": true,
     "interfaceCallBack": true,
     "loadPlayers": {
         "Korg": true,
-        "Bitstream": false,
-        "FingerPlay": true
+        "Bitstream": true,
+        "FingerPlay": false,
+        "TestKb": true
     },
     "players": {
         "Korg": {
@@ -19,7 +21,8 @@
                 "Korg-Focus": true
             },
             "loadTriggers": {
-                "Korg-Triggers": true
+                "Korg-Triggers": true,
+                "Korg-Keyboard": false
             },
             "loadMapping": {
                 "Korg-Mapping": true
@@ -30,12 +33,21 @@
         },
         "Bitstream": {
             "MidiInputPort": "Bitstream 3X:0",
-            "defaultDirectory": "config/"
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "Bitstream-Triggers": true
+            }
         },
         "FingerPlay": {
             "defaultDirectory": "config/",
             "loadTriggers": {
                 "FingerPlay-Triggers": true
+            }
+        },
+        "TestKb":{
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "TestKb": true
             }
         }
     }

@@ -76,7 +76,7 @@
                     (lambda ()
                         (let ((Nb-cube (truncate (+ 1 (* 30 nb-cube)))))
                             (push)
-                            (rotate (vmul (vector r-e-x r-e-y r-e-z) (* (time2) r-e-time)))
+                            (rotate (vmul (vector r-e-x r-e-y r-e-z) (* (time) r-e-time)))
                             (increment Nb-cube (/ (* (asin 1) 4) Nb-cube) nb-element-element 1)
                             (with-state
                                 (scale (vmul #(0.1 0.1 0.01) (+ (* (max (gh2 1 g) (gh2 2 g) (gh2 3 g)) (* 10 scale-sphere-gh)) scale-sphere-a)))
@@ -93,7 +93,7 @@
                 (hint-solid)
 
                 (let ((Nb-element (truncate (* 10 nb-element))))
-                    (rotate (vmul (vector r-x r-y r-z) (* (time2) r-speed)))
+                    (rotate (vmul (vector r-x r-y r-z) (* (time) r-speed)))
                     (increment Nb-element (/ (* (asin 1) 4) Nb-element) diametre-centre 2)
                 )
             )

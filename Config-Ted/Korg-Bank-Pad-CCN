@@ -187,3 +187,10 @@ midi-ccn
 (send god set-crossfader-launch #:visu "wiretriangle" #:player "Korg" #:crossfader 173 #:bank #t #:level 1)
 (send god set-crossfader-stop #:player "Korg" #:crossfader 173 #:bank #t #:level 1)
 #f
+BANK-PAD-NOTE-2-12
+Korg
+midi-ccn
+(vector 1 75)
+(send god set-crossfader-launch #:visu "neontron" #:player "Korg" #:crossfader 174 #:bank #t #:level 1)
+(send god set-crossfader-stop #:player "Korg" #:crossfader 174 #:bank #t #:level 1)
+#f
