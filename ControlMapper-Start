@@ -1,0 +1,34 @@
+#!/bin/bash
+echo "Starting JACK Audio Connection Kit..."
+
+SERVICE="qjackctl"
+RESULT=`ps -ae | sed -n /${SERVICE}/p`
+
+if [ "${RESULT:-null}" = null ];
+then
+        qjackctl -s &
+	sleep 4
+else
+        echo "Already running"
+fi
+
+echo "Starting Fluxus..."
+
+optirun_exists () {
+	type "optirun" &> /dev/null ;
+}
+
+
+if optirun_exists;
+then
+	OPTIRUN="optirun"
+fi
+
+if (("$#" > 0));
+then
+	FILE=$1
+else
+	FILE="ControlMapper.scm"
+fi
+
+$OPTIRUN fluxus -x $FILE
