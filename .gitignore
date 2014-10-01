@@ -4,8 +4,6 @@
 .project
 #opened files
 *~
-#Launcher file
-FluxusBrosLauncher.scm
 #Devellopement visuals
 visus/A\ intégrer/
 visus/A\ debugger/
