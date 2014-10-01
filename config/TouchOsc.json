@@ -16,11 +16,12 @@
         "type": "osc",
         "address": "/focus",
         "On": "setFocus"
-    }
-        "SELECT": {
-        "player": "Bitstream",
-        "type": "midi-ccn",
-        "address": "(vector 3 57)",
-        "On": "setFocus"
     },
+    "TouchTennis": {
+        "player": "TouchOsc",
+        "type": "osc",
+        "address": "/1/track1",
+        "On": "setVisual \"tennis\""
+    }
+    
 }
