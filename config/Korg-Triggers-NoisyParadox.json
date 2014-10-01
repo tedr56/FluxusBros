@@ -22,25 +22,25 @@
         "player": "Korg",
         "type": "midi-note",
         "address": "(vector 1 48)",
-        "On": "setVisual \"mur\""
+        "On": "setVisual \"tennis\""
     },
     "BANK-PAD-NOTE-1-2": {
         "player": "Korg",
         "type": "midi-note",
         "address": "(vector 1 49)",
-        "On": "setVisual \"tennis\""
+        "On": "setVisual \"radiohazard\""
     },
     "BANK-PAD-NOTE-1-3": {
         "player": "Korg",
         "type": "midi-note",
         "address": "(vector 1 50)",
-        "On": "setVisual \"tunnel-wall\""
+        "On": "setVisual \"tennis\""
     },
     "BANK-PAD-NOTE-1-4": {
         "player": "Korg",
         "type": "midi-note",
         "address": "(vector 1 51)",
-        "On": "setVisual \"zeplin\""
+        "On": "setVisual \"tennis\""
     },
     "BANK-PAD-NOTE-1-5": {
         "player": "Korg",
@@ -52,30 +52,12 @@
         "player": "Korg",
         "type": "midi-note",
         "address": "(vector 1 53)",
-        "On": "setVisual \"valley\""
+        "On": "setVisual \"quartertracker\""
     },
-    "BANK-PAD-NOTE-1-7": {
+    "BANK-PAD-NOTE-1-5": {
         "player": "Korg",
         "type": "midi-note",
-        "address": "(vector 1 54)",
-        "On": "setVisual \"wiretriangle\""
-    },
-    "BANK-PAD-NOTE-1-8": {
-        "player": "Korg",
-        "type": "midi-note",
-        "address": "(vector 1 55)",
-        "On": "setVisual \"matrix\""
-    },
-    "BANK-PAD-NOTE-1-9": {
-        "player": "Korg",
-        "type": "midi-note",
-        "address": "(vector 1 56)",
-        "On": "setVisual \"mozaik\""
-    },
-	"BANK-PAD-NOTE-1-10": {
-        "player": "Korg",
-        "type": "midi-note",
-        "address": "(vector 1 57)",
-        "On": "setVisual \"mozaik\""
+        "address": "(vector 1 52)",
+        "On": "setVisual \"soundwavetracker\""
     }
 }

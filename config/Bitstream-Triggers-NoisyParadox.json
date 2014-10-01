@@ -1,0 +1,67 @@
+{
+	"SENDFOCUS-TO-BITSTREAM-2": {
+		"player": "Bitstream",
+		"type": "midi-ccn",
+		"address": "(vector 1 0)",
+		"On": "setFocus-on-player \"Korg\""
+	},
+    "SELECT": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 57)",
+        "On": "setFocus"
+    },
+    "PUSH-1": {
+        "player": "Bitstream",
+        "type": "midi-note",
+        "address": "(vector 3 90)",
+        "On": "visualStart 902 0 \"quartertracker\"",
+        "Off": "visualStop 902 0"
+    },
+    "BANK-PAD-NOTE-1-1": {
+        "player": "Bitstream",
+        "type": "midi-note",
+        "address": "(vector 3 91)",
+        "On": "visualStart 903 0 \"tennis\"",
+        "Off": "visualStop 903 0"
+    },
+    "BANK-BS-1": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 58)",
+        "On": "visualStart \"801\" \"0\" \"horwirequartertracker\"",
+        "Off": "visualStop \"801\" \"0\""
+    },
+    "BANK-BS-2": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 59)",
+        "On": "visualStart \"802\" \"0\" \"quartertracker\"",
+        "Off": "visualStop \"802\" \"0\""
+    },
+    "BANK-BS-3": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 60)",
+        "On": "visualStart \"803\" \"0\" \"soundwavetracker\"",
+        "Off": "visualStop \"803\" \"0\""
+    },
+    "BANK-BS-6": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 63)",
+        "On": "setVisual \"horwirequartertracker\" \"806\" \"0\""
+    },
+    "BANK-BS-7": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 64)",
+        "On": "setVisual \"quartertracker\" \"807\" \"0\""
+    },
+    "BANK-BS-8": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 65)",
+        "On": "setVisual \"soundwavetracker\" \"808\" \"0\""
+    }
+}

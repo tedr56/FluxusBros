@@ -20,7 +20,7 @@
 (define DEFAULT_VAL_COEFF 127)
 (define DEFAULT_HOOK_INTERVAL 0.05)
 (define DEFAULT_GAIN 1)
-(define DEFAULT_SMOOTHING_BIAS 0.2)
+(define DEFAULT_SMOOTHING_BIAS 0.6)
 
 ;Configuration OSC
 (define DEFAULT_OSC_SOURCE "3334")
@@ -574,10 +574,16 @@
                                 (list (list) (list) (list) (list))
                             )
                             ((equal? typeV "number")
-                                (parseJson '(defaults) VisualJson '(1 1 1 1))
+			      (let
+				(
+				  (def (parseJson '(defaults) VisualJson '(1 1 1 1)))
+				)
+				(map (lambda (d) (if (string? d) (string->number d) d)) def)
+			      )
                             )
                         )
                     )
+                    
                             
                     (valueV 0.555)
                     (playerV #f)
@@ -821,42 +827,40 @@
                         ((or waitFocus (empty? lastFocus))
                             (setFocus CrossLevel)
                         )
-                        (else
-                            (cond
-                                ((hash-has-key? visualList CrossLevel)
-                                    (send (hash-ref visualList CrossLevel) Start)
-                                )
-                                (else
-                                    (letrec
-                                        (
-                                            (searchOtherLevel
-                                                (lambda ((levIter 0))
-                                                    (let ((lev (number->string levIter)))
-                                                        (cond
-                                                            ((hash-has-key? visualList (getCrossLevel cross lev))
-                                                                (setVisual (send (hash-ref visualList (getCrossLevel cross lev)) getVisual) cross level)
-                                                                (visualStart cross level)
-                                                            )
-                                                            ((>= n DEFAULT_OTHER_LEVEL_SEARCH)
-                                                                #f
-                                                            )
-                                                            (else
-                                                                (searchOtherLevel (+ lev 1))
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                        (searchOtherLevel)
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
+		    )
+		    (cond
+			((hash-has-key? visualList CrossLevel)
+			    (send (hash-ref visualList CrossLevel) Start)
+			)
+			(else
+			    (letrec
+				(
+				    (searchOtherLevel
+					(lambda ((levIter 0))
+					    (let ((lev (number->string levIter)))
+						(cond
+						    ((hash-has-key? visualList (getCrossLevel cross lev))
+							(setVisual (send (hash-ref visualList (getCrossLevel cross lev)) getVisual) cross level)
+							(visualStart cross level)
+						    )
+						    ((>= n DEFAULT_OTHER_LEVEL_SEARCH)
+							#f
+						    )
+						    (else
+							(searchOtherLevel (+ lev 1))
+						    )
+						)
+					    )
+					)
+				    )
+				)
+				(searchOtherLevel)
+			    )
+			)
+		    )
+		)
+	    )
+	)
         (define/public (visualStop (cross #f) (level "0"))
             (let ((CrossLevel (getCrossLevel cross level)))
                 (when CrossLevel
@@ -1077,6 +1081,7 @@
                             (visufiltercontrolList (parseAllPlayerControl))
                         )
                         (hash-set! visuTempTableControl (string-append visu cross) visufiltercontrolList)
+                        ;(show visufiltercontrolList )
                         visufiltercontrolList 
                     )
                 )
@@ -1169,7 +1174,7 @@
                 controlList
             ;)
         )
-        (define/public (setFocus (crosslevel #f) (nFocus 0)) ;unRecordControl[F] & recordControl[F] -> ControlMapper
+        (define/public (setFocus (crosslevel #f) (forceReload #f) (nFocus 0)) ;unRecordControl[F] & recordControl[F] -> ControlMapper
             (cond
                 (crosslevel
                     (unless (empty? lastFocus)
@@ -1177,6 +1182,10 @@
                             (send controlMapper unRecordControl (loadTableValuesVisualControls (send (hash-ref visualList oldLastFocus) getVisual) oldLastFocus))
                         )
                     )
+                    (show "debug setfocus")
+                    (show crosslevel)
+                    (show (string? crosslevel))
+                    
                     (set! focus (list crosslevel))
                     (set! lastFocus
                         (list
@@ -1186,7 +1195,11 @@
                     )
                     (set! waitFocus #f)
                     (when (hash-has-key? visualList crosslevel)
-                        (send controlMapper recordControl (loadTableValuesVisualControls (send (hash-ref visualList crosslevel) getVisual) crosslevel))
+			(show "Focus visual")
+			(show (send (hash-ref visualList crosslevel) getVisual))
+			(show "")
+                        (send controlMapper recordControl (loadTableValuesVisualControls (send (hash-ref visualList crosslevel) getVisual) crosslevel #:forceReload forceReload))
+			;(show (send controlMapper getMap))
                     )
                 )
                 (else
@@ -1194,9 +1207,93 @@
                 )
             )
         )
+        (define/public (unsetFocus (crosslevel #f))
+	    (show "debug unsetFocus")
+	    (unless (empty? lastFocus)
+		(show "debug 1")
+		(let ((oldLastFocus (string-append (first lastFocus) (second lastFocus))))
+		    (show "debug 2")
+		    (send controlMapper unRecordControl (loadTableValuesVisualControls (send (hash-ref visualList oldLastFocus) getVisual) oldLastFocus))
+		    (set! lastFocus '())
+		    (show "debug 3")
+		)
+	    )
+	)
+        (define/public (setFocus-on-player player)
+	  (show "debug")
+	  (let
+	    (
+	      (hash-players (send controlMapper get-players))
+	    )
+	    (cond
+	      ((hash-has-key? hash-players player)
+		(show "player found")
+		(show (hash-ref hash-players player))
+		(let*
+		    (
+			(hash-player (hash-ref hash-players player))
+			(hash-focus (send hash-player getFocus))
+		    )
+		    (cond
+			((empty? hash-focus)
+			    (show (string-append "No Focus from " player))
+			)
+			(else
+			    (let*
+				(
+				    (hash-cross (list-ref hash-focus 0))
+				    (hash-level (list-ref hash-focus 1))
+				    (hash-crosslevel (string-append hash-cross hash-level))
+				    (hash-visual (send hash-player getVisual))
+				)
+				(show hash-focus)
+				(show (list-ref hash-focus 0))
+				(show (string? (list-ref hash-focus 0)))
+				(show (string-append hash-cross hash-level))
+				(show hash-visual)
+				(show visualList)
+				(send hash-player unsetFocus)
+				(show "debug setFocusOn0")
+				(send (hash-ref visualList hash-crosslevel) setVisualControls (loadTableValuesVisualControls hash-visual hash-crosslevel #:forceReload #t))
+				(show "debug setFocusOn")
+				(setFocus (string-append hash-cross hash-level))
+				(show (getFocus))
+			    )
+			)
+		    )
+		(show "enddebug")
+		)
+	      )
+	      (else
+		(show "player not found")
+	      )
+	    )
+	  )
+	)
         (define/public (getFocus)
             lastFocus
         )
+        (define/public (getFocusString)
+	    (let ((focus (getFocus)))
+		(cond
+		    ((empty? focus)
+			""
+		    )
+		    (else
+			(string-append (list-ref focus 0) (list-ref focus 1))
+		    )
+		)
+	    )
+	)
+        (define/public (getVisual)
+	    (show visualList)
+	    (send (hash-ref visualList (getFocusString)) getVisual)
+	)
+	(define/public (getVisualObject)
+	    (show (getFocusString))
+	    (show (hash-ref visualList (getFocusString)))
+	    (hash-ref visualList (getFocusString))
+	)
         (define/public (getWaitFocus)
             (show "")
             (show waitFocus)
@@ -1223,6 +1320,12 @@
             (TuioDown #f)                ; Retain if last tuio message contained cursors to send one empty message
             (last-osc-peek "no message yet...")
         )
+        (define/public (getTypesEvents)
+	  (show TypesEvents)
+	)
+	(define/public (get-players)
+	  Players
+	)
         (define/public (recordControl table-filterControls) ; table-filterControls '(TableControl% FilterControl%))
             (show-d "->recordControl ")
             (for-each
@@ -1278,6 +1381,9 @@
         (define/private (getEventFunct type)
             (cond
                 ((equal? type "midi-ccn")
+                    (lambda () (ccEvents))
+                )
+                ((equal? type "ccn")
                     (lambda () (ccEvents))
                 )
                 ((equal? type "midi-note")
@@ -1767,7 +1873,7 @@
 )
                 
 (define (c nameV id #:type (type 'linear) #:coeff (coefficient 1) #:toggle (toggle #f))
-    (send id getControl nameV) 
+    (* (send id getControl nameV) coefficient)
 )
 
 (define VisualList (make-hash))

@@ -41,6 +41,7 @@
         midpoint
         minv
         maxv
+        random-center
     )
     (define (midi-connect)
         (letrec
@@ -425,5 +426,13 @@
     )
     (define (maxv v1 v2)
         (vector (max (vector-ref v1 0) (vector-ref v2 0)) (max (vector-ref v1 1) (vector-ref v2 1)) (max (vector-ref v1 2) (vector-ref v2 2)))
+    )
+    (define (random-center value)
+        (let
+            (
+                (rnd (random value))
+            )
+            (- rnd (/ rnd 2))
+        )
     )
 )

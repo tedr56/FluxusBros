@@ -1,7 +1,20 @@
+;(c "rot-1-x" id)
+;(c "rot-1-y" id)
+;(c "rot-1-z" id)
+;(c "rot-2-x" id)
+;(c "rot-2-y" id)
+;(c "rot-2-z" id)
+;(c "rot-3-x" id)
+;(c "rot-3-y" id)
+;(c "rot-3-z" id)
+;(c "rot-4-x" id)
+;(c "rot-4-y" id)
+;(c "rot-4-z" id)
+
 (define (circle id cross)
     (let
         (
-            (Name (send id get-name))
+            (Name (symbol->string (send id get-name)))
 		    (g (c "gain" id))
             (param-n (+ 1 (round (c "param-n" id #:coeff 127))))
             (param-c (c "param-c" id #:coeff 8))

@@ -1,14 +1,14 @@
 {
-    "audio": ["system:capture_1", 512, 44100],
+    "audio": ["system:capture_1", 1024, 44100],
     "gain": 2,
-    "smoothing-bias": 0.2,
+    "smoothing-bias": 0.6,
     "interfaceControl": true,
     "interfaceCallBack": true,
     "loadPlayers": {
         "Korg": true,
         "Bitstream": true,
         "FingerPlay": false,
-        "TestKb": true
+        "TestKb": false
     },
     "players": {
         "Korg": {
@@ -22,10 +22,11 @@
             },
             "loadTriggers": {
                 "Korg-Triggers": true,
-                "Korg-Keyboard": false
+                "Korg-Triggers-Fix": true,
+                "Korg-Keyboard": true
             },
             "loadMapping": {
-                "Korg-Mapping": true
+                "Korg-Mapping": false
             },
             "loadVisuals": {
                 "Korg-Visuals": true

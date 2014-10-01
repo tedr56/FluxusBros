@@ -1,7 +1,7 @@
 (define backrain-prims (make-hash))
 
 (define (backrain-build id)
-    (define rain (build-image (load-texture "RayuresTex-Lights.png") (vector 0 0) (get-screen-size)))
+    (define rain (build-image (load-texture "lights.png") (vector 0 0) (get-screen-size)))
     (with-primitive rain
         (pdata-op "*" "t" 5)
     )
@@ -15,7 +15,7 @@
 
 (define (backrain id cross)
     (with-primitive (hash-ref backrain-prims id)
-        (pdata-op "+" "t" (vmul (vector (* (delta) -0.3) (delta) 0) 2))
-        (colour (hsv->rgb (vector 0.6 (- 1 (gh 2)) 1)))
+        (pdata-op "+" "t" (vmul (vector (* (delta) -0.3) (delta) 0) .51))
+        (colour (hsv->rgb (vector 0.6 (- 1 (gh2 2 (c "gain" id #:coeff 0.1))) 1)))
     )
 )

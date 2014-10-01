@@ -1,1 +1,1 @@
-{"tempo":{"address":"(vector 1 26)","defaults":[1,1,1,1],"type":"ccn"},"gain":{"address":"(vector 1 25)","defaults":[1,1,1,1],"type":"ccn"},"blur":{"address":"(vector 1 24)","defaults":[1,1,1,1],"type":"ccn"}}
+{"tempo":{"address":"(vector 1 26)","defaults":[1,1,1,1],"type":"midi-ccn"},"gain":{"address":"(vector 1 25)","defaults":[1,1,1,1],"type":"midi-ccn"},"blur":{"address":"(vector 1 24)","defaults":[1,1,1,1],"type":"midi-ccn"}}
