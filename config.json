@@ -5,10 +5,11 @@
     "interfaceControl": true,
     "interfaceCallBack": true,
     "loadPlayers": {
-        "Korg": true,
-        "Bitstream": true,
+        "Korg": false,
+        "Bitstream": false,
         "FingerPlay": false,
-        "TestKb": false
+        "TestKb": false,
+        "TouchOsc": true
     },
     "players": {
         "Korg": {
@@ -49,6 +50,12 @@
             "defaultDirectory": "config/",
             "loadTriggers": {
                 "TestKb": true
+            }
+        },
+        "TouchOsc":{
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "TouchOsc": true
             }
         }
     }
