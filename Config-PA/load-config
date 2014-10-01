@@ -1,4 +1,0 @@
-(midiin-open 1)
-(send Triggers-List load-triggers "Config-PA/Bank-VMX")
-(send Triggers-List load-triggers "Config-PA/Bank-Visu-VMX")
-(send Triggers-List load-triggers "Config-PA/Trigger-VMX")
