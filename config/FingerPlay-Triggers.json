@@ -1,0 +1,20 @@
+{
+    "FP-1-1": {
+        "player": "FingerPlay",
+        "type": "osc",
+        "address": "/fingerplay/control/31",
+        "On": "visualStart"
+    },
+    "FP-1-2": {
+        "player": "FingerPlay",
+        "type": "osc",
+        "address": "/fingerplay/control/32",
+        "On": "visualStop"
+    },
+    "FP-B-2": {
+        "player": "FingerPlay",
+        "type": "osc",
+        "address": "/fingerplay/control/33",
+        "On": "setVisual 'tennis 901"
+    }
+}

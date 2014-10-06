@@ -1,0 +1,50 @@
+;(clear)
+;(smoothing-bias .1)
+;(gain .51)
+
+(define (coeur-x id cross n)
+    ;(smoothing-bias (mn 0 7))
+    (let
+        (
+            (freq (random (get-num-frequency-bins)))
+            (color-gain (c "color-gain" id))
+            (color-wire-gain (c "color-wire-gain" id))
+            )
+        (with-state
+            (hint-wire)
+            (scale (vector .5 .5 .5))
+            (scale (vmul (vector 1 1 1) (+ 1 (* (c "scale-random" id) (random 3)))))
+            (translate (vector -20 -2 0))
+            (translate (vmul (vector 2 0 0) n))
+            (scale (vector 2 (max -0.1 (* (gl freq) (c "scale-gh" id #:coeff 5)))  6))
+            (wire-colour (vmul (hsv->rgb (vector (+ (/ (random 100) 1000) 0) 1 1)) color-wire-gain))
+            (colour (vmul (hsv->rgb (vector 1 0 1)) color-gain))
+            #(draw-instance prim)
+            (draw-cube)
+            )
+        (unless (<= n 0)
+            (coeur-x id cross (- n 1))
+            )
+        )
+    )
+
+(define (coeur-z id cross n m)
+    (random-seed (max (inexact->exact (round m)) 1))
+    (with-state
+        (translate (vector 0 -1 -100))
+        (translate (vector 0 0 (* 15 (modulo-d (* (c "speed" id #:coeff 10) (+ m (c "speed-random" id #:coeff 50) .02 (time))) 10))))
+        ;(translate (vector 0 0 (* 15 (modulo-d (* (* m 1) .02 (time)) 10))))
+        (coeur-x id cross n)
+        )
+    (unless (<= m 0)
+        (coeur-z id cross n (- m 1))
+        )
+    )
+
+(define (coeur id cross)
+    (coeur-z id cross (c "cubes-x" id #:coeff 20) (c "cubes-y" id #:coeff 20))
+    #t
+)
+(show "coeur loaded")
+
+;(every-frame (coeur-z 20 20))

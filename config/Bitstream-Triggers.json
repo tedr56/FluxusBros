@@ -1,0 +1,99 @@
+{
+	"SENDFOCUS-TO-BITSTREAM-2": {
+		"player": "Bitstream",
+		"type": "midi-ccn",
+		"address": "(vector 1 0)",
+		"On": "setFocus-on-player \"Korg\""
+	},
+    "SELECT": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 57)",
+        "On": "setFocus"
+    },
+    "BANK-PAD-NOTE-1-1": {
+        "player": "Bitstream",
+        "type": "midi-note",
+        "address": "(vector 3 91)",
+        "On": "visualStart 903 0 \"tennis\"",
+        "Off": "visualStop 903 0"
+    },
+    "BANK-BS-1": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 58)",
+        "On": "visualStart 701 0 \"mur\"",
+        "Off": "visualStop 701 0"
+    },
+    "BANK-BS-2": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 59)",
+        "On": "visualStart 702 0 \"circle\"",
+        "Off": "visualStop 702 0"
+    },
+    "BANK-BS-3": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 60)",
+        "On": "visualStart 703 0 \"planets\"",
+        "Off": "visualStop 703 0"
+    },
+    "BANK-BS-4": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 61)",
+        "On": "visualStart 704 0 \"corner\"",
+        "Off": "visualStop 704 0"
+    },
+    "BANK-BS-5": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 62)",
+        "On": "visualStart 705 0 \"tennis\"",
+        "Off": "visualStop 705 0"
+    },
+    "BANK-BS-6": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 63)",
+        "On": "visualStart 706 0 \"dancing-cubes\"",
+        "Off": "visualStop 706 0"
+    },
+    "BANK-BS-7": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 64)",
+        "On": "visualStart 707 0 \"equal_sym\"",
+        "Off": "visualStop 707 0"
+    },
+    "BANK-BS-8": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 65)",
+        "On": "visualStart 708 0 \"radiohazard\"",
+        "Off": "visualStop 708 0"
+    },
+	"BANK-BS2-1": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 52)",
+        "On": "visualStart 709 0 \"dancing-cubes\"",
+        "Off": "visualStop 709 0"
+    },
+	"BANK-BS2-2": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 54)",
+        "On": "visualStart 710 0 \"foret\"",
+        "Off": "visualStop 710 0"
+    },
+	"BANK-BS2-3": {
+        "player": "Bitstream",
+        "type": "midi-ccn",
+        "address": "(vector 3 51)",
+        "On": "visualStart 711 0 \"flower\"",
+        "Off": "visualStop 711 0"
+    }
+
+}

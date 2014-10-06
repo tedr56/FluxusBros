@@ -76,7 +76,7 @@
             (scale
                 (vector 
                     (* 10 (c "scale-x" id))
-                    (* 0.05 (* (c "scale-y-gh" id) (gh2 n)))
+                    (* 0.05 (* (c "scale-y-gh" id) (gh2 n g)))
                     (* 50 (c "scale-z" id))
                 )
             )

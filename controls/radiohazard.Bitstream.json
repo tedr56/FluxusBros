@@ -1,0 +1,152 @@
+{
+  "gain": {
+      "type": "midi-ccn",
+      "address": "(vector 3 44)",
+      "defaults": [
+	  1.0,
+	  0.9291338324546814,
+	  0.34645670652389526,
+	  0.9921259880065918
+      ]
+  },
+  "coeffPrims": {
+      "type": "midi-ccn",
+      "address": "(vector 3 15)",
+      "defaults": [
+	  0.7,
+	  0.9291338324546814,
+	  0.34645670652389526,
+	  0.9921259880065918
+      ]
+  },
+  "speed": {
+    "type": "midi-ccn",
+    "address": "(vector 3 40)",
+    "defaults": [
+	0.3,
+	0.4,
+	0.34645670652389526,
+	0.7
+    ]
+  },
+  "Xcoeff": {
+    "type": "midi-ccn",
+    "address": "(vector 3 41)",
+    "defaults": [
+	1.0,
+	0.9291338324546814,
+	0.34645670652389526,
+	0.9921259880065918
+    ]
+  },
+  "Ycoeff": {
+    "type": "midi-ccn",
+    "address": "(vector 3 42)",
+    "defaults": [
+	1.0,
+	0.9291338324546814,
+	0.34645670652389526,
+	0.9921259880065918
+    ]
+  },
+  "coeffRadius": {
+    "type": "midi-ccn",
+    "address": "(vector 3 46)",
+    "defaults": [
+	0.5,
+	0.5291338324546814,
+	0.74645670652389526,
+	0.9921259880065918
+    ]
+  },
+  "sizeRadius": {
+    "type": "midi-ccn",
+    "address": "(vector 3 45)",
+    "defaults": [
+	0.5,
+	0.6291338324546814,
+	0.74645670652389526,
+	1
+    ]
+  },
+  "scaleGh": {
+    "type": "midi-ccn",
+    "address": "(vector 3 43)",
+    "defaults": [
+	0.4,
+	0.4291338324546814,
+	0.54645670652389526,
+	0.9921259880065918
+    ]
+  },
+  "coeffDistrodX": {
+    "type": "midi-ccn",
+    "address": "(vector 3 38)",
+    "defaults": [
+	0.2,
+	0.3,
+	0.34645670652389526,
+	0.6921259880065918
+    ]
+  },
+  "coeffDistrodY": {
+    "type": "midi-ccn",
+    "address": "(vector 3 39)",
+    "defaults": [
+	0.2,
+	0.3,
+	0.34645670652389526,
+	0.6921259880065918
+    ]
+  },
+  "colourRadius": {
+    "type": "midi-ccn",
+    "address": "(vector 3 33)",
+    "defaults": [
+	0.1,
+	0.2,
+	0.34645670652389526,
+	0.6921259880065918
+    ]
+  },
+  "colourBase": {
+    "type": "midi-ccn",
+    "address": "(vector 3 32)",
+    "defaults": [
+	0.7,
+	0.8,
+	0.34645670652389526,
+	0.1
+    ]
+  },
+  "rotZSpeed": {
+    "type": "midi-ccn",
+    "address": "(vector 3 47)",
+    "defaults": [
+	0,
+	0.4,
+	0.64645670652389526,
+	0.8
+    ]
+  },
+  "blur": {
+    "type": "midi-ccn",
+    "address": "(vector 3 10)",
+    "defaults": [
+        0.5,
+        0.4,
+        0.2,
+        0
+    ]
+  },
+  "shiny": {
+    "type": "midi-ccn",
+    "address": "(vector 3 11)",
+    "defaults": [
+        1,
+        0.4,
+        0.2,
+        0
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+    "points": {
+        "type": "tuio",
+        "address": "#t"
+    },
+    "center": {
+        "type": "midi-ccn",
+        "address": "(vector 3 32)",
+        "defaults": [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+        ]
+    },
+    "gain": {
+        "type": "midi-ccn",
+        "address": "(vector 3 8)",
+        "defaults": [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+        ]
+    },
+    "gh-offset": {
+        "type": "midi-ccn",
+        "address": "(vector 3 16)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "persistTuioDelay": {
+        "type": "midi-ccn",
+        "address": "(vector 3 9)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "firstBand": {
+        "type": "midi-ccn",
+        "address": "(vector 3 46)",
+        "defaults": [
+            1,
+            1,
+            1,
+            1
+        ]
+    },
+    "secondBand": {
+        "type": "midi-ccn",
+        "address": "(vector 3 47)",
+        "defaults": [
+            1,
+            1,
+            1,
+            1
+        ]
+    },
+    "rotate-1": {
+        "type": "midi-ccn",
+        "address": "(vector 3 40)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "rotate-2": {
+        "type": "midi-ccn",
+        "address": "(vector 3 41)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "rotate-3": {
+        "type": "midi-ccn",
+        "address": "(vector 3 42)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "rotate-4": {
+        "type": "midi-ccn",
+        "address": "(vector 3 43)",
+        "defaults": [
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "tuioX": {
+        "type": "midi-ccn",
+        "address": "(vector 3 14)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "tuioY": {
+        "type": "midi-ccn",
+        "address": "(vector 3 15)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "tuioOffsetX": {
+        "type": "midi-ccn",
+        "address": "(vector 3 22)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "tuioOffsetY": {
+        "type": "midi-ccn",
+        "address": "(vector 3 23)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    },
+    "size-all": {
+        "type": "midi-ccn",
+        "address": "(vector 3 39)",
+        "defaults": [
+            0.5,
+            0,
+            0,
+            0
+        ]
+    }
+}

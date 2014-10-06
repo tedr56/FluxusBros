@@ -1,0 +1,27 @@
+(require racket/list)
+(define S "(clr-coeff (c \"clrcoeff\" id #:type \"number\")) (c \"colour\" id #:coeff 12)")
+(define T "                        (e (+ (* (c \"ecart-low\" id) 0.1) (c \"ecart-high\" id)))")
+;(define result (regexp-match* #rx"(?<=\\(c \\\")([[a-z]*[A-Z]*[0-9]*[\\-]*[\\_]*]+)(?=\".*\\))" "cat (c \"Test-testy1\" #:coeff:12) dog (c \"testy\") cat"))
+;(define result (regexp-match* #rx"(?<=\\(c \\\"((\\w+\\-*)+)\\\".*\\#\\:type \"\\w+) S))
+;(?=\\\".*\\))" S))
+;(define result (regexp-match* #px"(?<=\"\\w+\" id \\#\\:type \")([\\w+]+)(?=\")" S))
+;(define result (regexp-match* #px"(?<=\\#\\:type \")([\\w+]+)" S))
+;(define result (regexp-match* #px"(([\\w+]+)" S))
+;(define result (regexp-match* #px"\\(c \".*\"(?>\\){1})" S))
+;(define result2
+;    (map
+;        (lambda (s)
+;            (show s)
+;            (regexp-match #px"(?<=\\#\\:type \")([\\w+\\-*]+)(?=\")" s)
+;        )
+;        result
+;    )
+;)
+(define ctrl-pattern (regexp-match* #px"\\(c \".*?\" id.*?\\){1}" T))
+(show "")
+(show ctrl-pattern)
+
+;(show result2)
+;(show (list? result))
+;(show (car result))
+;(show (string? (car result)))

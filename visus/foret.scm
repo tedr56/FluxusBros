@@ -5,7 +5,7 @@
     (with-state
         (let
             (
-                (Name (send id get-name))
+                (Name (symbol->string (send id get-name)))
                 (g (c "gain" id #:coeff 0.5))
             )
             (letrec

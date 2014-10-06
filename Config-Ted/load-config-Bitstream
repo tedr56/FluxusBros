@@ -1,2 +1,0 @@
-(send Triggers-List load-triggers "Config-Ted/Bitstream-Trigger")
-(send Triggers-List load-triggers "Config-Ted/Bitstream-Trigger-kb")

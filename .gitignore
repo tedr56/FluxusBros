@@ -4,12 +4,11 @@
 .project
 #opened files
 *~
-#Launcher file
-FluxusBrosLauncher.scm
 #Devellopement visuals
 visus/A\ intégrer/
 visus/A\ debugger/
 visus/Experimental
 #Tests files
 Tests/
+Tests/*
 temp.scm

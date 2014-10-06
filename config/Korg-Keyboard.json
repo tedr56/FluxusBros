@@ -1,0 +1,198 @@
+{
+    "1-1": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 48)",
+        "On": "visualStart 901 0",
+        "Off": "visualStop 901 0"
+    },
+    "1-2": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 50)",
+        "On": "visualStart 901 1",
+        "Off": "visualStop 901 1"
+    },
+    "1-3": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 52)",
+        "On": "visualStart 901 2",
+        "Off": "visualStop 901 2"
+    },
+    "1-4": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 53)",
+        "On": "visualStart 902 0",
+        "Off": "visualStop 902 0"
+    },
+    "1-5": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 55)",
+        "On": "visualStart 902 1",
+        "Off": "visualStop 902 1"
+    },
+    "1-6": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 57)",
+        "On": "visualStart 902 2",
+        "Off": "visualStop 902 2"
+    },
+    "1-7": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 59)",
+        "On": "visualStart 902 3",
+        "Off": "visualStop 902 3"
+    },
+    "2-1": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 60)",
+        "On": "visualStart 903 0",
+        "Off": "visualStop 903 0"
+    },
+    "2-2": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 62)",
+        "On": "visualStart 903 1",
+        "Off": "visualStop 903 1"
+    },
+    "2-3": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 64)",
+        "On": "visualStart 903 2",
+        "Off": "visualStop 903 2"
+    },
+    "2-4": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 65)",
+        "On": "visualStart 904 0",
+        "Off": "visualStop 904 0"
+    },
+    "2-5": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 67)",
+        "On": "visualStart 904 1",
+        "Off": "visualStop 904 1"
+    },
+    "2-6": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 69)",
+        "On": "visualStart 904 2",
+        "Off": "visualStop 904 2"
+    },
+    "2-7": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 71)",
+        "On": "visualStart 904 3",
+        "Off": "visualStop 904 3"
+    },
+    "3-1": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 72)",
+        "On": "visualStart 905 0",
+        "Off": "visualStop 905 0"
+    },
+    "3-2": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 74)",
+        "On": "visualStart 905 1",
+        "Off": "visualStop 905 1"
+    },
+    "3-3": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 76)",
+        "On": "visualStart 905 2",
+        "Off": "visualStop 905 2"
+    },
+    "3-4": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 77)",
+        "On": "visualStart 906 0",
+        "Off": "visualStop 906 0"
+    },
+    "3-5": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 79)",
+        "On": "visualStart 906 1",
+        "Off": "visualStop 906 1"
+    },
+    "3-6": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 81)",
+        "On": "visualStart 906 2",
+        "Off": "visualStop 906 2"
+    },
+    "3-7": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 83)",
+        "On": "visualStart 906 3",
+        "Off": "visualStop 906 3"
+    },
+    "4-1": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 84)",
+        "On": "visualStart 907 0",
+        "Off": "visualStop 907 0"
+    },
+    "4-2": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 86)",
+        "On": "visualStart 907 1",
+        "Off": "visualStop 907 1"
+    },
+    "4-3": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 88)",
+        "On": "visualStart 907 2",
+        "Off": "visualStop 907 2"
+    },
+    "4-4": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 89)",
+        "On": "visualStart 908 0",
+        "Off": "visualStop 908 0"
+    },
+    "4-5": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 91)",
+        "On": "visualStart 908 1",
+        "Off": "visualStop 908 1"
+    },
+    "4-6": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 93)",
+        "On": "visualStart 908 2",
+        "Off": "visualStop 908 2"
+    },
+    "4-7": {
+        "player": "Korg",
+        "type": "midi-note",
+        "address": "(vector 2 95)",
+        "On": "visualStart 908 3",
+        "Off": "visualStop 908 3"
+    }
+}

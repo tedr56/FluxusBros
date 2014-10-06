@@ -1,0 +1,188 @@
+{
+    "FOCUS?": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 0 84)",
+        "On": "getFocus"
+    },
+    "WAIT?": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 0 83)",
+        "On": "getWaitFocus"
+    },
+    "FOCUS": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 0 82)",
+        "On": "setFocus"
+    },
+    "BANK-PAD-NOTE-1-1": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 0 48)",
+        "On": "visualStart 411 0 \"apprehension\"",
+        "Off": "visualStop 411 0"
+    },
+    "BANK-PAD-NOTE-1-2": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 1 48)",
+        "On": "visualStart 412 0 \"mark2\"",
+        "Off": "visualStop 412 0"
+    },
+    "BANK-PAD-NOTE-1-3": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 2 48)",
+        "On": "visualStart 413 0 \"profondeur\"",
+        "Off": "visualStop 413 0"
+    },
+    "BANK-PAD-NOTE-1-4": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 3 48)",
+        "On": "visualStart 414 0 \"coeur\"",
+        "Off": "visualStop 414 0"
+    },
+    "BANK-PAD-NOTE-1-5": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 4 48)",
+        "On": "visualStart 415 0 \"construction\"",
+        "Off": "visualStop 415 0"
+    },
+    "BANK-PAD-NOTE-1-6": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 5 48)",
+        "On": "visualStart 416 0 \"valley\"",
+        "Off": "visualStop 416 0"
+    },
+    "BANK-PAD-NOTE-1-7": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 6 48)",
+        "On": "visualStart 417 1 \"valley\"",
+        "Off": "visualStop 417 1"
+    },
+    "BANK-PAD-NOTE-1-8": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 7 48)",
+        "On": "visualStart 418 2 \"valley\"",
+        "Off": "visualStop 418 2"
+    },
+    "BANK-PAD-NOTE-2-1": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 0 49)",
+        "On": "visualStart 421 3 \"valley\"",
+        "Off": "visualStop 421 3"
+    },
+    "BANK-PAD-NOTE-2-2": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 1 49)",
+        "On": "visualStart 422 0 \"new-mew\"",
+        "Off": "visualStop 422 0"
+    },
+    "BANK-PAD-NOTE-2-3": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 2 49)",
+        "On": "visualStart 423 0 \"bully\"",
+        "Off": "visualStop 423 0"
+    },
+    "BANK-PAD-NOTE-2-4": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 3 49)",
+        "On": "visualStart 424 0 \"bully\"",
+        "Off": "visualStop 424 0"
+    },
+    "BANK-PAD-NOTE-2-5": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 4 49)",
+        "On": "visualStart 425 0 \"bully\"",
+        "Off": "visualStop 425 0"
+    },
+    "BANK-PAD-NOTE-2-6": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 5 49)",
+        "On": "visualStart 426 0 \"bully\"",
+        "Off": "visualStop 426 0"
+    },
+    "BANK-PAD-NOTE-2-7": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 6 49)",
+        "On": "visualStart 427 0 \"bully\"",
+        "Off": "visualStop 427 0"
+    },
+    "BANK-PAD-NOTE-2-8": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 7 49)",
+        "On": "visualStart 428 0 \"bully\"",
+        "Off": "visualStop 428 0"
+    },
+    "BANK-PAD-NOTE-3-1": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 0 50)",
+        "On": "visualStart 431 0 \"bully\"",
+        "Off": "visualStop 431 0"
+    },
+    "BANK-PAD-NOTE-3-2": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 1 50)",
+        "On": "visualStart 432 0 \"radiohazard\"",
+        "Off": "visualStop 432 0"
+    },
+    "BANK-PAD-NOTE-3-3": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 2 50)",
+        "On": "visualStart 433 0 \"bully\"",
+        "Off": "visualStop 433 0"
+    },
+    "BANK-PAD-NOTE-3-4": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 3 50)",
+        "On": "visualStart 434 0 \"bully\"",
+        "Off": "visualStop 434 0"
+    },
+    "BANK-PAD-NOTE-3-5": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 4 50)",
+        "On": "visualStart 435 0 \"bully\"",
+        "Off": "visualStop 435 0"
+    },
+    "BANK-PAD-NOTE-3-6": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 5 50)",
+        "On": "visualStart 436 0 \"bully\"",
+        "Off": "visualStop 436 0"
+    },
+    "BANK-PAD-NOTE-3-7": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 6 50)",
+        "On": "visualStart 437 0 \"bully\"",
+        "Off": "visualStop 437 0"
+    },
+    "BANK-PAD-NOTE-3-8": {
+        "player": "Akai",
+        "type": "midi-note",
+        "address": "(vector 7 50)",
+        "On": "visualStart 438 0 \"bully\"",
+        "Off": "visualStop 438 0"
+    }
+}

@@ -1,0 +1,108 @@
+{
+    "FOCUS": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "f",
+        "On": "setFocus"
+    },
+    "SAVE-KORG": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "+",
+        "On": "saveControls"
+    },
+    "Kb-1-1": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "1",
+        "On": "visualStart 1 0",
+        "Off": "visualStop 1 0"
+    },
+    "Kb-1-2": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "2",
+        "On": "visualStart 1 1",
+        "Off": "visualStop 1 1"
+    },
+    "Kb-1-3": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "3",
+        "On": "visualStart 1 2",
+        "Off": "visualStop 1 2"
+    },
+    "Kb-2-1": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "4",
+        "On": "visualStart 2 0",
+        "Off": "visualStop 2 0"
+    },
+    "Kb-2-2": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "5",
+        "On": "visualStart 2 1",
+        "Off": "visualStop 2 1"
+    },
+    "Kb-2-3": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "6",
+        "On": "visualStart 2 2",
+        "Off": "visualStop 2 2"
+    },
+    "Kb-3-1": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "7",
+        "On": "visualStart 3 0",
+        "Off": "visualStop 3 0"
+    },
+    "Kb-3-2": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "8",
+        "On": "visualStart 3 1",
+        "Off": "visualStop 3 1"
+    },
+    "Kb-3-3": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "9",
+        "On": "visualStart 3 2",
+        "Off": "visualStop 3 2"
+    },
+    "SetTestKbTennis": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "t",
+        "On": "setVisual \"tennis\""
+    },
+    "SetTestKbRadioHazard": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "r",
+        "On": "setVisual \"radiohazard\""
+    },
+    "SetTestKbQuarter": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "q",
+        "On": "setVisual \"quartertracker\""
+    },
+    "SetTestKbBackrain": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "a",
+        "On": "visualStart \"backrain\" \"701\" \"0\""
+    },
+    "SetTestKbBackrain": {
+        "player": "TestKb",
+        "type": "kb",
+        "address": "z",
+        "On": "visualStop \"701\" \"0\""
+    }
+}
+    

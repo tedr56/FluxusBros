@@ -1,0 +1,79 @@
+{
+    "BANK-PAD-NOTE-1-1": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 48)",
+        "On": "visualStart 801 0 \"mur\"",
+        "Off": "visualStop 801 0"
+    },
+    "BANK-PAD-NOTE-1-2": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 49)",
+        "On": "visualStart 802 0 \"tennis\"",
+        "Off": "visualStop 802 0"
+    },
+    "BANK-PAD-NOTE-1-3": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 50)",
+        "On": "visualStart 803 0 \"tunnel-wall\"",
+        "Off": "visualStop 803 0"
+    },
+    "BANK-PAD-NOTE-1-4": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 51)",
+        "On": "visualStart 804 0 \"zeplin\"",
+        "Off": "visualStop 804 0"
+    },
+    "BANK-PAD-NOTE-1-5": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 52)",
+        "On": "visualStart 805 0 \"backrain\"",
+        "Off": "visualStop 805 0"
+    },
+    "BANK-PAD-NOTE-1-6": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 53)",
+        "On": "visualStart 806 0 \"valley\"",
+        "Off": "visualStop 806 0"
+    },
+    "BANK-PAD-NOTE-1-7": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 54)",
+        "On": "visualStart 807 0  \"wiretriangle\"",
+        "Off": "visualStop 807 0"
+    },
+    "BANK-PAD-NOTE-1-8": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 55)",
+        "On": "visualStart 808 0 \"matrix\"",
+        "Off": "visualStop 808 0"
+    },
+	"BANK-PAD-NOTE-1-9": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 56)",
+        "On": "visualStart 809 0 \"mozaik\"",
+        "Off": "visualStop 809 0"
+    },
+	"BANK-PAD-NOTE-1-10": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 57)",
+        "On": "visualStart 810 0 \"radiohazard\"",
+        "Off": "visualStop 810 0"
+    },
+	"BANK-PAD-NOTE-1-11": {
+        "player": "Korg",
+        "type": "midi-ccn",
+        "address": "(vector 1 58)",
+        "On": "visualStart 811 0 \"rainbow-cubes\"",
+        "Off": "visualStop 811 0"
+    }
+}

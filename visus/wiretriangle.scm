@@ -1,4 +1,5 @@
 (require racket/list)
+(require "modules/beat-module.scm")
 (define wiretriangle-save (make-hash))
 
 (define (wiretriangle-build id)

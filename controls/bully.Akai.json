@@ -1,0 +1,32 @@
+{
+    "tempo":{
+        "address":"(vector 0 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "gain":{
+        "address":"(vector 1 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "blur":{
+        "address":"(vector 2 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    }
+}

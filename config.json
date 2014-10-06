@@ -1,0 +1,74 @@
+{
+    "audio": ["system:capture_1", 1024, 44100],
+    "gain": 2,
+    "smoothing-bias": 0.6,
+    "interfaceControl": true,
+    "interfaceCallBack": true,
+    "loadPlayers": {
+        "Akai": true,
+        "Korg": false,
+        "Bitstream": false,
+        "FingerPlay": false,
+        "TestKb": false,
+        "TouchOsc": false
+    },
+    "players": {
+        "Akai": {
+            "MidiInputPort": {
+                "Akai APC20:0": true
+            },
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "Akai-Triggers-LiveNoisy": true
+            }
+        },
+        "Korg": {
+            "MidiInputPort": {
+                "microKONTROL:1": true,
+                "microKONTROL:2": true
+            },
+            "defaultDirectory": "config/",
+            "loadFocus": {
+                "Korg-Focus": true
+            },
+            "loadTriggers": {
+                "Korg-Triggers": true,
+                "Korg-Triggers-Fix": true,
+                "Korg-Keyboard": true
+            },
+            "loadMapping": {
+                "Korg-Mapping": false
+            },
+            "loadVisuals": {
+                "Korg-Visuals": true
+            }
+        },
+        "Bitstream": {
+            "MidiInputPort": "Bitstream 3X:0",
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "Bitstream-Triggers": true
+            }
+        },
+        "FingerPlay": {
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "FingerPlay-Triggers": true
+            }
+        },
+        "TestKb": {
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "TestKb": true
+            }
+        },
+        "TouchOsc": {
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "TouchOsc": true
+            }
+        }
+    }
+}
+
+

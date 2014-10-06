@@ -1,0 +1,18 @@
+;defaults variables
+(define DEFAULT_THRESHOLD_TRIGGER_VALUE 0.5)
+(define DEFAULT_VISUAL_PATH "visus/")
+(define DEFAULT_CONTROL_PATH "controls/")
+(define DEFAULT_CROSS_SIZE 3)
+(define DEFAULT_OTHER_LEVEL_SEARCH 4)
+(define DEFAULT_VAL_COEFF 127)
+(define DEFAULT_HOOK_INTERVAL 0.05)
+(define DEFAULT_GAIN 1)
+(define DEFAULT_SMOOTHING_BIAS 0.6)
+
+;Configuration OSC
+(define DEFAULT_OSC_SOURCE "3334")
+(define DEFAULT_OSC_DESTINATION "4444")
+
+;Configuration TUIO
+(define DEFAULT_TUIO_SOURCE 3332)
+

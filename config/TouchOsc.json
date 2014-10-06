@@ -1,0 +1,27 @@
+{
+    "TouchStart": {
+        "player": "TouchOsc",
+        "type": "osc",
+        "address": "/start",
+        "On": "visualStart"
+    },
+    "TouchStop": {
+        "player": "TouchOsc",
+        "type": "osc",
+        "address": "/stop",
+        "On": "visualStop"
+    },
+    "TouchFocus": {
+        "player": "TouchOsc",
+        "type": "osc",
+        "address": "/focus",
+        "On": "setFocus"
+    },
+    "TouchTennis": {
+        "player": "TouchOsc",
+        "type": "osc",
+        "address": "/1/track1",
+        "On": "setVisual \"tennis\""
+    }
+    
+}

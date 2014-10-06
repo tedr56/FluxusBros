@@ -1,0 +1,1 @@
+{"trans-x":{"address":"(vector 1 24)","defaults":[0.55,0,0,0],"type":"midi-ccn"},"trans-y":{"address":"(vector 1 25)","defaults":[0.46,0,0,0],"type":"midi-ccn"},"trans-z":{"address":"(vector 1 26)","defaults":[0.669,0,0,0],"type":"midi-ccn"},"trans-coeff":{"address":"(vector 1 27)","defaults":[0.51,0,0,0],"type":"midi-ccn"}}
