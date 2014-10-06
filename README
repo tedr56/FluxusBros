@@ -6,23 +6,24 @@ What is FluxusBros?
 ---------------------------------------------------------------------------------
 FluxusBros is a Visuals Mixing Script for Fluxus software. Fluxus is a 3D scheme
 environement for realtime animation from mutiple inputs like midi, osc and sound.
+http://www.pawfal.org/fluxus/
+
+Fluxus for Osx : http://mndl.hu/fluxus/
 
 
 Introdution
 ---------------------------------------------------------------------------------
-The FluxusBros script mix different Fluxus visuals scripts with user triggers.
+The FluxusBros script mix different Fluxus visual scripts with user triggers.
 The visuals scripts contains abstracted controls, and the FluxusBros script
-re-attribute the abstracted controls to actual controls depending of the actual
-player controls mapping.
-The FluxusBros system allow to map visuals to different areas.
+re-attribute the abstracted controls to actual controls depending of the
+player control configurations.
+The FluxusBros system allow to map visuals to different areas. (wip)
 
 How to Launch?
 ---------------------------------------------------------------------------------
 FluxusBros-Start will launch JackServer, then Fluxus with FluxusBros loaded.
 If you want to launch FluxusBros from Fluxus, for devellopement for instance,
-prefer FluxusBrosLauncher.scm to load. Options can be passed and all scripts
-will be actualised at relaunch of FluxusBrosLauncher.scm to catch
-modifications.
+prefer FluxusBrosLauncher.scm to load.
 
 Folder Organisation
 ---------------------------------------------------------------------------------
@@ -35,10 +36,10 @@ Visuals-Scripts
 
 Rules to devellop new scripts inside:
 
-All the visuals scripts must in /visu folder.
+All the visuals scripts must in /visus folder.
 The script's file name must have the same name of the main function script.
 The main function script must have two parameters : id and crossfader
-The id parameter is a different identifier for each running script.
+The id parameter is an identifier for each running script.
 It contain the visu object of the running instance.
 To get a string identifier for several reasons, you can use (send id Get-Name)
 to obtain the string attached identifier.
@@ -63,100 +64,180 @@ This function is also automatically called by the manager script.
 
 Taking in example, the "test" visual.
 The file have to be named "test.scm"
-and the main function of the visual script have to be defined like this :
-(define (test id cross)
+
 To insert a cube primitive with (build-cube) and retain its value,
 you must create:
 (define test-primitives (make-hash))
 (define (test-build id)
     (hash-set! test-primitives id (build-cube))
 )
-To destroy the (build-cube) used in the test visual, use the function
+To destroy the (build-cube) when the visual is stopped, use the function
 (define (test-destroy id)
 and place a (destroy (hash-ref test-primitives id)) function inside.
 
+Also, the looping function will be defined like this
+(define (test id cross)
+    (some-cool-stuff)
+)
+Note the cross parameter must be add, but is not implemented yet.
+
+
+Players
+---------------------------------------------------------------------------------
+FluxusBros can deal with several users with several controllers.
+Each user is called Player and have there separate config files.
+See the next parts to see how to deal with them.
+
+
 Triggers
 ---------------------------------------------------------------------------------
-
 The triggers are the midi, osc or keyboard events which can
 launch, kill, choose visuals and other few actions.
 It is the managing system of the visuals.
-The basic "Save-Trigger-File" can be use to place new triggers.
-To make your own and complexer config :
- - create your folder
- - replace the name of the folder in the "load-config"
-   file by your folder.
- - if you use multiple triggers file, make another load-config
-   and load the different files.
- - make your trigger file in your folder.
+These data are stored in json files.
 
-To add a new trigger in the file, the syntax is like this :
+* config.json
+It's the default file to de/activate basic options and players options of FluxuxBros.
 
-NAME_OF_THE_TRIGGER
-Hardware (just identify your different controlers)
-type-of-control
-address-to-catch-the-control
-function-linked-to-the-trigger-when-activated
-function-linked-to-the-trigger-when-desactivated
-mapping-on-channel (experimental)
-
-and add the next triggers to the below.
-The different type of triggers are :
- midi note : note
- midi ccn : midi-ccn or ccn
- keyboard normal keys : kb
- keyboard special keys : kbs
- osc : osc
-
-The address of controls:
-midi address : (vector midi-channel number-of-the-control)
-keyboard normal keys : character of the key
-keyboard special keys : special number of the key
-(cf (help keys-special-down) or (help keys-special-pressed) in Fluxus)
-
+ - basic options
+  "audio" : set the parameters for fluxus audio input with jack.
+  "gain" : set the audio input level
+  "smoothing-bias" : set the reactivity to audio levels (between 0 and 1, 0 as hyper-reactive)
+  
+ - "loadPlayers"
+  In this subtree, you can activate or deactivate players configurations with the boolean option.
+ 
+ - "players"
+  Here is defined the options for each players
+  
+  midi-connection :
+    fluxus will try to connect to the defined midi in/out port. Fluxus can actually deal with only one midi in & out port.
+    To connect several midi port with Fluxus, use Jack connect panel.
+    The midi port names must be named with Fluxus names. Type (midi-info) in Fluxus to get them.
+    
+    "MidiInputPort" : specify the midi input port
+    "MidiOuputPort" : specify the midi output port (wip)
+  "defaultDirectory" :
+    specify the folder to search for triggers json files
+  loadTriggers :
+    load several json files with triggers configs.
+    the boolean option is to make them active or not.
+  
+  Example of basic config.json
+  {
+    "audio": ["system:capture_1", 1024, 44100],
+    "gain": 2,
+    "smoothing-bias": 0.6,
+    "loadPlayers": {
+        "Akai": true, 
+        "OtherPlayer": false
+    },
+    "players": {
+        "Akai": {
+            "MidiInputPort": {
+                "Akai APC20:0": true
+            },
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "Akai-Triggers-LiveNoisy": true
+            }
+        },
+        "OtherPlayer" : {
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "TriggerFile": true
+            }
+        }
+    }
+  
+  
+* trigger files
+  Trigger files are also in json.
+  Each trigger must be set as this :
+  
+  "trigger-name": {
+    "player": "name-of-player-who-attached-to",
+    "type": "type-of-controller",
+    "address": "address-to-track-on-controller",
+    "On": "function-to-launch-on-activation",
+    "Off": "function-to-launch-on-deactivation"
+  }
+  
+  The "type" field can be one of these supported controllers :
+    - "midi-ccn"
+    - "midi-note"
+    - "kb" (for basic keyboard keys)
+    - "kbs" (for special keyboard keys)
+    - "osc" (for OpenSoundControl protocol)
+  
+    The address of controls:
+    midi address : (vector midi-channel number-of-the-control)
+    keyboard normal keys : character of the key
+    keyboard special keys : special number of the key
+    
+    To get keyboard keys encoding, launch the script "utils/Keyboard-keys-encoding.scm" with Fluxus or
+    see (help keys-special-down) and (help keys-special-pressed) in Fluxus
+    
+  The "Off" and "On" fields are optionnal, but one of them should by specify to be useful.
+  The available commands are :
+    getFocus
+    wait
+    getWaitFocus
+    setFocus
+    setFocus-on-player \"other-player\"   (used by one player to get control on visual of another player)
+    visualStart 411 0                     (launch visual on layer 411, with sublayer and controls default values 0)
+    visualStart 411 0 \"specify-visual\"  (launch  "specify-visual" on layer 411, with controls default values 0)
+    visualStop 411 0                      (stop visual on layer 411, with controls default values 0)
+    setVisual \"specify-visual\"          (set "specify-visual" on the focused layer)
+  
+  A layer contains 4 sublayers. Each automatically loading the corresponding default values.
+  When you change the visual (with the "setVisual" command) of a sublayer, all sublayers will change as well.
+  This is useful when you want to play with several (recorded) aspects of the same visual.
+  
+  A player can control (for now) only one layer (and sublayer) at a time.
+  To change of control ("focus") the wait command will affect the focus on the next launched visual.
+  
+  
 Controls
 ---------------------------------------------------------------------------------
 
-The control part is to act on the inside of a visual.
-In the visual, the function to use is "c", like control.
+The control part is to act on the parameters inside of a visual.
+In the visual script, the function to use is "c", like control.
 The basic way to use this is :
 (c "name-of-the-control-in-a-string" id)
 and the manager script will search in the config files to
-which midi,osc or keyboard control it is linked to.
+which midi,osc or keyboard control is linked to.
 To configure these links, the files are in the "controls" folder.
-The basic Save-Control-File can be use to place your control config.
-To make complex config, the system use on config file for one visual
-with the same name. To use the multiple hardware separation system,
-you can specify the hardware at the end of the file name.
-For example, for the test.scm visual used with
-your FAVORITE-MIDI-CONTROLLER, create thefile
-"test.FAVORITE-MIDI-CONTROLLER" in the "controls" folder.
-To add a new control in your file, here is the syntax :
 
-name-of-the-visual (even in a same named file)
-name-of-the-control (the name used in the visual script with the "c" function)
-Hardware
-type-of-control
-address-of-the-control
-mapping-on-channel (experimental, stay on 0)
-default-mode
-first-default-value
-second-default-value
-third-default-value
-fourth-default-value
+Each visual must have a json config file for each players.
+The files must be named like this :
 
-The different type of control are :
- midi note : note
- midi ccn : ccn
- keyboard normal keys : kb
- keyboard special keys : kbs
- osc : osc
- fake : a non controlable control which just can handle default values
+Visual_name.Player.json
 
-The default-mode value act on the value to catch on the visual loading:
- -1 : connect to the hardware control
- 0  : automatic setting
- 1  : use the first default value
- 2  : use the second default value
- 3  : use the third default value
- 4  : use the fourth default value
+The json inside is defined like this :
+
+    "name_of_the_visual_control":{
+        "address":"address_to_track_on_controller",
+        "defaults":[
+            default_value_1,
+            default_value_2,
+            default_value_3,
+            default_value_4
+        ],
+        "type":"type_of_controller"
+    }
+
+    The types of supported controllers are the same used for Triggers.
+        - "midi-ccn"
+        - "midi-note"
+        - "kb" (for basic keyboard keys)
+        - "kbs" (for special keyboard keys)
+        - "osc" (for OpenSoundControl protocol)
+  
+    The address of controls:
+    midi address : (vector midi-channel number-of-the-control)
+    keyboard normal keys : character of the key
+    keyboard special keys : special number of the key
+    
+    To get keyboard keys encoding, launch the script "utils/Keyboard-keys-encoding.scm" with Fluxus or
+    see (help keys-special-down) and (help keys-special-pressed) in Fluxus
