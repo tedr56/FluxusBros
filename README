@@ -23,7 +23,8 @@ How to Launch?
 ---------------------------------------------------------------------------------
 FluxusBros-Start will launch JackServer, then Fluxus with FluxusBros loaded.
 If you want to launch FluxusBros from Fluxus, for devellopement for instance,
-prefer FluxusBrosLauncher.scm to load.
+prefer FluxusBrosLauncher.scm to load. You'll have to specify the directory
+to your FluxusBros location
 
 Folder Organisation
 ---------------------------------------------------------------------------------
