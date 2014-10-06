@@ -1,0 +1,72 @@
+{
+    "color-oscillo":{
+        "address":"(vector 0 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "gain-oscillo":{
+        "address":"(vector 1 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "oscillo-w":{
+        "address":"(vector 2 7)",
+        "defaults":[
+            0.1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "gain-caustik":{
+        "address":"(vector 6 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "color-caustik":{
+        "address":"(vector 7 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "color-caustik-gh-s":{
+        "address":"(vector 4 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "color-caustik-gh-v":{
+        "address":"(vector 5 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    }
+}

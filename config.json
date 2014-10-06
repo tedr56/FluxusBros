@@ -5,13 +5,23 @@
     "interfaceControl": true,
     "interfaceCallBack": true,
     "loadPlayers": {
+        "Akai": true,
         "Korg": false,
         "Bitstream": false,
         "FingerPlay": false,
         "TestKb": false,
-        "TouchOsc": true
+        "TouchOsc": false
     },
     "players": {
+        "Akai": {
+            "MidiInputPort:0": {
+                "Akai APC20": true
+            },
+            "defaultDirectory": "config/",
+            "loadTriggers": {
+                "Akai-Triggers-LiveNoisy": true
+            }
+        },
         "Korg": {
             "MidiInputPort": {
                 "microKONTROL:1": true,
@@ -46,13 +56,13 @@
                 "FingerPlay-Triggers": true
             }
         },
-        "TestKb":{
+        "TestKb": {
             "defaultDirectory": "config/",
             "loadTriggers": {
                 "TestKb": true
             }
         },
-        "TouchOsc":{
+        "TouchOsc": {
             "defaultDirectory": "config/",
             "loadTriggers": {
                 "TouchOsc": true

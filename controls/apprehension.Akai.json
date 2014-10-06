@@ -1,0 +1,72 @@
+{
+    "translate-g-gh":{
+        "address":"(vector 0 7)",
+        "defaults":[
+            0,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "translate-gh":{
+        "address":"(vector 1 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "rotate-1":{
+        "address":"(vector 3 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "rotate-2":{
+        "address":"(vector 4 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "color-gh":{
+        "address":"(vector 0 14)",
+        "defaults":[
+            0,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "red":{
+        "address":"(vector 7 7)",
+        "defaults":[
+            0,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    },
+    "sub":{
+        "address":"(vector 5 7)",
+        "defaults":[
+            1,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    }
+}
