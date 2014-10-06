@@ -14,8 +14,8 @@
     },
     "players": {
         "Akai": {
-            "MidiInputPort:0": {
-                "Akai APC20": true
+            "MidiInputPort": {
+                "Akai APC20:0": true
             },
             "defaultDirectory": "config/",
             "loadTriggers": {
