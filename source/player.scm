@@ -36,7 +36,7 @@
                     )
                     (addressT
                         (cond
-                            ((or (equal? typeT "midi-ccn") (equal? typeT "midi-note"))
+                            ((or (equal? typeT "midi-ccn")  (equal? typeT "ccn") (equal? typeT "midi-note"))
                                 (eval-string  (parseJson '(address) TableJson "0"))
                             )
                             ((equal? typeT "osc")
