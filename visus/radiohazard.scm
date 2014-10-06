@@ -37,7 +37,7 @@
                                 (coeffdist (max 0 (+ coeffRadius (* (atan (/  (* (max 0.000001 sizeRadius)  (max 0.000001 coeffRadius) -1))) dist 1))))
                             )
                             (rotate (vector 0 0 (* rotZSpeed (- (flxrnd) .5) (time))))
-                            (colour (hsv->rgb (vector (- colourBase (* colourRadius coeffdist)) 1 1)))
+                            (colour (hsv->rgb (vector (- colourBase (* colourRadius coeffdist)) 0.2 1)))
                             (opacity (min cross (gl n gain-c)))
                             (shinyness shiny)
 ;                            (specular (vector (gl 3 .5) 0.1 .61))
