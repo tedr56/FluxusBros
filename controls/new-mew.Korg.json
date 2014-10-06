@@ -1,1 +1,47 @@
-{"acceleration":{"address":"#(1 27)","defaults":[0.874015748500824,0.7795275449752808,0.51,0.51],"type":"midi-ccn"},"home-attraction":{"address":"#(1 25)","defaults":[0.08661417663097382,1.0,1.0,1.0],"type":"midi-ccn"},"speed":{"address":"#(1 26)","defaults":[0.031496062874794006,1.0,1.0,1.0],"type":"midi-ccn"},"line-width-gh":{"address":"#(1 18)","defaults":[1.0,0.03,0.08661417663097382,0.08661417663097382],"type":"midi-ccn"},"neighbor-avoidance":{"address":"#(1 24)","defaults":[0.23622047901153564,1.0,0.24409449100494385,1.0],"type":"midi-ccn"},"gain":{"address":"#(1 16)","defaults":[1.0,0.960629940032959,1.0,1.0],"type":"midi-ccn"},"colour-gain":{"address":"#(1 28)","defaults":[0.10236220806837082,0.6299212574958801,1.0,0.10236220806837082],"type":"midi-ccn"},"blur":{"address":"#(1 17)","defaults":[0.0,0.5,1.0,0.4960629940032959],"type":"midi-ccn"},"wire-colour-gain":{"address":"#(1 29)","defaults":[0.07086614519357681,0.4645669162273407,0.07086614519357681,0.07086614519357681],"type":"midi-ccn"}}
+{
+    "acceleration":{
+        "address":"#(1 27)"
+        "defaults":[0.874015748500824,0.7795275449752808,0.51,0.51],
+        "type":"midi-ccn"
+    },
+    "home-attraction":{
+        "address":"#(1 25)",
+        "defaults":[0.08661417663097382,1.0,1.0,1.0],
+        "type":"midi-ccn"
+    },
+    "speed":{
+        "address":"#(1 26)",
+        "defaults":[0.031496062874794006,1.0,1.0,1.0],
+        "type":"midi-ccn"
+    },
+    "line-width-gh":{
+        "address":"#(1 18)",
+        "defaults":[1.0,0.03,0.08661417663097382,0.08661417663097382],
+        "type":"midi-ccn"
+    },
+    "neighbor-avoidance":{
+        "address":"#(1 24)",
+        "defaults":[0.23622047901153564,1.0,0.24409449100494385,1.0],
+        "type":"midi-ccn"
+    },
+    "gain":{
+        "address":"#(1 16)",
+        "defaults":[1.0,0.960629940032959,1.0,1.0],
+        "type":"midi-ccn"
+    },
+    "colour-gain":{
+        "address":"#(1 28)",
+        "defaults":[0.10236220806837082,0.6299212574958801,1.0,0.10236220806837082],
+        "type":"midi-ccn"
+    },
+    "blur":{
+        "address":"#(1 17)",
+        "defaults":[0.0,0.5,1.0,0.4960629940032959],
+        "type":"midi-ccn"
+    },
+    "wire-colour-gain":{
+        "address":"#(1 29)",
+        "defaults":[0.07086614519357681,0.4645669162273407,0.07086614519357681,0.07086614519357681],
+        "type":"midi-ccn"
+    }
+}
