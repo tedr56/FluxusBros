@@ -118,7 +118,6 @@
         (start-audio (list-ref audioConf 0) (list-ref audioConf 1) (list-ref audioConf 2))
         (set-gain! (parseJson '(gain) configJson DEFAULT_GAIN))
         (smoothing-bias (parseJson '(smoothing-bias) configJson DEFAULT_SMOOTHING_BIAS))
-        (midiin-open 0)
         (set! OSC_SOURCE (parseJson '(OscSource) configJson DEFAULT_OSC_SOURCE))
         (when (parseJson '(interfaceControl) configJson #f) (osc-source-launch))
         (hash-for-each
@@ -165,4 +164,4 @@
 
 (show "")(show "")(show "")
 (show "Executed")
-;(loadConfig PlayerList Mapper VisualNameList VisualList MappingManager)
+(loadConfig PlayerList Mapper VisualNameList VisualList MappingManager)
