@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Starting JACK Audio Connection Kit..."
 
 SERVICE="qjackctl"
@@ -12,6 +13,8 @@ else
         echo "Already running"
 fi
 
+echo
+
 echo "Starting Fluxus..."
 
 optirun_exists () {
@@ -22,6 +25,7 @@ optirun_exists () {
 if optirun_exists;
 then
 	OPTIRUN="optirun"
+	echo "Optirun detected"
 fi
 
 if (("$#" > 0));
