@@ -1,0 +1,82 @@
+{
+    "scale-gh":{
+        "address":"(vector 0 7)",
+        "defaults":[
+            0.1,
+            0.1,
+            0.1,
+            0.1
+        ],
+        "type":"midi-ccn"
+    },
+    "scale-random":{
+        "address":"(vector 2 7)",
+        "defaults":[
+            0.1,
+            0.1,
+            0.1,
+            0.1
+        ],
+        "type":"midi-ccn"
+    },
+    "color-gain":{
+        "address":"(vector 0 14)",
+        "defaults":[
+            0,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    },
+    "color-wire-gain":{
+        "address":"(vector 1 7)",
+        "defaults":[
+            0,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    },
+    "cubes-x":{
+        "address":"(vector 6 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "cubes-y":{
+        "address":"(vector 7 7)",
+        "defaults":[
+            1,
+            1,
+            1,
+            1
+        ],
+        "type":"midi-ccn"
+    },
+    "speed-random":{
+        "address":"(vector 4 7)",
+        "defaults":[
+            0,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    },
+    "speed":{
+        "address":"(vector 5 7)",
+        "defaults":[
+            0,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    }
+}
