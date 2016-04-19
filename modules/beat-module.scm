@@ -1,7 +1,7 @@
 (module beat-module racket
     (require fluxus-018/fluxus-midi)
     (require fluxus-018/fluxus)
-    (require "vjbros.scm")
+    (require "module-vjbros/vjbros.rkt")
     (require racket/vector)
     (require racket/list)
     (provide
