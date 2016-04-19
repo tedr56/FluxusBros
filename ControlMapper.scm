@@ -7,8 +7,8 @@
     json
 )
 (require
-    "modules/vjbros.scm"
-    "modules/Tuio.ss"
+    "modules/vjbros.rkt"
+;    "modules/Tuio.ss"
 )
 
 (load "source/globals.scm")

@@ -1,10 +1,11 @@
 (module vjbros racket
-    (require fluxus-018/fluxus-midi)
+    (require racket/math)
+    (require racket/string)
+    (require racket/list)
     (require fluxus-018/fluxus)
     (require fluxus-018/time)
-    (require scheme/math)
-    (require scheme/string)
-    (require scheme/list)
+    (require fluxus-018/fluxus-midi)
+
     (provide
         midi-connect
         m
@@ -42,6 +43,7 @@
         minv
         maxv
         random-center
+        eval-string
     )
     (define (midi-connect)
         (letrec
@@ -434,5 +436,18 @@
             )
             (- rnd (/ rnd 2))
         )
+    )
+    (define (gain-control-kb)
+        (when (key-special-pressed 114)
+            (when (key-pressed "+")
+                (set-gain! (+ (get-gain) 0.05))
+            )
+            (when (key-pressed "-")
+                (set-gain! (- (get-gain) 0.05))
+            )
+        )
+    )
+    (define (eval-string string)
+        (eval (read (open-input-string string)
     )
 )
