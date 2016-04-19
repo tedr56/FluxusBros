@@ -17,8 +17,8 @@
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-#lang scheme
-(require scheme/udp)
+#lang racket
+(require racket/udp)
 
 (provide (struct-out TuioPoint)(struct-out 2Dobj)(struct-out 2Dcur)
          start-tuio-client

@@ -1,4 +1,4 @@
-#lang scheme
+#lang racket
 
 (require "SchemeTuio.ss")
 (provide (all-from-out "SchemeTuio.ss"))
