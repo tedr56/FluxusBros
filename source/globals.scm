@@ -1,6 +1,6 @@
 ;defaults variables
 (define DEFAULT_THRESHOLD_TRIGGER_VALUE 0.5)
-(define DEFAULT_VISUAL_PATH "visus/")
+(define DEFAULT_VISUAL_PATH "visuals/")
 (define DEFAULT_CONTROL_PATH "controls/")
 (define DEFAULT_CROSS_SIZE 3)
 (define DEFAULT_OTHER_LEVEL_SEARCH 4)
