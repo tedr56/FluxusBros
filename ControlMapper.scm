@@ -1,3 +1,5 @@
+(display "Starting")
+(newline)
 (require
     racket/class
     racket/list
@@ -8,7 +10,7 @@
 )
 (require
     "modules/vjbros.rkt"
-;    "modules/Tuio.ss"
+    "modules/Tuio.ss"
 )
 
 (load "source/globals.scm")
@@ -18,6 +20,7 @@
 (load "source/controlmapper.scm")
 (load "source/mapping.scm")
 
+(show "Modules Loaded")
 
 (define OSC_SOURCE DEFAULT_OSC_SOURCE)
 (define previous_osc_source_enable #f)
