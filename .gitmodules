@@ -1,0 +1,3 @@
+[submodule "module-vjbros"]
+	path = module-vjbros
+	url = https://github.com/tedr56/FluxusBros-Library

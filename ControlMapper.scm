@@ -9,7 +9,7 @@
     json
 )
 (require
-    "modules/vjbros.rkt"
+    "module-vjbros/vjbros.rkt"
     "modules/Tuio.ss"
 )
 
