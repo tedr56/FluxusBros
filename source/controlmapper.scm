@@ -82,11 +82,7 @@
             )
         )
         (define/private (getEventFunct type)
-        (show type)
             (cond
-                ;((or (equal? type "midi-ccn") (equal? type "ccn"))
-                ;    (lambda () (ccEvents))
-                ;)
                 ((equal? type "midi-ccn")
                     (lambda () (ccEvents))
                 )
