@@ -167,6 +167,9 @@
     (hash-ref PlayerList name)
 )
 
-(show "")(show "")(show "")
-(show "Executed")
+(show "")
+
 (loadConfig PlayerList Mapper VisualNameList VisualList MappingManager)
+
+(show "Config Loaded")
+(show "Executed")
