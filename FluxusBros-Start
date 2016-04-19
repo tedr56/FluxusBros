@@ -32,7 +32,7 @@ if (("$#" > 0));
 then
 	FILE=$1
 else
-	FILE="ControlMapper.scm"
+	FILE="FluxusBros.scm"
 fi
 
 $OPTIRUN fluxus -x $FILE
