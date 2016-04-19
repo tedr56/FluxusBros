@@ -3,7 +3,7 @@
     racket/list
     racket/vector
     racket/string
-    mzlib/string
+    racket/base
     json
 )
 (require
