@@ -448,6 +448,6 @@
         )
     )
     (define (eval-string string)
-        (eval (read (open-input-string string)
+        (eval (read (open-input-string string)))
     )
 )
