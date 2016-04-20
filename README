@@ -15,33 +15,33 @@ Introdution
 ---------------------------------------------------------------------------------
 The FluxusBros script mix different Fluxus visual scripts with user triggers.
 The visuals scripts contains abstracted controls, and the FluxusBros script
-re-attribute the abstracted controls to actual controls depending of the
+re-attributes the abstracted controls to actual controls depending on the
 player control configurations.
-The FluxusBros system allow to map visuals to different areas. (wip)
+The FluxusBros system allows to map visuals to different areas. (wip)
 
 How to Launch?
 ---------------------------------------------------------------------------------
 FluxusBros-Start will launch JackServer, then Fluxus with FluxusBros loaded.
-If you want to launch FluxusBros from Fluxus, for devellopement for instance,
-prefer FluxusBrosLauncher.scm to load. You'll have to specify the directory
-to your FluxusBros location
+
 
 Folder Organisation
 ---------------------------------------------------------------------------------
-visus    : all visuals scripts.
-controls : control mappings.
-utils    : tools files.
+config     : Players Configs
+visuals    : all visuals scripts.
+controls   : control mappings.
+utils      : tools files.
+
 
 Visuals-Scripts
 ---------------------------------------------------------------------------------
 
 Rules to devellop new scripts inside:
 
-All the visuals scripts must in /visus folder.
+All the visuals scripts must in /visuals folder.
 The script's file name must have the same name of the main function script.
 The main function script must have two parameters : id and crossfader
 The id parameter is an identifier for each running script.
-It contain the visu object of the running instance.
+It contains the visual object of the running instance.
 To get a string identifier for several reasons, you can use (send id Get-Name)
 to obtain the string attached identifier.
 It is made by :
@@ -87,6 +87,8 @@ Players
 ---------------------------------------------------------------------------------
 FluxusBros can deal with several users with several controllers.
 Each user is called Player and have there separate config files.
+The config.json in root folder allow to add nex players and define
+associated config files.
 See the next parts to see how to deal with them.
 
 
@@ -106,7 +108,7 @@ It's the default file to de/activate basic options and players options of Fluxux
   "smoothing-bias" : set the reactivity to audio levels (between 0 and 1, 0 as hyper-reactive)
   
  - "loadPlayers"
-  In this subtree, you can activate or deactivate players configurations with the boolean option.
+  In this subtree, you can activate or deactivate players loading with the boolean option.
  
  - "players"
   Here is defined the options for each players
@@ -229,6 +231,7 @@ The json inside is defined like this :
     }
 
     The types of supported controllers are the same used for Triggers.
+        - "fake" (for uncontrollable control)
         - "midi-ccn"
         - "midi-note"
         - "kb" (for basic keyboard keys)
