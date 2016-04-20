@@ -49,12 +49,8 @@
 (when (defined? 'debug)
     (set! previous-debug debug)
 )
+
 (define debug previous-debug)
-(define (show-d t)
-    (when debug
-        (show t)
-    )
-)
 
 ;System reset
 (rm-all-tasks)
@@ -118,7 +114,10 @@
             (midiInPorts '())
             (midiOutPorts '())
         )
-        (start-audio (list-ref audioConf 0) (list-ref audioConf 1) (list-ref audioConf 2))
+        (if (> (length audioConf) 3)
+            (start-audio (list-ref audioConf 0) (list-ref audioConf 1) (list-ref audioConf 2) (list-ref audioConf 3))
+            (start-audio (list-ref audioConf 0) (list-ref audioConf 1) (list-ref audioConf 2))
+        )
         (set-gain! (parseJson '(gain) configJson DEFAULT_GAIN))
         (smoothing-bias (parseJson '(smoothing-bias) configJson DEFAULT_SMOOTHING_BIAS))
         (set! OSC_SOURCE (parseJson '(OscSource) configJson DEFAULT_OSC_SOURCE))
@@ -165,6 +164,8 @@
     (hash-ref PlayerList name)
 )
 
-(show "")(show "")(show "")
-(show "Executed")
+(show "")
+
 (loadConfig PlayerList Mapper VisualNameList VisualList MappingManager)
+
+(show "Executed")
