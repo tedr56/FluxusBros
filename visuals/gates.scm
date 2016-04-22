@@ -7,7 +7,7 @@
     (flxseed 1)
     (hint-depth-sort)
     (blend-mode 'src-alpha 'zero)
-    (rotate (vadd (vmul (vector (time) (time) (time)) 30) (vmul (vector (gh 1) (gh 6) (gh 12)) 0.5)))
+    (rotate (vadd (vmul (vector (time-now) (time-now) (time-now)) 30) (vmul (vector (gh 1) (gh 6) (gh 12)) 0.5)))
     (for ((i (build-list 16 values))
             #:when (> (gh i) 1))
         (let ((coeff-trans (c "scale-z-gh" id))

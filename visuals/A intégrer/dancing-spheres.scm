@@ -41,7 +41,7 @@
     (hint-depth-sort)
     (blend-mode 'src-alpha 'dst-alpha)
 
-    (rotate (vector (* 60 (cos (* 1.5 (time)))) (* 60 (sin (* 2 (time)))) (* 10 (time))))
+    (rotate (vector (* 60 (cos (* 1.5 (time-now)))) (* 60 (sin (* 2 (time-now)))) (* 10 (time-now))))
     (for ((i (build-list (length (dspheres-dspheres ds)) values))
             #:when (< i (length (dspheres-dspheres ds))))
         (let ((cube (list-ref (dspheres-dspheres ds) i))

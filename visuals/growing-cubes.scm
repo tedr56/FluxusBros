@@ -212,7 +212,7 @@
         (unless (hash-has-key? growing-cubes-prims id)
             (hash-set! growing-cubes-prims id '())
         )
-        (flxseed (+ (inexact->exact (floor (* 1000 (flxrnd) (time))))))
+        (flxseed (+ (inexact->exact (floor (* 1000 (flxrnd) (time-now))))))
         (when (beat-catch (send id get-name) "addcube")
             (add-cube)
             (move-cube)

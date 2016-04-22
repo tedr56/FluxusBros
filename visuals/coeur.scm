@@ -32,8 +32,8 @@
     (random-seed (max (inexact->exact (round m)) 1))
     (with-state
         (translate (vector 0 -1 -100))
-        (translate (vector 0 0 (* 15 (modulo-d (* (c "speed" id #:coeff 10) (+ m (c "speed-random" id #:coeff 50) .02 (time))) 10))))
-        ;(translate (vector 0 0 (* 15 (modulo-d (* (* m 1) .02 (time)) 10))))
+        (translate (vector 0 0 (* 15 (modulo-d (* (c "speed" id #:coeff 10) (+ m (c "speed-random" id #:coeff 50) .02 (time-now))) 10))))
+        ;(translate (vector 0 0 (* 15 (modulo-d (* (* m 1) .02 (time-now)) 10))))
         (coeur-x id cross n)
         )
     (unless (<= m 0)

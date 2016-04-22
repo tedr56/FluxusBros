@@ -138,7 +138,7 @@
 
 (define (beat-sphere id cross)
     (with-state
-;        (rotate (vmul (vector (* (time) 1.987) (* (time) 1.0789) (* (time) 0.51245)) 0.05))
+;        (rotate (vmul (vector (* (time-now) 1.987) (* (time-now) 1.0789) (* (time-now) 0.51245)) 0.05))
         (with-primitive (hash-ref beat-sphere-prims id)
             (when (beat-catch (send id get-name) "swap")
                 (beat-sphere-launcher-swap id)

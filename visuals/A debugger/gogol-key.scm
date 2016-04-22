@@ -5,8 +5,8 @@
 (define beat-memory (make-hash))
 (define (beat-catch id)
     (cond
-        ((> (floor (time)) (hash-ref! beat-memory id (floor (time))))
-            (hash-set! beat-memory id (floor (time)))
+        ((> (floor (time-now)) (hash-ref! beat-memory id (floor (time-now))))
+            (hash-set! beat-memory id (floor (time-now)))
             #t
         )
         (else

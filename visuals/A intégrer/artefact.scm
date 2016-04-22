@@ -57,12 +57,12 @@
                             (identity)
 
                             (rotate (vmul (vector (* 360 (flxrnd)) (* 360 (flxrnd)) (* 360 (flxrnd))) 1))
-                            (rotate (vmul (vector (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd))) 0.1))
+                            (rotate (vmul (vector (* 360 (time-now) (flxrnd)) (* 360 (time-now) (flxrnd)) (* 360 (time-now) (flxrnd))) 0.1))
                     (pdata-index-map!
                         (lambda (i p)
                             (flxseed prim)
-;    (show                        (vector (cos (+ i (time))) (sin (+ i (time))) 0))
-                            (vmul (vector (cos (+ (* i 0.1) (* 2 (time)))) (sin (+ (* i 0.1) (* 2 (time)))) 0) (+ 5 (- (* 0.2 (flxrnd)) 0.1)))
+;    (show                        (vector (cos (+ i (time-now))) (sin (+ i (time-now))) 0))
+                            (vmul (vector (cos (+ (* i 0.1) (* 2 (time-now)))) (sin (+ (* i 0.1) (* 2 (time-now)))) 0) (+ 5 (- (* 0.2 (flxrnd)) 0.1)))
                         )
                         "p"
                     )

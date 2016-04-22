@@ -19,7 +19,7 @@
                         (unless (>= n (- long 1))
                             (push)
 (flxseed 2)
-(rotate (vector 0 0 (* 50 (+ (time) (* (flxrnd) 1000 num-id)))))
+(rotate (vector 0 0 (* 50 (+ (time-now) (* (flxrnd) 1000 num-id)))))
                             (blur 0.3)
                             (translate (vector 0 -2 (+ (* -1 n) 10)))
                             (wire-colour (hsv->rgb (vector (* n (/ n long)) 1 1)))

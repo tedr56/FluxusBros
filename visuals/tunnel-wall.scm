@@ -46,8 +46,8 @@
                 (e 4)
                 (ee (* 1.2 e))
 
-                (r (vector 0 (* (time) 100 (c "rotate-local" id)) 0))
-                (R (vector 0 0 (* (time) 100 (c "rotate-global" id))))
+                (r (vector 0 (* (time-now) 100 (c "rotate-local" id)) 0))
+                (R (vector 0 0 (* (time-now) 100 (c "rotate-global" id))))
                 (g (* (c "gain-a" id) (* (c "gain-b" id) 5)))
                 (max-size (c "max-size" id))
                 (scale-gh (c "scale-gh-coeff" id #:coeff 2))

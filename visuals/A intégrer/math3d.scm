@@ -57,16 +57,16 @@
                             (identity)
 
 ;                            (rotate (vmul (vector (* 360 (flxrnd)) (* 360 (flxrnd)) (* 360 (flxrnd))) 1))
-;                            (rotate (vmul (vector (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd))) 0.1))
+;                            (rotate (vmul (vector (* 360 (time-now) (flxrnd)) (* 360 (time-now) (flxrnd)) (* 360 (time-now) (flxrnd))) 0.1))
                     (pdata-index-map!
                         (lambda (i p)
                             (flxseed prim)
-;    (show                        (vector (cos (+ i (time))) (sin (+ i (time))) 0))
-;                            (vmul (vector (cos (+ (* i 0.1) (* 2 (time)))) (sin (+ (* i 0.1) (* 2 (time)))) 0) (+ 5 (- (* 0.2 (flxrnd)) 0.1)))
+;    (show                        (vector (cos (+ i (time-now))) (sin (+ i (time-now))) 0))
+;                            (vmul (vector (cos (+ (* i 0.1) (* 2 (time-now)))) (sin (+ (* i 0.1) (* 2 (time-now)))) 0) (+ 5 (- (* 0.2 (flxrnd)) 0.1)))
 ;                            (vector
-;                                (* (+ R (* r (cos (+ (* i e) (* (time) v))))) (cos (* (time) v)))
-;                                (* (+ R (* r (cos (+ (* i e) (* (time) v))))) (sin (* (time) v)))
-;                                (* r (sin (+ (* i e) (* (time) v))))
+;                                (* (+ R (* r (cos (+ (* i e) (* (time-now) v))))) (cos (* (time-now) v)))
+;                                (* (+ R (* r (cos (+ (* i e) (* (time-now) v))))) (sin (* (time-now) v)))
+;                                (* r (sin (+ (* i e) (* (time-now) v))))
 ;                            )
                             (vector
                                 (+ (* a (cos (* i e))) (* b (cos (* 3 (* i e)))))

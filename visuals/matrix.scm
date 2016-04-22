@@ -12,7 +12,7 @@
                                 (let*
                                     (
                                         (vec (vtransform (vector 0 0 0) (get-transform)))
-                                        (dist (vdist vec (vector 5 (* 5 (+ 1 (sin (time)))) 5)))
+                                        (dist (vdist vec (vector 5 (* 5 (+ 1 (sin (time-now)))) 5)))
                                         (size (/ (max 0 (- 5 dist)) 5))
                                         (n 0)
                                     )

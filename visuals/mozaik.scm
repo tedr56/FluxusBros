@@ -48,13 +48,13 @@
                             (when
                                 (and
                                     (cond ((< threshold-x (/ 127 3))
-                                                (> (gh2 (+ x (* fact-time-x (time))) g) limit-x))
+                                                (> (gh2 (+ x (* fact-time-x (time-now))) g) limit-x))
                                           ((< threshold-x (* (/ 127 3) 2))
                                             (and
-                                                (> (gh2 (abs ((ope ope1) (+ x (* fact-time-x (time))) (+ y (* fact-time-y (time))))) g) limit-x)
-                                                (> (gh2 (abs ((ope ope2) (+ x (* fact-time-x (time))) (+ y (* fact-time-y (time))))) g) limit-y))))
+                                                (> (gh2 (abs ((ope ope1) (+ x (* fact-time-x (time-now))) (+ y (* fact-time-y (time-now))))) g) limit-x)
+                                                (> (gh2 (abs ((ope ope2) (+ x (* fact-time-x (time-now))) (+ y (* fact-time-y (time-now))))) g) limit-y))))
                                     (cond ((< threshold-y (/ 127 3))
-                                        (> (gh2 (+ y (* fact-time-y (time))) g) limit-y)
+                                        (> (gh2 (+ y (* fact-time-y (time-now))) g) limit-y)
                                     ))
                                 )
                                 (draw-cube)))))
@@ -64,7 +64,7 @@
                             (
                                 (x (* X signX))
                                 (y (* Y signY))
-                                (speed (* 0.2 wave-speed (time)))
+                                (speed (* 0.2 wave-speed (time-now)))
                                 (globloc-x (if (< globloc-x-select 63) x X))
                                 (globloc-y globloc-x)
 ;                                (globloc-y (if (< (m chann 24) 63) y Y))
@@ -87,7 +87,7 @@
                     (lambda (x y)
                         (let*
                             (
-                                (speed (* rot-speed (time)))
+                                (speed (* rot-speed (time-now)))
                             )
                             (when (or (and (< rot-sens (/ 127 3)) (odd? y)) (and (> rot-sens (* (/ 127 3) 2)) (odd? y)))
                                 (rotate (vector 0  speed 0)))

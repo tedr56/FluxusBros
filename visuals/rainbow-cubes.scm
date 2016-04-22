@@ -74,7 +74,7 @@
             [invert-gain-gh (c "invert-gain-gh" id)]
             [invert-radius-base (c "invert-radius-base" id)]
             [invert-radius-gh (c "invert-radius-gh" id)]
-            [a2 (* 0.233 (time))]
+            [a2 (* 0.233 (time-now))]
             [a (* 0.233 (tempo "R" (+ (mn 0 37 10) (* (mn 0 29 (mn 0 21)) (gl 1)))))]
             [inv-p
                 (vector

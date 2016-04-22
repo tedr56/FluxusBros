@@ -1,4 +1,4 @@
-(require scheme/list)
+(require racket/list)
 ;(clear)
 ;(hint-points)
 
@@ -89,15 +89,15 @@
                         (flxseed prim)
                         (identity)
                         (rotate (vmul (vector (* 360 (flxrnd)) (* 360 (flxrnd)) (* 360 (flxrnd))) 1))
-                        ;(rotate (vmul (vector (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd)) (* 360 (time) (flxrnd))) 0.1))
+                        ;(rotate (vmul (vector (* 360 (time-now)) (flxrnd)) (* 360 (time-now)) (flxrnd)) (* 360 (time-now)) (flxrnd))) 0.1))
 
                         (let ((pos-offset (* (flxrnd) (* pos-offsetC 127))))
                             (pdata-index-map!
                                 (lambda (i p)
                                     (vector
-                                        (+ (* A (cos (+ (* i e) (* (+ pos-offset (time)) v)))) (* B (cos (* 3 (+ (* i e) (* (+ pos-offset (time)) v))))))
-                                        (+ (* A (sin (+ (* i e) (* (+ pos-offset (time)) v)))) (* B (sin (* 3 (+ (* i e) (* (+ pos-offset (time)) v))))))
-                                        (* C (sin (* 2 (+ (* i e) (* (+ pos-offset (time)) v)))))
+                                        (+ (* A (cos (+ (* i e) (* (+ pos-offset (time-now))) v)))) (* B (cos (* 3 (+ (* i e) (* (+ pos-offset (time-now))) v))))))
+                                        (+ (* A (sin (+ (* i e) (* (+ pos-offset (time-now))) v)))) (* B (sin (* 3 (+ (* i e) (* (+ pos-offset (time-now))) v))))))
+                                        (* C (sin (* 2 (+ (* i e) (* (+ pos-offset (time-now))) v)))))
                                     )
                                 )
                                 "p"

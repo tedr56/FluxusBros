@@ -27,6 +27,6 @@
         (hint-unlit)
         (hint-ignore-depth)
         (translate (vmul (vsub (vector (c "trans-x" id) (c "trans-y" id) (c "trans-z" id)) (vector .5 .5 .5)) (* 20 (c "trans-coeff" id))))
-        (rotate (vector (* 5 (sin (* 1 (time)))) (* 7 (cos (+ 12 (* 0.5 (time))))) (* 3 (sin (+ 3 (* 0.2 (time)))))))
+        (rotate (vector (* 5 (sin (* 1 (time-now)))) (* 7 (cos (+ 12 (* 0.5 (time-now))))) (* 3 (sin (+ 3 (* 0.2 (time-now)))))))
 )
     ) 

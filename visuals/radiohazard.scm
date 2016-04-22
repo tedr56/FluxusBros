@@ -30,13 +30,13 @@
                     (with-state
                         (let*
                             (
-                                (pos (vector (CenterCoeff Xcoeff) (CenterCoeff Ycoeff) (- (fmod (+ (* (flxrnd) Zcoeff) offset (* speed (time))) 40) 40)))
+                                (pos (vector (CenterCoeff Xcoeff) (CenterCoeff Ycoeff) (- (fmod (+ (* (flxrnd) Zcoeff) offset (* speed (time-now)))) 40) 40)))
                                 (glDistord (* 5 (- (max 0 (gl n)) (max 0 (gl (+ n 1))))))
                                 (dist (vdist-sq (vector (* coeffDistrodX glDistord) (* coeffDistrodY glDistord) -10) pos))
 ;                                (coeffdist (max 0 (+ coeffRadius (* (atan (/ (* coeffRadius sizeRadius -1) )) dist 1))))
                                 (coeffdist (max 0 (+ coeffRadius (* (atan (/  (* (max 0.000001 sizeRadius)  (max 0.000001 coeffRadius) -1))) dist 1))))
                             )
-                            (rotate (vector 0 0 (* rotZSpeed (- (flxrnd) .5) (time))))
+                            (rotate (vector 0 0 (* rotZSpeed (- (flxrnd) .5) (time-now)))))
                             (colour (hsv->rgb (vector (- colourBase (* colourRadius coeffdist)) 0.2 1)))
                             (opacity (min cross (gl n gain-c)))
                             (shinyness shiny)

@@ -37,7 +37,7 @@
             (draw-wiretriangle
                 (lambda (i)
                     (with-state
-                        (rotate (vmul (vector (* (c "r-x-time" id #:coeff 50) (time)) (* (c "r-y-time" id #:coeff 50) (time)) 0) (c "r-time" id)))
+                        (rotate (vmul (vector (* (c "r-x-time" id #:coeff 50) (time-now)) (* (c "r-y-time" id #:coeff 50) (time-now)) 0) (c "r-time" id)))
                         (translate (vector 0 0 (c "offset-y" id #:coeff -10)))
                         (rotate (vmul (vector (* (gl i) (c "r-x" id)) (* (gl i)  (c "r-y" id)) 0) 360))
                         (translate (vmul (vector (* (gl i) 0.1) (* (gl i) 1.5) 0) 1))

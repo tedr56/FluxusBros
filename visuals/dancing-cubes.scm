@@ -47,7 +47,7 @@
     (hint-depth-sort)
     (blend-mode 'src-alpha 'one-minus-src-alpha)
     (translate (vector 0 0 -20))
-    (rotate (vmul (vector (* 60 (cos (* 0.6 (time)))) (* 60 (sin (* 1 (time)))) (* 10 (time))) (* (c "rotation" id) 5)))
+    (rotate (vmul (vector (* 60 (cos (* 0.6 (time-now)))) (* 60 (sin (* 1 (time-now)))) (* 10 (time-now))) (* (c "rotation" id) 5)))
     (for ((i (build-list (length (dcubs-dcubes dc)) values))
             #:when (< i (length (dcubs-dcubes dc))))
         (let ((cube (list-ref (dcubs-dcubes dc) i))

@@ -2,6 +2,6 @@
     (colour (vmul (vector (gl 2) (gl 4) (gl 6)) 0.4))
     (scale (vector (gl 2) (gl 3) (gl 1)))
     (translate (vector 0 0 0))
-    (rotate (vector (* (time) 100) (* (time) 100) (* (time) 100)))
+    (rotate (vector (* (time-now) 100) (* (time-now) 100) (* (time-now) 100)))
     (draw-cube)
 )
