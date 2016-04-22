@@ -24,11 +24,11 @@
             (last-osc-peek "no message yet...")
         )
         (define/public (getTypesEvents)
-      (show TypesEvents)
-    )
-    (define/public (get-players)
-      Players
-    )
+            (show TypesEvents)
+        )
+        (define/public (get-players)
+          Players
+        )
         (define/public (recordControl table-filterControls) ; table-filterControls '(TableControl% FilterControl%))
             (show-d "->recordControl ")
             (for-each
