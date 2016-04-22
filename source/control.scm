@@ -77,15 +77,15 @@
 (define VisualControl%
     (class AbstractControl%
         (init-field
-            name 
+            name
             (defaultValues '())
             (level #f)
         )
-        (field
+        #(field
             (initLevel (initLevelDefault))
         )
         (inherit-field Player Type Value id)
-        ;(inherit getValue setValue)
+        #(inherit getValue setValue)
         (inherit getValue)
         (define/private (initLevelDefault)
             (show-d "->initLevelDefault")
@@ -97,9 +97,9 @@
         (define/public (setLevel lev)
             (show-d "->setLevel")
             (set! level (min lev (- (length defaultValues) 1)))
-            (show-d (getValue))
+
             (setValue (list-ref defaultValues level))  ; TODO Task for fading VisualControl to next level
-            (show-d (getValue))
+
         )
         (define/public (setDefaultValues valuesList)
             (set! defaultValues valuesList)
@@ -336,4 +336,3 @@
         (super-new)
     )
 )
-

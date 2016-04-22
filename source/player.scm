@@ -1,4 +1,3 @@
-
 (define Player-Interface
     (interface ()
         setVisual
@@ -59,6 +58,8 @@
         )
         (define/private (generateVisualControl VisualJson nameV visuV LevelV)
             (show-d "->genVisualControl")
+            (show-d nameV)
+            (show-d LevelV)
             (let*
                 (
                     (typeV (loadVisualControlType visuV nameV))
@@ -68,28 +69,27 @@
                                 (list (list) (list) (list) (list))
                             )
                             ((equal? typeV "number")
-			      (let
-				(
-				  (def (parseJson '(defaults) VisualJson '(1 1 1 1)))
-				)
-				(map (lambda (d) (if (string? d) (string->number d) d)) def)
-			      )
+                                (let
+		                                (
+                                        (def (parseJson '(defaults) VisualJson '(1 1 1 1)))
+                                    )
+                                    (map (lambda (d) (if (string? d) (string->number d) d)) def)
+                                )
                             )
                         )
                     )
-                    
-                            
-                    (valueV 0.555)
-                    (playerV #f)
+
+                    (playerV name)
                     (levelV
                         (cond
                             ((string? LevelV) (string->number LevelV))
                             ((number? LevelV) LevelV)
                         )
                     )
+                    (valueV (list-ref defaultsV levelV))
                     (visualV (new VisualControl% (Value valueV) (Player playerV) (Type typeV) (name nameV) (defaultValues defaultsV) (level levelV)))
                 )
-                (send visualV setLevel levelV)
+                (show-d "  genVisualControl->")
                 visualV
             )
         )
@@ -185,7 +185,7 @@
                 )
                 (loadDefaultDirectory defaultDir)
                 (loadTriggerControls (filesPath configTriggers))
-            )    
+            )
         )
         (define/public (loadTriggerControls files)
             (for-each
@@ -321,40 +321,40 @@
                         ((or waitFocus (empty? lastFocus))
                             (setFocus CrossLevel)
                         )
-		    )
-		    (cond
-			((hash-has-key? visualList CrossLevel)
-			    (send (hash-ref visualList CrossLevel) Start)
-			)
-			(else
-			    (letrec
-				(
-				    (searchOtherLevel
-					(lambda ((levIter 0))
-					    (let ((lev (number->string levIter)))
-						(cond
-						    ((hash-has-key? visualList (getCrossLevel cross lev))
-							(setVisual (send (hash-ref visualList (getCrossLevel cross lev)) getVisual) cross level)
-							(visualStart cross level)
-						    )
-						    ((>= n DEFAULT_OTHER_LEVEL_SEARCH)
-							#f
-						    )
-						    (else
-							(searchOtherLevel (+ lev 1))
-						    )
-						)
-					    )
-					)
-				    )
-				)
-				(searchOtherLevel)
-			    )
-			)
-		    )
-		)
-	    )
-	)
+		            )
+		            (cond
+			            ((hash-has-key? visualList CrossLevel)
+			                (send (hash-ref visualList CrossLevel) Start)
+			            )
+			            (else
+			                (letrec
+				                (
+				                    (searchOtherLevel
+					                    (lambda ((levIter 0))
+					                        (let ((lev (number->string levIter)))
+						                        (cond
+						                            ((hash-has-key? visualList (getCrossLevel cross lev))
+					                		            (setVisual (send (hash-ref visualList (getCrossLevel cross lev)) getVisual) cross level)
+					                		            (visualStart cross level)
+						                            )
+						                            ((>= levIter DEFAULT_OTHER_LEVEL_SEARCH)
+					                		            #f
+						                            )
+						                            (else
+					                		            (searchOtherLevel (+ levIter 1))
+						                            )
+						                        )
+					                        )
+					                    )
+				                    )
+				                )
+				                (searchOtherLevel)
+			                )
+			            )
+		            )
+		        )
+	        )
+    	)
         (define/public (visualStop (cross #f) (level "0"))
             (let ((CrossLevel (getCrossLevel cross level)))
                 (when CrossLevel
@@ -576,7 +576,7 @@
                         )
                         (hash-set! visuTempTableControl (string-append visu cross) visufiltercontrolList)
                         ;(show visufiltercontrolList )
-                        visufiltercontrolList 
+                        visufiltercontrolList
                     )
                 )
             )
@@ -586,8 +586,14 @@
         )
         (define/private (loadVisualControlType visu control)
             (show-d "->loadVisualControlType")
-            (show-d (loadVisualControlsNamesTypes visu))
-            (hash-ref (loadVisualControlsNamesTypes visu) control "number")
+            (let
+              (
+                (VisualNameTypes   (loadVisualControlsNamesTypes visu))
+                (controlType (hash-ref (loadVisualControlsNamesTypes visu) control "number"))
+              )
+              (show-d "  loadVisualControlType->")
+              controlType
+            )
         )
         (define/private (loadVisualControlsNamesTypes visu)
             (cond
@@ -621,7 +627,7 @@
                                                     )
                                                     (when (not (empty? nameCtl))
                                                         (hash-set!
-                                                            (hash-ref visuVisualControlNamesList visu) 
+                                                            (hash-ref visuVisualControlNamesList visu)
                                                             (first nameCtl)
                                                             typeCtl
                                                         )
@@ -673,13 +679,15 @@
                 (crosslevel
                     (unless (empty? lastFocus)
                         (let ((oldLastFocus (string-append (first lastFocus) (second lastFocus))))
-                            (send controlMapper unRecordControl (loadTableValuesVisualControls (send (hash-ref visualList oldLastFocus) getVisual) oldLastFocus))
+                            (when (hash-has-key? visualList oldLastFocus)
+	                            (send controlMapper unRecordControl (loadTableValuesVisualControls (send (hash-ref visualList oldLastFocus) getVisual) oldLastFocus))
+	                        )
                         )
                     )
                     (show "debug setfocus")
                     (show crosslevel)
                     (show (string? crosslevel))
-                    
+
                     (set! focus (list crosslevel))
                     (set! lastFocus
                         (list
@@ -795,4 +803,3 @@
         (super-new)
     )
 )
-
