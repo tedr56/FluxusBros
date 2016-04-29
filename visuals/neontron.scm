@@ -1,4 +1,4 @@
-(require scheme/list)
+(require racket/list)
 ;(clear)
 (define neontron-bevel (load-primitive "bevel.obj"))
 (define neontron-bevel-long (load-primitive "bevel-long-y.obj"))
@@ -147,12 +147,12 @@
                         (
                             (neon-trans-m
                                 (modulo-d
-                                    (* (+ global-speed (random-speed i)) (random-sens i) (row-sens i) (time))
+                                    (* (+ global-speed (random-speed i)) (random-sens i) (row-sens i) (time-now))
                                     size-ctrl))
                             (neon-trans (vector 0 (- neon-trans-m (/ size-ctrl 2)) 0))
                             (row-trans (vector (- (* (row i) size-row)  (/ rows-size 2)) 0 0))
-                            (rotate-local (vmul (vector 0  (sin (* (time) 3 rotate-global-speed))  0) rotate-local-ctrl))
-                            (rotate-global (vmul (vector (sin (* (time) 5 rotate-global-speed)) (sin (* (time) 2 rotate-global-speed)) (cos (* (time) 3 rotate-global-speed))) rotate-global-ctrl))
+                            (rotate-local (vmul (vector 0  (sin (* (time-now) 3 rotate-global-speed))  0) rotate-local-ctrl))
+                            (rotate-global (vmul (vector (sin (* (time-now) 5 rotate-global-speed)) (sin (* (time-now) 2 rotate-global-speed)) (cos (* (time-now) 3 rotate-global-speed))) rotate-global-ctrl))
                         )
                         (with-primitive (list-ref prims i)
                             (identity)

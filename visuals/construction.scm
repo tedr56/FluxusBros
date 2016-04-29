@@ -1,4 +1,3 @@
-;(smoothing-bias .4)
 (define grid 10)
 
 (define (draw-row id cross  x y z)
@@ -7,7 +6,7 @@
             (translate (vector 1 0 0))
             (with-state  
                 (let* ((vec (vtransform (vector 0 0 0) (get-transform)))
-                   (dist (/ (vdist vec (vector 0 (* 1 (+ 1 (sin (* (c "center-speed" id #:coeff 5) (time))))) 0)) (max .0001 (* (c "center-size" id) (gl (modulo (+ x y z) (get-num-frequency-bins)))))))
+                   (dist (/ (vdist vec (vector 0 (* 1 (+ 1 (sin (* (c "center-speed" id #:coeff 5) (time-now))))) 0)) (max .0001 (* (c "center-size" id) (gl (modulo (+ x y z) (get-num-frequency-bins)))))))
                    (size (/ (max 0 (- 5 dist)) 5)))
                 #(scale (vector size size size))
                 (scale
@@ -50,7 +49,7 @@
 
 (define (cube-matrix id cross x y z)
     (with-state
-    (rotate (vmul (vector (* .5 (time)) (* .8 (time)) (* 3 (time))) (c "rotate-speed" id #:coeff 20)))
+    (rotate (vmul (vector (* .5 (time-now)) (* .8 (time-now)) (* 3 (time-now))) (c "rotate-speed" id #:coeff 20)))
     (translate (vector -5 -5 0))
     (draw-grid id cross x y z)
     )

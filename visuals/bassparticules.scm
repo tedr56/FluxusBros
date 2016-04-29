@@ -1,4 +1,4 @@
-(require scheme/list)
+(require racket/list)
 (define bassparicules-number 100)
 (define BassParticules-prims (make-hash))
 (define BassParticules-prims-torus (make-hash))
@@ -102,7 +102,7 @@
             (Prims (hash-ref BassParticules-prims id))
             (TPrims (hash-ref BassParticules-prims-torus id))
             (gravity (vector 0 (* -1 gravity-c) 0))
-            (time-p (time))
+            (time-p (time-now))
             (rotate-c-l
                 (list rotation-c1 rotation-c2)
             )

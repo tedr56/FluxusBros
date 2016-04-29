@@ -2,7 +2,7 @@
     (let*
         (
             (delta-time (- t1 t0))
-            (elapsed-time (- (time) t0))
+            (elapsed-time (- (time-now) t0))
             (delta-f0 0.25)
             (delta-f1 0.75)
             (delta-f  (- (- 1 delta-f0) (- 1 delta-f1)))
@@ -10,8 +10,8 @@
             (delta-time-f1 (* delta-time (- 1 delta-f1)))
             (delta-time-f  (* delta-time delta-f))
             (elapsed-time-f0 elapsed-time)
-            (elapsed-time-f1 (- (time) (- t1 delta-time-f1)))
-            (elapsed-time-f  (- (time) (+ t0 delta-time-f0)))
+            (elapsed-time-f1 (- (time-now) (- t1 delta-time-f1)))
+            (elapsed-time-f  (- (time-now) (+ t0 delta-time-f0)))
             (progress-f0 (/ elapsed-time-f0 delta-time-f0))
             (progress-f1 (/ elapsed-time-f1 delta-time-f1))
             (progress-f  (/ elapsed-time-f  delta-time-f))
@@ -52,13 +52,13 @@
         )
     )
 
-(define preTime (time))
+(define preTime (time-now))
 (define (mark2-anim n)
-    (when (> (- (time) preTime) (mn 0 7 2))
+    (when (> (- (time-now) preTime) (mn 0 7 2))
         (let*
             (
                 (task-name (gensym))
-                (t0 (time))
+                (t0 (time-now))
                 (speed (+ (mn 1 7 3) .001))
                 (XsizeS (* (random-center 20) (mn 2 7 20)))
                 (YsizeS (* (random-center 20) (mn 3 7 20)))
@@ -76,7 +76,7 @@
             )
         (unless (< n 0)
             (mark2-anim (- n 1)))
-        (set! preTime (time))
+        (set! preTime (time-now))
         )
     
     )

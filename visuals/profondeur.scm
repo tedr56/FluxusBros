@@ -1,4 +1,3 @@
-;(require scheme/list)
 (define div 8)
 (define profondeur-prims (make-hash))
 (define (profondeur-build id)
@@ -109,8 +108,8 @@
         (with-state
             (hint-normalise)
             (translate (vector (random-center 30) 0 (random-center 30)))
-            (translate (vmul (vector 0 0 (- (modulo-d (+ (* 2 freq) (time)) 30) 20)) 1))
-            (rotate (vector 0 (time) 0))
+            (translate (vmul (vector 0 0 (- (modulo-d (+ (* 2 freq) (time-now)) 30) 20)) 1))
+            (rotate (vector 0 (time-now) 0))
             (rotate (vector 10 20 (+ -10 (random-center 5))))
             (scale (vector (min .4 (* .02 (gh freq))) 100 1))
             #(rotate (vector 60 30 0)) 

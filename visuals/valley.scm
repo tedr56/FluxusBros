@@ -1,4 +1,4 @@
-(require scheme/math)
+(require racket/math)
 
 ;(clear)
 
@@ -87,8 +87,8 @@
         (shinyness 20)
         (recalc-normals 1)
     )
-    (hash-set! master-time-hash id (time))
-    (hash-set! slave-time-hash  id (time))
+    (hash-set! master-time-hash id (time-now))
+    (hash-set! slave-time-hash  id (time-now))
 )
 
 ;(set-gain! 0.1)
@@ -215,11 +215,11 @@
                 "p"
             )
 
-            (when (> (time) (+ master-speed master-time))
+            (when (> (time-now) (+ master-speed master-time))
                 (pdata-decal "master" (pdata-size))
-                (set! master-time (time))
+                (set! master-time (time-now))
             )
-            (when (> (time) (+ slave-speed slave-time))
+            (when (> (time-now) (+ slave-speed slave-time))
                 (pdata-decal "c" (pdata-size))
                 (pdata-index-map!
                     (lambda (i s)
@@ -230,10 +230,9 @@
                     )
                     "slave"
                 )
-                (set! slave-time (time))
+                (set! slave-time (time-now))
             )
             (recalc-normals 1)
         )
     )
 )
-
