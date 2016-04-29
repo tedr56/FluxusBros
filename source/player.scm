@@ -449,7 +449,7 @@
                             (parseControlFileJson ; return '(TableControl% VisualControl%) from file and ('(VisualControlNames) | '())
                                 (lambda (player visualNames (tablevisualList '()))
                                     (show-d "->parseControlFileJson")
-                                    (let ((inputFilePath (string-append DEFAULT_CONTROL_PATH visu "." player "." "json"))) ; Next - change to (string-append DEFAULT_CONTROL_PATH visu ".xml"
+                                    (let ((inputFilePath (string-append DEFAULT_CONTROL_PATH visu "." player "." "json")))
                                         (when (file-exists? inputFilePath)
                                             (let*
                                                 (
@@ -545,21 +545,22 @@
                 )
             )
         )
-        (define/private (loadVisualControlsNames visu) ;return '(VisualControlName)
+        (define/private (loadVisualControlsNames visu) ; return '(VisualControlName)
             (hash-keys (loadVisualControlsNamesTypes visu))
         )
         (define/private (loadVisualControlType visu control)
             (show-d "->loadVisualControlType")
-            (let
+            (let*
               (
                 (VisualNameTypes   (loadVisualControlsNamesTypes visu))
-                (controlType (hash-ref (loadVisualControlsNamesTypes visu) control "number"))
+                (controlType (hash-ref VisualNameTypes control "number"))
               )
               (show-d "  loadVisualControlType->")
               controlType
             )
         )
-        (define/private (loadVisualControlsNamesTypes visu)
+        ;;; Parse Visual file to found all Controls and associated Types
+        (define/private (loadVisualControlsNamesTypes visu) ; return (hash-ref visuVisualControlNamesList visu)
             (cond
                 ((hash-has-key? visuVisualControlNamesList visu)
                     (hash-ref visuVisualControlNamesList visu)
