@@ -33,12 +33,15 @@
                             "-"
                             "build"
                         )
-                        (lambda ()
-                            (eval-string "void")
+                        (lambda (exn)
+                            (show "fonction build absente")
+                            void
                         )
                     )
                     this
                 )
+                (show-d "Lancement de visuel")
+                (show-d name)
                 ;(thread (with-state ((eval-string name) this 1)))
                 (spawn-task (lambda () (with-state ((eval-string name) this 1))) (get-visu-task-name))
                 (set! running #t)
@@ -53,8 +56,8 @@
                             "-"
                             "destroy"
                         )
-                        (lambda ()
-                            (eval-string "void")
+                        (lambda (e)
+                            void
                         )
                     )
                     this
@@ -87,7 +90,9 @@
         (define/public (getVisual)
             name
         )
+        (define/public (getId)
+            (string->number crosslevel)
+        )
         (super-new)
     )
 )
-
