@@ -1,3 +1,4 @@
+(require "../modules/beat-module.scm")
 (define bully-hash (make-hash))
 (define bully-seed (make-hash))
 
@@ -20,14 +21,7 @@
         )
         (letrec
             (
-                (num-id
-                    (lambda ()
-                        (+
-                            (string->number (substring name 0 3))
-                            (string->number (substring name 4))
-                        )
-                    )
-                )
+                (num-id (send id getId))
                 (flxrndX
                     (lambda ()
                         (flxrnd)
@@ -63,7 +57,7 @@
                             (line-width 20)
                             (scale (vector 1 1 1))
                             (when (beat-catch name "posrnd" #:beat (list (c "tempo" id)))
-                                (hash-set! bully-seed id (+ (num-id) (inexact->exact (floor (* 1000 (gh (* 16 (flxrnd)))))) 1))
+                                (hash-set! bully-seed id (+ num-id (inexact->exact (floor (* 1000 (gh (* 16 (flxrnd)))))) 1))
                             )
                             (flxseed (hash-ref bully-seed id))
                             (posrnd)
