@@ -49,6 +49,16 @@
         ],
         "type":"midi-ccn"
     },
+    "trans-side":{
+        "address":"(vector 3 7)",
+        "defaults":[
+            0,
+            0,
+            0,
+            0
+        ],
+        "type":"midi-ccn"
+    },
     "cubes-y":{
         "address":"(vector 7 7)",
         "defaults":[

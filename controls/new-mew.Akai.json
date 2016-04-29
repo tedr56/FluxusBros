@@ -10,7 +10,7 @@
         "type":"midi-ccn"
     },
     "acceleration":{
-        "address":"#(2 7)"
+        "address":"#(2 7)",
         "defaults":[0.874015748500824,0.7795275449752808,0.51,0.51],
         "type":"midi-ccn"
     },

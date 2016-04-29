@@ -1,12 +1,19 @@
 (define number-points 100)
 (define (defil-z v #:v-init (v-init 0) #:v-max (v-max 10) #:v-min (v-min -30))
-    (cond
-        ((>= (vector-ref v 2) v-max)
-            (vector (vector-ref v 0) (vector-ref v 1) v-init)
+    (let
+        (
+            (return
+                (cond
+                    ((>= (vector-ref v 2) v-max)
+                        (vector (vector-ref v 0) (vector-ref v 1) v-init)
+                    )
+                    ((<= (vector-ref v 2) v-min)
+                        (vector (vector-ref v 0) (vector-ref v 1) v-init)
+                    )
+                )
+            )
         )
-        ((<= (vector-ref v 2) v-min)
-            (vector (vector-ref v 0) (vector-ref v 1) v-init)
-        )
+        return
     )
 )
 (define new-mew-prims (make-hash))
@@ -89,7 +96,7 @@
                                 (
                                     (dir (vmul (vnormalise (vsub (pdata-get "p" n) closest)) neighbor-avoidance))
                                     (centre (vmul (vnormalise (vsub (vector 0 0 -40) (pdata-get "p" n))) home-attraction))
-                                    (velocity 
+                                    (velocity
                                         (vmul
                                             (vnormalise
                                                 (vadd (vmul (vadd dir centre) (* (gh2 n g) speed)) (pdata-get "vel" n)))
@@ -127,7 +134,7 @@
                                 (translate p)
                                 (opacity (* (gh2 i) .01))
                                 (colour (hsv->rgb (vmul (vector (gh2 i g) (gh2 (* i 2) g) (gh2 (* i 4) g)) colour-gain)))
-                                (wire-colour (hsv->rgb (vmul (vector (gh2 (* 2 i) g) (gh2 (* i 4) g) (gh2 (* i 2) g)) wire-colour-gain)))
+                                (wire-colour (hsv->rgb (vmul (vector (gh2 (* 2 i) g) 0 (gh2 (* i 2) g)) wire-colour-gain)))
                                 (scale (vmul (vector (gh2 i g) (gh2 i g) (gh2 i g)) .051))
                             (ungrab)
                             (defil-z p #:v-init 10 #:v-min -30)
