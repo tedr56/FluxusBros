@@ -435,14 +435,6 @@
             (cond
                 ((and (hash-has-key? visuTempTableControl (string-append visu cross)) (not forceReload))
                     (let ((visuTempControls (hash-ref visuTempTableControl (string-append visu cross))))
-;;                         (when record?
-;;                             (hash-for-each
-;;                                 visuTempControls
-;;                                 (lambda (TableKey FilterVisualVal)
-;;                                     (send controlMapper recordControl (list TableKey (first FilterVisualVal)))
-;;                                 )
-;;                             )
-;;                         )
                         (show-d "->loadTableValuesVisualControls")
                         visuTempControls
                     )
@@ -547,7 +539,7 @@
                             (visufiltercontrolList (parseAllPlayerControl))
                         )
                         (hash-set! visuTempTableControl (string-append visu cross) visufiltercontrolList)
-                        ;(show visufiltercontrolList )
+                        (show-d "->loadTableValuesVisualControls")
                         visufiltercontrolList
                     )
                 )
