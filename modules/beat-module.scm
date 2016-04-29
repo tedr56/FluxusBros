@@ -25,6 +25,7 @@
 
     (define beat-memory (make-hash))
     (define beat-pattern-memory (make-hash))
+    
     (define (beat-add beat1 beat2)  ; #(bar beat tick)
         (let*
             (
@@ -178,7 +179,15 @@
         )
     )
     (define (beat-catch id name #:first-beat (first-beat 0) #:beat (beat-pattern (list 1)) #:mode-continuous (continuous-mode #t) #:beat-limit (beat-limit 4))
-        (let ((id-name (string-append id name)) (mid-pos (midi-position)))
+        (let*
+            (
+                (id-string
+                    (if (symbol? id)
+                        (symbol->string id)
+                        id
+                    )
+                )
+                (id-name (string-append id-string name)) (mid-pos (midi-position)))
             (if (hash-has-key? beat-memory id-name)
                 (unless (equal? (second (hash-ref beat-pattern-memory id-name)) (list first-beat beat-pattern continuous-mode beat-limit))
                     (beat-update id-name (list first-beat beat-pattern continuous-mode beat-limit) mid-pos)
