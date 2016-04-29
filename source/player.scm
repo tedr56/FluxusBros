@@ -467,7 +467,6 @@
                                                 (hash-for-each
                                                     inputJson
                                                     (lambda (key val)
-                                                        ;(show-d "->parseControlFileJson hash-for-each")
                                                         (let
                                                             (
                                                                 (nameV
@@ -480,34 +479,7 @@
                                                                 (levelV Level)
                                                             )
                                                             (show-d nameV)
-;;                                                             (show-d (string? nameV))
-;;                                                             (show-d visualNames)
-;;                                                             (show-d levelV)
-;;                                                             (show-d record?)
                                                             (when (and (member nameV visualNames) (not (member nameV visualControlsNamesFound)))
-;;                                                                 (cond
-;;                                                                     (record?
-;;                                                                         (let*
-;;                                                                             (
-;;                                                                                 (TableC (generateTableControl val player))
-;;                                                                                 (VisualC (generateVisualControl val nameV visu levelV))
-;;                                                                                 (FilterC (generateFilterControl val VisualC))
-;;                                                                             )
-;; ;;                                                                             (when record?
-;; ;;                                                                                 (send controlMapper recordControl (list (list TableC FilterC)))
-;; ;;                                                                             )
-;;                                                                             (set! tablevisualList (append tablevisualList (list (list TableC VisualC))))
-;;                                                                         )
-;;                                                                     )
-;;                                                                     (else
-;;                                                                         (let*
-;;                                                                             (
-;;                                                                                 (VisualC (generateVisualControl VisualJson nameV visu levelV))
-;;                                                                             )
-;;                                                                             (set! tablevisualList (append tablevisualList (list (list #f visualC))))
-;;                                                                         )
-;;                                                                     )
-;;                                                                 )
                                                                 (let*
                                                                     (
                                                                         (TableC (generateTableControl val player))
