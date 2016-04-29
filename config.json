@@ -1,5 +1,6 @@
 {
-    "audio": ["system:capture_1", 1024, 44100],
+    "debug": "#t",
+    "audio": ["system:capture_1", 1024, 44100, "FluxusBros"],
     "gain": 2,
     "smoothing-bias": 0.6,
     "interfaceControl": true,
@@ -9,7 +10,7 @@
         "Korg": false,
         "Bitstream": false,
         "FingerPlay": false,
-        "TestKb": false,
+        "TestKb": true,
         "TouchOsc": false
     },
     "players": {

@@ -96,13 +96,13 @@
         "player": "TestKb",
         "type": "kb",
         "address": "a",
-        "On": "visualStart \"backrain\" \"701\" \"0\""
+        "On": "visualStart 701 0 \"backrain\""
     },
     "SetTestKbBackrain": {
         "player": "TestKb",
         "type": "kb",
         "address": "z",
-        "On": "visualStop \"701\" \"0\""
+        "On": "visualStop 701 0"
     }
 }
     
